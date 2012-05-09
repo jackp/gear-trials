@@ -70,7 +70,7 @@ var Users = require('./models').Users;
   Routes
 *************************************************************/
 app.get('/', function(req, res){
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Gear Trials Project' });
 });
 
 /*************************************************************

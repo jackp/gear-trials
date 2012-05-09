@@ -1,29 +1,57 @@
 extends layout
 
 block content
-	.hero-unit
-		h1 Welcome to Node Template
-		p This template is meant to make starting a new web project in nodejs as easy as possible using:
-		ul
-			li 
-				span Express 3.0alpha3 
-				a(href="http://expressjs.com/h5bp") (http://expressjs.com/h5bp)
-			li 
-				span Socket.io 0.9 
-				a(href="http://socket.io/") (http://socket.io/)
-			li
-				span Mongoose 2.5 
-				a(href="http://mongoosejs.com/") (http://mongoosejs.com/)
-			li
-				span Connect-MongoDB for session storage 
-				a(href="https://github.com/masylum/connect-mongodb") (https://github.com/masylum/connect-mongodb)
-			li
-				span H5BP 3.0 
-				a(href="http://html5boilerplate.com/") (http://html5boilerplate.com/)
-			li
-				span Twitter Bootstrap - Less files included for customization 
-				a(href="http://twitter.github.com/bootstrap/") (http://twitter.github.com/bootstrap/)
-			li
-				span jQuery 1.7.2 
-				a(href="http://jquery.com/") (http://jquery.com/)
+	.row
+		.main.span9
+			#carousel.showcase
+				.showcase-slide
+					.showcase-content
+						img(src='/img/test1.jpg')
+					.showcase-thumbnail
+						img(src='/img/test1.jpg', width='140')
+						.showcase-thumbnail-caption Caption text
+						.showcase-thumbnail-cover
+					.showcase-caption
+						h1 Caption
+				.showcase-slide
+					.showcase-content
+						img(src='/img/test1.jpg')
+					.showcase-thumbnail
+						img(src='/img/test1.jpg', width='140')
+						.showcase-thumbnail-caption Caption text
+						.showcase-thumbnail-cover
+					.showcase-caption
+						h1 Caption
+				.showcase-slide
+					.showcase-content
+						img(src='/img/test1.jpg')
+					.showcase-thumbnail
+						img(src='/img/test1.jpg', width='140')
+						.showcase-thumbnail-caption Caption text
+						.showcase-thumbnail-cover
+					.showcase-caption
+						h1 Caption
+
+			.tabbable.tabs-left
+				ul.nav.nav-tabs
+					li.active
+						a(href='#welcome', data-toggle='tab') Welcome
+					li
+						a(href='#program-info', data-toggle='tab') Program Info
+					li
+						a(href='#how-to-apply', data-toggle='tab') How to Apply
+				.tab-content
+					#welcome.tab-pane.active
+						p Welcome to the website for the Commercial Fisheries Research Foundation’s “Gear Trials Program”. This program is designed to financially assist industry with utilizing and further testing two gear types – the large mesh belly panel and the drop chain – that were designed to reduce winter flounder bycatch in the southern New England stock area within the small mesh trawl fisheries.  Here you will find information on how to get involved, how to use your vouchers, and how to be part of the research component of the program.  Please follow this site for continual updates, and to track the program’s progress.
+					#program-info.tab-pane
+						h1 Program Information
+					#how-to-apply.tab-pane
+						h1 How to Apply
+		.sidebar.span3
+			.voucher-lookup
+				input(type='text', placeholder='Check Voucher #')
+			.actions
+				a.btn.btn-large.btn-primary(href='#') Apply
+				a.btn.btn-large.btn-primary(href='#') Submit Report
+				a.btn.btn-large.btn-primary(href='#') Contact Us
 
