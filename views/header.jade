@@ -1,6 +1,6 @@
 .navbar.navbar-fixed-top
 	.navbar-inner
-		.container
+		.container.header
 			a.brand(href='#') Gear Trials Project
 			ul.nav
 				li
@@ -14,6 +14,13 @@
 			ul.nav.pull-right
 				li.divider-vertical
 				li
-					a(href='#') Login
+					a(href='#').login Login
+					.login-area
+						form#login-form
+							label(for='login-username') Username
+							input#login-username(type='text')
+							label.control-label(for='login-pass') Password:
+							input#login-pass(type='password')
+							input.btn.btn-primary(type='submit', value='Login')
 			form.navbar-search.pull-right
 				input.search-query(type='text', placeholder='Search')

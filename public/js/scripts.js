@@ -1,6 +1,9 @@
 $(document).ready(function(){
 	// Socket.io Initialization
-	var socket = io.connect('http://localhost');
+	var socket = io.connectWithSession();
+	socket.on('connect', function(){
+		console.log('SOCKET CONNECTED');
+	});
 
 	// Home Page Carousel
 	$('#carousel').awShowcase({
@@ -34,5 +37,24 @@ $(document).ready(function(){
 		dynamic_height:				false, /* For dynamic height to work in webkit you need to set the width and height of images in the source. Usually works to only set the dimension of the first slide in the showcase. */
 		speed_change:					true, /* Set to true to prevent users from swithing more then one slide at once. */
 		viewline:							false /* If set to true content_width, thumbnails, transition and dynamic_height will be disabled. As for dynamic height you need to set the width and height of images in the source. */
+	});
+
+	// Login Menu
+	$('.login').click(function(){
+		$('.login-area').toggle();
+	});
+
+	// Login Form
+	$('#login-form').submit(function(){
+
+		socket.emit('login', {
+			username: $('#login-username').val(),
+			password: $('#login-password').val()
+		});
+		socket.on('loginResponse', function(response){
+			console.log(response);
+		});
+
+		return false;
 	});
 });

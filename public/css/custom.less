@@ -4,6 +4,23 @@ body {
 	margin-top: @navbarHeight + 20;
 }
 
+.header {
+	.login-area {
+		display: none;
+		position: absolute;
+		right: 0;
+		top: @navbarHeight;
+		z-index: @zindexModal;
+		background-color: #FFF;
+		border: 1px solid @grayLight;
+		padding: 10px;
+		button {
+			margin: 0;
+		}
+		.border-radius(0 0 5px 5px);
+	}
+}
+
 .sidebar {
 	.voucher-lookup {
 		input {

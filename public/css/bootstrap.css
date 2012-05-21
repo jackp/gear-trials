@@ -4404,6 +4404,22 @@ div.showcase-tooltip {
 body {
   margin-top: 60px;
 }
+.header .login-area {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 40px;
+  z-index: 1050;
+  background-color: #FFF;
+  border: 1px solid #999999;
+  padding: 10px;
+  -webkit-border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
+}
+.header .login-area button {
+  margin: 0;
+}
 .sidebar .voucher-lookup input {
   width: 100%;
 }
