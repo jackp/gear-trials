@@ -3,9 +3,12 @@
 body {
 	margin-top: @navbarHeight + 20;
 }
+.fixed {
+	position: fixed;
+}
 
 .header {
-	.login-area {
+	.login-area, .register-area {
 		display: none;
 		position: absolute;
 		right: 0;
@@ -33,5 +36,16 @@ body {
 			width: 100%;
 			margin-bottom: 10px;
 		}
+	}
+}
+
+// Admin Page
+.admin-area{
+	.admin-tabs{
+		width: 20%;
+		font-size: 2em;
+	}
+	.tab-content {
+		margin-left: 25%;
 	}
 }

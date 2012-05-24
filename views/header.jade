@@ -1,7 +1,7 @@
 .navbar.navbar-fixed-top
 	.navbar-inner
 		.container.header
-			a.brand(href='#') Gear Trials Project
+			a.brand(href='/') Gear Trials Project
 			ul.nav
 				li
 					a(href='#') Reports
@@ -13,14 +13,27 @@
 					a(href='#') About
 			ul.nav.pull-right
 				li.divider-vertical
-				li
-					a(href='#').login Login
-					.login-area
-						form#login-form
-							label(for='login-username') Username
-							input#login-username(type='text')
-							label.control-label(for='login-pass') Password:
-							input#login-pass(type='password')
-							input.btn.btn-primary(type='submit', value='Login')
+				- if (!session.user)
+					li
+						a(href='#').login Login
+						.login-area
+							form#login_form
+								label(for='email') Email
+								input#email(type='text', name="email")
+								label.control-label(for='password') Password:
+								input#password(type='password', name="password")
+								input.btn.btn-primary(type='submit', value='Login')
+					li
+						a(href='#').register Register
+						.register-area
+							form#register_form(method="POST", action="/register")
+								label(for='email') Email
+								input#email(type='text', name="email")
+								label.control-label(for='password') Password:
+								input#password(type='password', name="password")
+								input.btn.btn-primary(type='submit', value='Register')
+				- else
+					li
+						a(href='/admin')= session.user.email
 			form.navbar-search.pull-right
 				input.search-query(type='text', placeholder='Search')

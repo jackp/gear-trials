@@ -4404,7 +4404,11 @@ div.showcase-tooltip {
 body {
   margin-top: 60px;
 }
-.header .login-area {
+.fixed {
+  position: fixed;
+}
+.header .login-area,
+.header .register-area {
   display: none;
   position: absolute;
   right: 0;
@@ -4417,7 +4421,8 @@ body {
   -moz-border-radius: 0 0 5px 5px;
   border-radius: 0 0 5px 5px;
 }
-.header .login-area button {
+.header .login-area button,
+.header .register-area button {
   margin: 0;
 }
 .sidebar .voucher-lookup input {
@@ -4429,6 +4434,13 @@ body {
 .sidebar .actions .btn {
   width: 100%;
   margin-bottom: 10px;
+}
+.admin-area .admin-tabs {
+  width: 20%;
+  font-size: 2em;
+}
+.admin-area .tab-content {
+  margin-left: 25%;
 }
 .pull-right {
   float: right;
