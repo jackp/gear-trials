@@ -17,7 +17,7 @@
 					li
 						a(href='#').login Login
 						.login-area
-							form#login_form
+							form#login_form(method="POST", action="/login")
 								label(for='email') Email
 								input#email(type='text', name="email")
 								label.control-label(for='password') Password:

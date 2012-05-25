@@ -148,6 +148,30 @@ $(document).ready(function(){
 			window.location.reload();
 		});
 	});
+
+	/***********************************************************
+		Application Process
+	***********************************************************/
+	$('#application_form').submit(function(){
+		var empty = false;
+		var form = {};
+		$('#application_form :input:not([type=submit])').each(function(){
+			form[$(this).attr('id')] = $(this).val();
+
+			if(!$(this).val()) {
+				$(this).closest('.control-group').addClass('error');
+				empty = true;
+			}
+		});
+		
+		if(!empty) {
+			socket.emit('application', form);
+			socket.on('application_resp', function(){
+				alert('application submitted');
+			});
+		}
+		return false;
+	});
 	/***********************************************************
 		TESTING ONLY
 	***********************************************************/

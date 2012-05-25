@@ -70,17 +70,32 @@ app.get('/', function(req, res){
 });
 
 app.get('/admin', function(req, res){
+  // Get Users
   var query = Users.find({});
   query.where('_id').ne(req.session.user._id);
   query.sort('admin', -1);
   query.exclude('password');
-  query.run(function(err, docs){
-    res.render('admin', {
-      title: 'Admin Area',
-      users: docs
+  query.run(function(err, users){
+    // Get Applications
+    Applications.find({}, [], {sort: {date_submitted: -1}}, function(err, apps){
+      var open = accepted = denied = [];
+      apps.forEach(function(app){
+        if(app.status == 1) open.push(app);
+        else if(app.status == 2) accepted.push(app);
+        else if(app.status === 0) denied.push(app);
+      });
+      console.log(open);
+      res.render('admin', {
+        title: 'Admin Area',
+        users: users,
+        open_applications: open,
+        accepted_applications: accepted,
+        denied_applications: denied
+      });
     });
   });
 });
+
 app.get('/apply', function(req, res){
   res.render('apply', {
     title: 'Apply Now'
@@ -125,8 +140,6 @@ app.post('/register', function(req, res){
     };
     res.redirect('admin');
   });
-
-  
 });
 
 /*************************************************************
@@ -168,6 +181,14 @@ io.sockets.on('connection', function(socket){
       socket.emit('issue_voucher_resp', err);
     });
   });
+
+  socket.on('application', function(app){
+    var App = new Applications(app);
+    App.save(function(err){
+      if(err) console.log(err);
+      socket.emit('application_resp');
+    });
+  })
 });
 
 /*************************************************************

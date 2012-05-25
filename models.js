@@ -41,7 +41,9 @@ var Applications = new Schema({
 	vessel: {type: String},
 	permit: {type: String},
 	email: {type: String},
-	phone: {type: String}
+	phone: {type: String},
+	date_submitted: {type: Date, default: new Date() },
+	status: {type: Number, default: 1}
 });
 
 exports.Applications = mongoose.model('Applications', Applications);

@@ -12,32 +12,32 @@ block content
 		.page-header
 			h1 Apply Online:
 	.row
-		form#issue_voucher.form-horizontal.span6.offset3
+		form#application_form.form-horizontal.span6.offset3
 			fieldset
 				legend Contact Information
 				.control-group
-					label.control-label(for="voucher_name") Name:
+					label.control-label(for="name") Name:
 					.controls
-						input#voucher_name.input-xlarge(type='text')
+						input#name.input-xlarge(type='text')
 				.control-group
-					label.control-label(for="voucher_email") Email:
+					label.control-label(for="email") Email:
 					.controls
-						input#voucher_email.input-xlarge(type='text')
+						input#email.input-xlarge(type='text')
 				.control-group
-					label.control-label(for="voucher_phone") Phone #:
+					label.control-label(for="phone") Phone #:
 					.controls
-						input#voucher_phone.input-xlarge(type='text')
+						input#phone.input-xlarge(type='text')
 			fieldset
 				legend Vessel Information
 				.control-group
-					label.control-label(for="voucher_vessel") Vessel:
+					label.control-label(for="vessel") Vessel:
 					.controls
-						input#voucher_vessel.input-xlarge(type='text')
+						input#vessel.input-xlarge(type='text')
 				.control-group
-					label.control-label(for="voucher_permit") Permit # or State Landing License #:
+					label.control-label(for="permit") Permit # or State Landing License #:
 					.controls
-						input#voucher_permit.input-xlarge(type='text')
+						input#permit.input-xlarge(type='text')
 			.control-group
 				.controls
-					a#apply_button.btn.btn-large.btn-primary Apply
+					input.btn.btn-large.btn-primary(type="submit", value="Apply")
 

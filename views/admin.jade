@@ -7,7 +7,9 @@ block content
 				a(href='#user_management', data-toggle="tab") User Management
 			li
 				a(href='#vouchers', data-toggle="tab") Vouchers
-		.tab-content
+			li
+				a(href='#applications', data-toggle="tab") Applications
+		.tab-content.admin-main
 			#user_management.tab-pane.active
 				.page-header
 					h1 Add User
@@ -95,7 +97,40 @@ block content
 					.control-group
 						.controls
 							a#issue_voucher_button.btn.btn-large.btn-primary Issue Voucher
-
+			#applications.tab-pane
+				.page-header
+					h1 Applications
+				ul.nav.nav-tabs
+					li.active
+						a(href='#open', data-toggle="tab") Open
+					li
+						a(href='#accepted', data-toggle="tab") Accepted
+					li
+						a(href='#denied', data-toggle="tab") Denied
+				.tab-content
+					#open.tab-pane.active
+						table.table.table-striped
+							thead
+								tr
+									th Date Submitted
+									th Name
+									th Vessel
+									th Permit #
+									th Email
+									th Phone
+							tbody
+							each app in open_applications
+								tr
+									td= app.date_submitted.toDateString()
+									td= app.name
+									td= app.vessel
+									td= app.permit
+									td= app.email
+									td= app.phone
+					#accepted.tab-pane
+						p Accepted
+					#denied.tab-pane
+						p Denied
 	#add_user_modal.modal.hide
 		.modal-header
 			h3 Confirm New User
