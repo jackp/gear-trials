@@ -1,10 +1,7 @@
 // Custom Styles
-* { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+// * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 body {
 	margin-top: @navbarHeight + 20;
-}
-.fixed {
-	position: fixed;
 }
 
 .header {
@@ -39,13 +36,67 @@ body {
 	}
 }
 
-// Admin Page
-.admin-area{
-	.admin-tabs{
-		width: 200px;
-		font-size: 2em;
-	}
-	.admin-main {
-		margin-left: 210px;
+// Process Voucher Page
+#voucher_lookup {
+	text-align: center;
+	input[type=text] {
+		margin: 0 20px;
+		width: 50%;
+		font-size: 3em;
+		line-height: 150%;
+		height: 150%;
+		text-align: center;
 	}
 }
+#lookup_results {
+	text-align: center;
+
+	dl{
+		text-align: left;
+		width: 33%;
+		margin-left: 33%;
+	}
+}
+
+// Tablesorter Styles
+
+table.tablesorter .header,
+table.tablesorter .tablesorter-header {
+	/* black double arrow */
+	background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
+	/* white double arrow */
+	/* background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAAP///////yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==); */
+	/* image */
+	/* background-image: url(black-bg.gif); */
+	background-repeat: no-repeat;
+	background-position: center right;
+	padding: 4px 20px 4px 4px;
+	cursor: pointer;
+}
+table.tablesorter tbody td {
+	color: #3d3d3d;
+	padding: 4px;
+	background-color: #fff;
+	vertical-align: top;
+}
+table.tablesorter th.headerSortUp,
+table.tablesorter th.tablesorter-headerSortUp {
+	background-color: #8dbdd8;
+	/* black asc arrow */
+	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
+	/* white asc arrow */
+	/* background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAAP///////yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7); */
+	/* image */
+	/* background-image: url(black-asc.gif); */
+}
+table.tablesorter th.headerSortDown,
+table.tablesorter th.tablesorter-headerSortDown {
+	background-color: #8dbdd8;
+	/* black desc arrow */
+	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
+	/* white desc arrow */
+	/* background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAAP///////yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7); */
+	/* image */
+	/* background-image: url(black-desc.gif); */
+}
+

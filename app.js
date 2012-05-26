@@ -50,6 +50,48 @@ app.configure('production', function(){
   mongoose.connect('mongodb://YOUR-DB-HERE');
 });
 
+app.use(function(req, res, next){
+  // respond with html page
+  if (req.accepts('html')) {
+    res.status(404);
+    res.render('error/404', { url: req.url });
+    return;
+  }
+
+  // respond with json
+  if (req.accepts('json')) {
+    res.send({ error: 'Not found' });
+    return;
+  }
+
+  // default to plain-text. send()
+  res.type('txt').send('Not found');
+});
+
+app.use(function(err, req, res, next){
+  // we may use properties of the error object
+  // here and next(err) appropriately, or if
+  // we possibly recovered from the error, simply next().
+  res.status(err.status || 500);
+  res.render('error/500', { error: err });
+});
+
+function restrict(req, res, next){
+  if(req.session.user) {
+    next();
+  } else {
+    req.session.error = 'Access denied!'
+    res.redirect('/login');
+  }
+}
+
+function admin(req, res, next){
+  if(req.session.user && req.session.user.admin) {
+    next();
+  } else {
+    res.send('You do not have admin permissions');
+  }
+}
 /*************************************************************
   Socket.io Configuration
 *************************************************************/
@@ -65,34 +107,95 @@ var Applications = require('./models').Applications;
 /*************************************************************
   Routes
 *************************************************************/
+
 app.get('/', function(req, res){
   res.render('index', { title: 'Gear Trials Project' });
 });
 
-app.get('/admin', function(req, res){
+app.get('/404', function(req, res, next){
+  next();
+});
+
+app.get('/500', function(req, res, next){
+  next(new Error('keyboard cat!'));
+});
+
+app.get('/admin/all-vouchers', admin, function(req, res){
+  Vouchers.find({}, [], {sort: {issued_date: -1}}, function(err, vouchers){
+    var open = [], used = [], expired = [];
+    vouchers.forEach(function(voucher){
+      if((voucher.status === 'open') && (new Date(voucher.expiration_date) >= new Date())) {
+        open.push(voucher);
+      } else if(voucher.status === 'used') {
+        used.push(voucher);
+      } else {
+        expired.push(voucher);
+      }
+    });
+    res.render('admin/all-vouchers', {
+      title: 'Admin: Vouchers',
+      open_vouchers: open,
+      used_vouchers: used,
+      expired_vouchers: expired
+    });
+  });
+});
+app.get('/admin/issue-voucher', admin, function(req, res){
+  res.render('admin/issue-voucher', {
+    title: 'Admin: Issue New Voucher'
+  });
+});
+app.get('/admin/users', admin, function(req, res){
   // Get Users
   var query = Users.find({});
   query.where('_id').ne(req.session.user._id);
-  query.sort('admin', -1);
   query.exclude('password');
   query.run(function(err, users){
-    // Get Applications
-    Applications.find({}, [], {sort: {date_submitted: -1}}, function(err, apps){
-      var open = accepted = denied = [];
-      apps.forEach(function(app){
-        if(app.status == 1) open.push(app);
-        else if(app.status == 2) accepted.push(app);
-        else if(app.status === 0) denied.push(app);
-      });
-      console.log(open);
-      res.render('admin', {
-        title: 'Admin Area',
-        users: users,
-        open_applications: open,
-        accepted_applications: accepted,
-        denied_applications: denied
-      });
+    res.render('admin/users', {
+      title: 'Admin: User Management',
+      users: users
     });
+  });
+});
+app.get('/admin/applications', admin, function(req, res){
+  Applications.find({}, [], {sort: {date_submitted: -1}}, function(err, apps){
+    var open = [], accepted = [], declined = [];
+    apps.forEach(function(app){
+      if(app.status === 'open') {
+        open.push(app);
+      } else if(app.status === 'accepted'){
+        accepted.push(app);
+      } else if(app.status === 'declined'){
+        declined.push(app);
+      } 
+    });
+    res.render('admin/applications', {
+      title: 'Admin: Applications',
+      open_applications: open,
+      accepted_applications: accepted,
+      declined_applications: declined
+    });
+  }); 
+});
+app.get('/admin/master-reports', admin, function(req, res){
+  res.render('admin/master-reports', {
+    title: 'Admin: Master Reports'
+  });
+});
+
+app.get('/process-voucher', restrict, function(req, res){
+  res.render('dealer/process-voucher', {
+    title: 'Process Voucher'
+  });
+});
+app.get('/vouchers', restrict, function(req, res){
+  res.render('dealer/vouchers', {
+    title: 'Vouchers'
+  });
+});
+app.get('/reports', restrict, function(req, res){
+  res.render('dealer/reports', {
+    title: 'Reports'
   });
 });
 
@@ -112,13 +215,22 @@ app.post('/login', function(req, res){
         // Successful login
         delete doc.password;
         req.session.user = doc;
-        res.redirect('admin');
+        if(doc.admin){
+          res.redirect('admin/users');
+        } else {
+          res.redirect('process-voucher')
+        }
       }
     } else {
       // Send to /login with error message
     }
   });
-
+});
+app.get('/logout', function(req, res){
+  req.session.destroy(function(err){
+    if(err) console.log(err);
+    res.redirect('/');
+  });
 });
 
 app.post('/register', function(req, res){
@@ -152,6 +264,7 @@ io.sockets.on('connection', function(socket){
     var new_user = new Users();
     new_user.name = form.name;
     new_user.email = form.email;
+    new_user.location = form.location;
     new_user.admin = form.admin;
     // For testing only
     var salt = bcrypt.genSaltSync(10);
@@ -159,6 +272,7 @@ io.sockets.on('connection', function(socket){
     new_user.password = hash;
 
     new_user.save(function(err){
+      // SEND NEW USER EMAIL HERE
       socket.emit('add_user_resp');
     });
   });
@@ -178,6 +292,7 @@ io.sockets.on('connection', function(socket){
     var new_voucher = new Vouchers(voucher);
     new_voucher.save(function(err){
       if(err) console.log(err);
+      // SEND VOUCHER EMAIL HERE
       socket.emit('issue_voucher_resp', err);
     });
   });
@@ -188,7 +303,65 @@ io.sockets.on('connection', function(socket){
       if(err) console.log(err);
       socket.emit('application_resp');
     });
-  })
+  });
+
+  socket.on('accept_application', function(id){
+    Applications.update({_id: id}, { status: 'accepted', date_accepted: new Date()}, function(err){
+      if(err) console.log(err);
+      // CREATE VOUCHER IN DATABASE
+      Applications.findById(id, function(err, doc){
+        var new_voucher = new Vouchers();
+        new_voucher.number = (Math.random()+' ').substring(2,10)+(Math.random()+' ').substring(2,10);
+        new_voucher.type = doc.voucher_type;
+        switch(doc.voucher_type){
+          case 'Belly Panel':
+            new_voucher.amount = 350;
+            break;
+          case 'Drop Chain (Small)':
+            new_voucher.amount = 450;
+            break;
+          case 'Drop Chain (Large)':
+            new_voucher.amount = 800;
+            break;
+        }
+        new_voucher.name = doc.name;
+        new_voucher.vessel = doc.vessel;
+        new_voucher.permit = doc.permit;
+        new_voucher.email = doc.email;
+        new_voucher.phone = doc.phone;
+        new_voucher.issued_date = new Date();
+        new_voucher.expiration_date = new Date(new_voucher.issued_date.getTime() + 180 * 24 * 60 * 60 * 1000);
+        console.log(new_voucher);
+        new_voucher.save(function(err){
+          if(err) console.log(err);
+          // SEND VOUCHER EMAIL HERE
+          socket.emit('accept_application_resp');
+        });
+      });
+    });
+  });
+  socket.on('decline_application', function(id){
+    Applications.update({_id: id}, { status: 'declined', date_declined: new Date()}, function(err){
+      if(err) console.log(err);
+      // SEND DECLINE EMAIL HERE
+      socket.emit('decline_application_resp');
+    });
+  });
+
+  socket.on('voucher_lookup', function(num){
+    Vouchers.findOne({number: num}, function(err, doc){
+      if(err) console.log(err);
+      
+      socket.emit('voucher_lookup_resp', doc);
+    });
+  });
+
+  socket.on('process_voucher', function(num, location){
+    Vouchers.update({number: num}, { status: 'used', used_date: new Date(), used_location: location }, function(err){
+      if(err) console.log(err);
+      socket.emit('process_voucher_resp');
+    });
+  });
 });
 
 /*************************************************************

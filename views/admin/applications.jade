@@ -1,0 +1,134 @@
+extends ../layout
+
+block content
+	ul.nav.nav-tabs
+		li
+			a(href='/admin/users') User Management
+		li
+			a(href='/admin/issue-voucher') Issue Voucher
+		li
+			a(href='/admin/all-vouchers') View All Vouchers
+		li.active
+			a(href='/admin/applications') Applications
+		li
+			a(href='/admin/master-reports') Master Reports
+	#admin-area
+		.page-header
+				h1 Applications
+			ul.nav.nav-tabs
+				li.active
+					a(href='#open', data-toggle="tab") Open
+				li
+					a(href='#accepted', data-toggle="tab") Accepted
+				li
+					a(href='#declined', data-toggle="tab") Denied
+			.tab-content
+				#open.tab-pane.active
+					table.table.table-striped.tablesorter
+						thead
+							tr
+								th Date Submitted
+								th Name
+								th Voucher Type
+								th Vessel
+								th Permit #
+								th Contact Info
+								th Actions
+						each app in open_applications
+							tr
+								td.application-date-submitted= app.date_submitted.toDateString()
+								td.application-name= app.name
+								td.application-voucher-type= app.voucher_type
+								td.application-vessel= app.vessel
+								td.application-permit= app.permit
+								td.application-contact
+									#{app.email}
+									br
+									#{app.phone}
+								td
+									button.btn.btn-primary.accept-application(data-id= "#{app._id}") Accept
+									button.btn.btn-danger.decline-application(data-id= "#{app._id}") Decline
+				#accepted.tab-pane
+					table.table.table-striped.tablesorter
+						thead
+							tr
+								th Date Submitted
+								th Date Accepted
+								th Name
+								th Vessel
+								th Permit #
+								th Contact Info
+						each app in accepted_applications
+							tr
+								td= app.date_submitted.toDateString()
+								td= app.date_accepted.toDateString()
+								td= app.name
+								td= app.vessel
+								td= app.permit
+								td
+									#{app.email}
+									br
+									#{app.phone}
+				#declined.tab-pane
+					table.table.table-striped.tablesorter
+						thead
+							tr
+								th Date Submitted
+								th Date Declined
+								th Name
+								th Voucher Type
+								th Vessel
+								th Permit #
+								th Contact Info
+						each app in declined_applications
+							tr
+								td= app.date_submitted.toDateString()
+								td= app.date_declined.toDateString()
+								td= app.name
+								th= app.voucher_type
+								td= app.vessel
+								td= app.permit
+								td
+									#{app.email}
+									br
+									#{app.phone}
+	#accept_application_modal.modal.hide
+		.modal-header
+			h3 Confirm Application Accept
+		.modal-body
+			p Please confirm that you would like to accept this application. After confirming, the applicant will receive an email with his/her voucher information.
+			dl.dl-horizontal
+				dt Name:
+				dd#accept_application_name
+				dt Voucher Type:
+				dd#accept_application_voucher_type
+				dt Vessel:
+				dd#accept_application_vessel
+				dt Permit #:
+				dd#accept_application_permit
+				dt Contact Info:
+				dd#accept_application_contact
+				dt Date Submitted:
+				dd#accept_application_date_submitted
+		.modal-footer
+			a.btn(href='#', data-dismiss="modal") Cancel
+			a#accept_application_confirm.btn.btn-primary(href='#') Confirm
+	#decline_application_modal.modal.hide
+		.modal-header
+			h3 Confirm Application Decline
+		.modal-body
+			p Please confirm that you would like to decline this application. After confirming, the applicant will receive an email letting them know they have been declined.
+			dl.dl-horizontal
+				dt Name:
+				dd#decline_application_name
+				dt Vessel:
+				dd#decline_application_vessel
+				dt Permit #:
+				dd#decline_application_permit
+				dt Contact Info:
+				dd#decline_application_contact
+				dt Date Submitted:
+				dd#decline_application_date_submitted
+		.modal-footer
+			a.btn(href='#', data-dismiss="modal") Cancel
+			a#decline_application_confirm.btn.btn-primary(href='#') Confirm

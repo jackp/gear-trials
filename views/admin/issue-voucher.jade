@@ -1,0 +1,79 @@
+extends ../layout
+
+block content
+	ul.nav.nav-tabs
+		li
+			a(href='/admin/users') User Management
+		li.active
+			a(href='/admin/issue-voucher') Issue Voucher
+		li
+			a(href='/admin/all-vouchers') View All Vouchers
+		li
+			a(href='/admin/applications') Applications
+		li
+			a(href='/admin/master-reports') Master Reports
+	#admin-area
+		.page-header
+				h1 Issue New Voucher
+			form#issue_voucher.form-horizontal
+				fieldset
+					legend Voucher Information
+					.control-group
+						label.control-label(for="voucher_type") Type:
+						.controls
+							select#voucher_type
+								option(selected) Belly Panel
+								option Drop Chain (Small)
+								option Drop Chain (Large)
+					.control-group
+						label.control-label(for="voucher_amount") Amount ($):
+						.controls
+							input#voucher_amount(type='text', disabled, value="350")
+				fieldset
+					legend Contact Information
+					.control-group
+						label.control-label(for="voucher_name") Name:
+						.controls
+							input#voucher_name.input-xlarge(type='text')
+					.control-group
+						label.control-label(for="voucher_vessel") Vessel:
+						.controls
+							input#voucher_vessel.input-xlarge(type='text')
+					.control-group
+						label.control-label(for="voucher_permit") Permit # or State Landing License #:
+						.controls
+							input#voucher_permit.input-xlarge(type='text')
+					.control-group
+						label.control-label(for="voucher_email") Email:
+						.controls
+							input#voucher_email.input-xlarge(type='text')
+					.control-group
+						label.control-label(for="voucher_phone") Phone #:
+						.controls
+							input#voucher_phone.input-xlarge(type='text')
+				.control-group
+					.controls
+						a#issue_voucher_button.btn.btn-large.btn-primary Issue Voucher
+	#issue_voucher_modal.modal.hide
+		.modal-header
+			h3 Confirm Voucher Information
+		.modal-body
+			p Please confirm the following information is correct. After confirmation, a PDF of this voucher will be emailed to the email address provided.
+			dl.dl-horizontal
+				dt Type:
+				dd#issue_voucher_type
+				dt Amount ($):
+				dd#issue_voucher_amount
+				dt Name:
+				dd#issue_voucher_name
+				dt Vessel:
+				dd#issue_voucher_vessel
+				dt Permit #:
+				dd#issue_voucher_permit
+				dt Email:
+				dd#issue_voucher_email
+				dt Phone
+				dd#issue_voucher_phone
+		.modal-footer
+			a.btn(href='#', data-dismiss="modal") Cancel
+			a#issue_voucher_confirm.btn.btn-primary(href='#') Confirm

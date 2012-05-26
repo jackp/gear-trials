@@ -1,0 +1,80 @@
+extends ../layout
+
+block content
+	ul.nav.nav-tabs
+		li.active
+			a(href='/admin/users') User Management
+		li
+			a(href='/admin/issue-voucher') Issue Voucher
+		li
+			a(href='/admin/all-vouchers') View All Vouchers
+		li
+			a(href='/admin/applications') Applications
+		li
+			a(href='/admin/master-reports') Master Reports
+	#admin-area
+		.page-header
+			h1 Add User
+		form#add_user.form-horizontal
+			.control-group
+				label.control-label(for="name") Name:
+				.controls
+					input#name.input-xlarge(type='text')
+					p.help-block Full name of user
+			.control-group
+				label.control-label(for="email") Email Address:
+				.controls
+					input#email.input-xlarge(type='text')
+					p.help-block This email address will be used by the user to login, as well as for any communications.
+			.control-group
+				label.control-label(for="location") Location:
+				.controls
+					select#location
+						option(selected) CFRF
+						option Dealer 1
+						option Dealer 2
+						option Dealer 3
+			.control-group
+				.controls
+					a#add_user_button.btn.btn-large.btn-primary Add User
+		.page-header
+			h1 Edit Users
+		table#user_list.table.table-striped.tablesorter
+			thead
+				tr
+					th Name
+					th Email
+					th Location
+					th Actions
+			each user in users
+				tr
+					td.user-name= user.name
+					td.user-email= user.email
+					td.user-location= user.location
+					td.user-actions
+						button.btn.edit-user-button(data-id= "#{user._id}") Edit
+						button.btn.btn-danger.remove-user-button(data-id= "#{user._id}") Remove
+	#add_user_modal.modal.hide
+		.modal-header
+			h3 Confirm New User
+		.modal-body
+			p Please confirm the following information is correct. After confirmed, the new user will receive an email with login instructions and their temporary password.
+			dl.dl-horizontal
+				dt Name:
+				dd#add_user_name
+				dt Email:
+				dd#add_user_email
+				dt Location:
+				dd#add_user_location
+		.modal-footer
+			a.btn(href='#', data-dismiss="modal") Cancel
+			a#add_user_confirm.btn.btn-primary(href='#') Confirm
+	#remove_user_modal.modal.hide
+		.modal-header
+			h3 Confirm Deletion
+		.modal-body
+			p Are you sure you would like to delete: 
+				span#remove_user_name
+		.modal-footer
+			a.btn(href='#', data-dismiss="modal") Cancel
+			a#remove_user_confirm.btn.btn-primary(href='#') Confirm

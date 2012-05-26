@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+	ul.nav.nav-tabs
+		li
+			a(href='/admin/users') User Management
+		li
+			a(href='/admin/issue-voucher') Issue Voucher
+		li
+			a(href='/admin/all-vouchers') View All Vouchers
+		li
+			a(href='/admin/applications') Applications
+		li.active
+			a(href='/admin/master-reports') Master Reports
+	#admin-area
+		.page-header
+				h1 Master Reports
+			

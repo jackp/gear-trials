@@ -33,7 +33,31 @@
 								input#password(type='password', name="password")
 								input.btn.btn-primary(type='submit', value='Register')
 				- else
-					li
-						a(href='/admin')= session.user.email
+					li.dropdown
+						a.dropdown-toggle(href='#', data-toggle="dropdown")
+							#{session.user.name}
+							b.caret
+						ul.dropdown-menu
+							- if(session.user.admin)
+								li
+									a(href='/admin/users') User Management
+								li
+									a(href='/admin/applications') View Applications
+								li
+									a(href='/admin/issue-voucher') Issue Voucher
+								li
+									a(href='/admin/all-vouchers') View All Vouchers
+								li
+									a(href='/admin/master-reports') Master Reports
+							- else
+								li
+									a(href='/process-voucher') Process Voucher
+								li
+									a(href='/vouchers') View Vouchers
+								li
+									a(href='/reports') Reports
+							li.divider
+							li
+								a(href='/logout') Logout
 			form.navbar-search.pull-right
 				input.search-query(type='text', placeholder='Search')

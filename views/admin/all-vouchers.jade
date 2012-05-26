@@ -1,0 +1,115 @@
+extends ../layout
+
+block content
+	ul.nav.nav-tabs
+		li
+			a(href='/admin/users') User Management
+		li
+			a(href='/admin/issue-voucher') Issue Voucher
+		li.active
+			a(href='/admin/all-vouchers') View All Vouchers
+		li
+			a(href='/admin/applications') Applications
+		li
+			a(href='/admin/master-reports') Master Reports
+	#admin-area
+		.page-header
+				h1 All Vouchers
+			ul.nav.nav-tabs
+				li.active
+					a(href='#open', data-toggle="tab") Open
+				li
+					a(href='#used', data-toggle="tab") Used
+				li
+					a(href='#expired', data-toggle="tab") Expired
+			.tab-content
+				#open.tab-pane.active
+					table.table.table-striped.tablesorter
+						thead
+							tr
+								th Number
+								th Issued Date
+								th Expiration Date
+								th Type
+								th Owner
+								th Contact Info
+						each voucher in open_vouchers
+							tr
+								td= voucher.number
+								td= voucher.issued_date.toDateString()
+								td= voucher.expiration_date.toDateString()
+								td
+									span Type: #{voucher.type}
+									br
+									span Amount: $#{voucher.amount}
+								td
+									span Name: #{voucher.name}
+									br
+									span Vessel: #{voucher.vessel}
+									br
+									span Permit #: #{voucher.permit}
+								td
+									#{voucher.email}
+									br
+									#{voucher.phone}
+				#used.tab-pane
+					table.table.table-striped.tablesorter
+						thead
+							tr
+								th Number
+								th Issued Date
+								th Used Date
+								th Location
+								th Type
+								th Owner
+								th Contact Info
+						each voucher in used_vouchers
+							tr
+								td= voucher.number
+								td= voucher.issued_date.toDateString()
+								td= voucher.used_date.toDateString()
+								td= voucher.used_location
+								td
+									span Type: #{voucher.type}
+									br
+									span Amount: $#{voucher.amount}
+								td
+									span Name: #{voucher.name}
+									br
+									span Vessel: #{voucher.vessel}
+									br
+									span Permit #: #{voucher.permit}
+								td
+									#{voucher.email}
+									br
+									#{voucher.phone}
+				#expired.tab-pane
+					table.table.table-striped.tablesorter
+						thead
+							tr
+								th Number
+								th Issued Date
+								th Expiration Date
+								th Type
+								th Owner
+								th Contact Info
+						each voucher in expired_vouchers
+							tr
+								td= voucher.number
+								td= voucher.issued_date.toDateString()
+								td= voucher.expiration_date.toDateString()
+								td
+									span Type: #{voucher.type}
+									br
+									span Amount: $#{voucher.amount}
+								td
+									span Name: #{voucher.name}
+									br
+									span Vessel: #{voucher.vessel}
+									br
+									span Permit #: #{voucher.permit}
+								td
+									#{voucher.email}
+									br
+									#{voucher.phone}
+			

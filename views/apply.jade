@@ -14,6 +14,15 @@ block content
 	.row
 		form#application_form.form-horizontal.span6.offset3
 			fieldset
+				legend Applying for:
+					.control-group
+						label.control-label(for="voucher_type") Type:
+						.controls
+							select#voucher_type
+								option(selected) Belly Panel
+								option Drop Chain (Small)
+								option Drop Chain (Large)
+			fieldset
 				legend Contact Information
 				.control-group
 					label.control-label(for="name") Name:

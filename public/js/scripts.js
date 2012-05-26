@@ -6,15 +6,20 @@ $(document).ready(function(){
 	$('.login').click(function(){
 		$('.login-area').toggle();
 	});
+	$('.dropdown-toggle').dropdown()
+	/***********************************************************
+		Admin: General
+	***********************************************************/
+	$('#admin-area table').tablesorter();
 
 	/***********************************************************
 		Admin: User Management
 	***********************************************************/
+	
 	// Add User Flow
 	$('#add_user_button').click(function(e){
 		$name = $('#add_user #name');
 		$email = $('#add_user #email');
-		$admin = $('#add_user #admin');
 
 		var errors = false;
 		// Validate Form
@@ -46,21 +51,17 @@ $(document).ready(function(){
 
 			$('#add_user_name').text($('#add_user #name').val());
 			$('#add_user_email').text($('#add_user #email').val());
-			if($('#add_user #admin').prop('checked')){
-				$('#add_user_admin').text('Yes');
-			} else {
-				$('#add_user_admin').text('No');
-			}
+			$('#add_user_location').text($('#add_user #location').val());
 		} 
 	});
 	
 	$('#add_user_confirm').click(function(){
 		// Submit user information to database
-		var checked = $('#add_user #admin').is(':checked');
 		socket.emit('add_user', {
 			name: $('#add_user #name').val(),
 			email: $('#add_user #email').val(),
-			admin: checked
+			location: $('#add_user #location').val(),
+			admin: $('#add_user #location').val() === 'CFRF'
 		});
 		socket.on('add_user_resp', function(resp){
 			window.location.reload();
@@ -78,7 +79,7 @@ $(document).ready(function(){
 		var id = $(this).attr('data-id');
 		socket.emit('remove_user', id);
 		socket.on('remove_user_resp', function(err){
-			window.location = '/admin#user_management';
+			window.location.reload();
 		});
 	});
 
@@ -86,11 +87,9 @@ $(document).ready(function(){
 	$('.edit-user-button').click(function(){
 		var $name = $(this).parent().siblings('.user-name');
 		var $email = $(this).parent().siblings('.user-email');
-		var $admin = $(this).parent().siblings('.user-admin').children('input');
 
 		$name.html('<input id="user-name" type="text" value="' + $name.text() + '">');
 		$email.html('<input id="user-email" type="text" value="' + $email.text() + '">');
-		$admin.prop('disabled', false);
 
 		$(this).closest('.user-actions').children('button:first').removeClass('edit-user-button').addClass('save-user-button btn-primary').text('Save');
 		$(this).closest('.user-actions').children('button:last').removeClass('remove-user-button btn-danger').addClass('save-user-cancel').text('Cancel');
@@ -102,11 +101,11 @@ $(document).ready(function(){
 	$('#voucher_type').change(function(){
 		var selected = $(this).val();
 
-		if(selected == 'bp'){
+		if(selected == 'Belly Panel'){
 			$('#voucher_amount').val('350');
-		} else if(selected == 'dc_s') {
+		} else if(selected == 'Drop Chain (Small)') {
 			$('#voucher_amount').val('450');
-		} else if(selected == 'dc_l') {
+		} else if(selected == 'Drop Chain (Large)') {
 			$('#voucher_amount').val('800');
 		}
 	});
@@ -157,13 +156,12 @@ $(document).ready(function(){
 		var form = {};
 		$('#application_form :input:not([type=submit])').each(function(){
 			form[$(this).attr('id')] = $(this).val();
-
 			if(!$(this).val()) {
 				$(this).closest('.control-group').addClass('error');
 				empty = true;
 			}
 		});
-		
+		console.log(form);
 		if(!empty) {
 			socket.emit('application', form);
 			socket.on('application_resp', function(){
@@ -172,6 +170,152 @@ $(document).ready(function(){
 		}
 		return false;
 	});
+
+	$('button.accept-application').click(function(){
+		$this = $(this);
+		$('#accept_application_name').text($this.parent().siblings('.application-name').text());
+		$('#accept_application_voucher_type').text($this.parent().siblings('.application-voucher-type').text());
+		$('#accept_application_vessel').text($this.parent().siblings('.application-vessel').text());
+		$('#accept_application_permit').text($this.parent().siblings('.application-permit').text());
+		$('#accept_application_contact').html($this.parent().siblings('.application-contact').html());
+		$('#accept_application_date_submitted').text($this.parent().siblings('.application-date-submitted').text());
+		$('#accept_application_confirm').attr('data-id', $this.attr('data-id'));
+		$('#accept_application_modal').modal('show');
+	});
+
+	$('#accept_application_confirm').click(function(){
+		socket.emit('accept_application', $(this).attr('data-id'));
+		socket.on('accept_application_resp', function(){
+			window.location.reload();
+		});
+	});
+
+	$('button.decline-application').click(function(){
+		$this = $(this);
+		$('#decline_application_name').text($this.parent().siblings('.application-name').text());
+		$('#decline_application_voucher_type').text($this.parent().siblings('.application-voucher-type').text());
+		$('#decline_application_vessel').text($this.parent().siblings('.application-vessel').text());
+		$('#decline_application_permit').text($this.parent().siblings('.application-permit').text());
+		$('#decline_application_contact').html($this.parent().siblings('.application-contact').html());
+		$('#decline_application_date_submitted').text($this.parent().siblings('.application-date-submitted').text());
+		$('#decline_application_confirm').attr('data-id', $this.attr('data-id'));
+		$('#decline_application_modal').modal('show');
+	});
+
+	$('#decline_application_confirm').click(function(){
+		socket.emit('decline_application', $(this).attr('data-id'));
+		socket.on('decline_application_resp', function(){
+			window.location.reload();
+		});
+	});
+
+	/***********************************************************
+		Dealer: Process Voucher
+	***********************************************************/
+	$('#voucher_lookup').submit(function(){
+		$input = $(this).children('input[type=text]');
+		if($input.val().length === 16){
+			socket.emit("voucher_lookup", $input.val());
+			socket.on('voucher_lookup_resp', function(resp){
+				if(resp){
+					if((resp.status === 'open') && (new Date(resp.expiration_date) >= new Date())) {
+						$('#lookup_results').html(
+							'<div class="alert alert-success">\
+								<a class="close" data-dismiss="alert" href="#">×</a>\
+								<h4 class="alert-heading">Voucher Found!</h4>\
+								<dl class="dl-horizontal">\
+									<dt>Voucher Holder:</dt>\
+									<dd><i>Name: </i>' + resp.name + '<br><i>Vessel: </i>' + resp.vessel + '</dd>\
+									<dt>Contact Info:</dt>\
+									<dd>' +  resp.email + '<br>' + resp.phone + '</dd>\
+									<dt>Voucher Type:</dt>\
+									<dd>' + resp.type + '</dd>\
+									<dt>Amount:</dt>\
+									<dd>$' + resp.amount + '</dd>\
+									<dt>Issued Date:</dt>\
+									<dd>' + new Date(resp.issued_date).toDateString() + '</dd>\
+									<dt>Expiration Date:</dt>\
+									<dd>' + new Date(resp.expiration_date).toDateString() + '</dd>\
+								</dl>\
+								<button class="btn btn-primary btn-large process-voucher" data-id="' + resp.number + '" data-name="' + resp.name + '" data-type="' + resp.type + '" data-amount="' + resp.amount + '">Use Voucher</button>\
+							</div>');
+						$('button.process-voucher').click(function(){
+							$this = $(this);
+							$('#process_voucher_modal #voucher_number').text($this.attr('data-id'));
+							$('#process_voucher_modal #voucher_name').text($this.attr('data-name'));
+							$('#process_voucher_modal #voucher_type').text($this.attr('data-type'));
+							$('#process_voucher_modal #voucher_amount').text('$' + $this.attr('data-amount'));
+							$('#process_voucher_modal #process_voucher_confirm').attr('data-id', $this.attr('data-id'));
+							$('#process_voucher_modal').modal('show');
+						});
+
+						$('#process_voucher_confirm').click(function(){
+							socket.emit('process_voucher', $(this).attr('data-id'), $('#user_location').val());
+							socket.on('process_voucher_resp', function(){
+								window.location = '/vouchers';
+							});
+						});
+					} else if(resp.status === 'used') {
+						$('#lookup_results').html(
+							'<div class="alert alert-error">\
+								<a class="close" data-dismiss="alert" href="#">×</a>\
+								<h4 class="alert-heading">Voucher Already Used.</h4>\
+								<dl class="dl-horizontal">\
+									<dt>Voucher Holder:</dt>\
+									<dd><i>Name: </i>' + resp.name + '<br><i>Vessel: </i>' + resp.vessel + '</dd>\
+									<dt>Contact Info:</dt>\
+									<dd>' +  resp.email + '<br>' + resp.phone + '</dd>\
+									<dt>Voucher Type:</dt>\
+									<dd>' + resp.type + '</dd>\
+									<dt>Amount:</dt>\
+									<dd>$' + resp.amount + '</dd>\
+									<dt>Issued Date:</dt>\
+									<dd>' + new Date(resp.issued_date).toDateString() + '</dd>\
+									<dt>Date Used:</dt>\
+									<dd><b>' + new Date(resp.used_date).toDateString() + '</b></dd>\
+									<dt>Location Used:</dt>\
+									<dd><b>' + resp.used_location + '</b></dd>\
+								</dl>\
+							</div>');
+					} else {
+						$('#lookup_results').html(
+							'<div class="alert alert-error">\
+								<a class="close" data-dismiss="alert" href="#">×</a>\
+								<h4 class="alert-heading">Voucher Expired.</h4>\
+								<dl class="dl-horizontal">\
+									<dt>Voucher Holder:</dt>\
+									<dd><i>Name: </i>' + resp.name + '<br><i>Vessel: </i>' + resp.vessel + '</dd>\
+									<dt>Contact Info:</dt>\
+									<dd>' +  resp.email + '<br>' + resp.phone + '</dd>\
+									<dt>Voucher Type:</dt>\
+									<dd>' + resp.type + '</dd>\
+									<dt>Amount:</dt>\
+									<dd>$' + resp.amount + '</dd>\
+									<dt>Issued Date:</dt>\
+									<dd>' + new Date(resp.issued_date).toDateString() + '</dd>\
+									<dt>Expiration Date:</dt>\
+									<dd><b>' + new Date(resp.expiration_date).toDateString() + '</b></dd>\
+								</dl>\
+							</div>');
+					}
+				} else {
+					$('#lookup_results').html(
+						'<div class="alert alert-error">\
+							<a class="close" data-dismiss="alert" href="#">×</a>\
+							<h4 class="alert-heading">Voucher not found.</h4>\
+						</div>');
+				}
+			});
+		} else {
+			$('#lookup_results').html(
+				'<div class="alert alert-block">\
+					<a class="close" data-dismiss="alert" href="#">×</a>\
+					<h4 class="alert-heading">Voucher must be 16 digits long.</h4>\
+				</div>');
+		}
+		return false;
+	});
+
 	/***********************************************************
 		TESTING ONLY
 	***********************************************************/
