@@ -161,15 +161,27 @@ $(document).ready(function(){
 				empty = true;
 			}
 		});
-		console.log(form);
 		if(!empty) {
-			socket.emit('application', form);
-			socket.on('application_resp', function(){
-				alert('application submitted');
+			// Show Confirmation Modal
+			$('#apply_type').text(form.voucher_type);
+			$('#apply_name').text(form.name);
+			$('#apply_email').text(form.email);
+			$('#apply_phone').text(form.phone);
+			$('#apply_vessel').text(form.vessel);
+			$('#apply_permit').text(form.permit);
+			$('#apply_modal').modal('show');
+
+			$('#apply_confirm').click(function(){
+				socket.emit('application', form);
+					socket.on('application_resp', function(){
+						window.location = '/';
+					});
 			});
 		}
 		return false;
 	});
+
+	
 
 	$('button.accept-application').click(function(){
 		$this = $(this);

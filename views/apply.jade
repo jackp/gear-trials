@@ -49,4 +49,24 @@ block content
 			.control-group
 				.controls
 					input.btn.btn-large.btn-primary(type="submit", value="Apply")
-
+	#apply_modal.modal.hide
+		.modal-header
+			h3 Confirm Application 
+		.modal-body
+			p Please confirm the information on your application. Once submitted, the CFRF will review your application and contact you with the results.
+			dl.dl-horizontal
+				dt Applying For:
+				dd#apply_type
+				dt Name:
+				dd#apply_name
+				dt Email:
+				dd#apply_email
+				dt Phone:
+				dd#apply_phone
+				dt Vessel:
+				dd#apply_vessel
+				dt Permit:
+				dd#apply_permit
+		.modal-footer
+			a.btn(href='#', data-dismiss="modal") Cancel
+			a#apply_confirm.btn.btn-primary(href='#') Confirm
