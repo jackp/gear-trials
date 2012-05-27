@@ -11,6 +11,7 @@
     "less-middleware": "*",
     "mongoose": "latest",
     "connect-mongodb": "latest",
-    "socket.io": "latest"
+    "socket.io": "latest",
+    "bcrypt": "latest"
   }
 }

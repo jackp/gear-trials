@@ -104,6 +104,23 @@ var Users = require('./models').Users;
 var Vouchers = require('./models').Vouchers;
 var Applications = require('./models').Applications;
 
+// Create admin user if database empty
+Users.find({}, function(err, docs){
+  if(!docs.length){
+    var admin = new Users();
+    admin.name = "Jack Parker";
+    admin.email = "parkej3@gmail.com";
+
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync('j6286ipp', salt);
+    admin.password = hash;
+    admin.location = 'CFRF';
+    admin.admin = true;
+    admin.save(function(err){
+      console.log('admin added');
+    });
+  }
+});
 /*************************************************************
   Routes
 *************************************************************/
