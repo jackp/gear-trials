@@ -250,27 +250,6 @@ app.get('/logout', function(req, res){
   });
 });
 
-app.post('/register', function(req, res){
-  var form = req.body;
-
-  // Encrypt password
-  var salt = bcrypt.genSaltSync(10);
-  var hash = bcrypt.hashSync(form.password, salt);
-
-  var new_user = new Users();
-  new_user.email = form.email;
-  new_user.password = hash;
-
-  new_user.save(function(err){
-    if(err) console.log(err);
-    req.session.user = {
-      _id: new_user._id,
-      email: new_user.email
-    };
-    res.redirect('admin');
-  });
-});
-
 /*************************************************************
   Socket.io Events
 *************************************************************/

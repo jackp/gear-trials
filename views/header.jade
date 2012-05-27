@@ -23,15 +23,6 @@
 								label.control-label(for='password') Password:
 								input#password(type='password', name="password")
 								input.btn.btn-primary(type='submit', value='Login')
-					li
-						a(href='#').register Register
-						.register-area
-							form#register_form(method="POST", action="/register")
-								label(for='email') Email
-								input#email(type='text', name="email")
-								label.control-label(for='password') Password:
-								input#password(type='password', name="password")
-								input.btn.btn-primary(type='submit', value='Register')
 				- else
 					li.dropdown
 						a.dropdown-toggle(href='#', data-toggle="dropdown")
