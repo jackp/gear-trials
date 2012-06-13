@@ -6,11 +6,13 @@
 				li
 					a(href='#') Reports
 				li
-					a(href='#') Articles
+					a(href='#') Fisherman Feedback
+				li
+					a(href='#') Voucher Information
 				li
 					a(href='#') Gallery
 				li
-					a(href='#') About
+					a(href='#') Background Info
 			ul.nav.pull-right
 				li.divider-vertical
 				- if (!session.user)
@@ -50,5 +52,3 @@
 							li.divider
 							li
 								a(href='/logout') Logout
-			form.navbar-search.pull-right
-				input.search-query(type='text', placeholder='Search')
