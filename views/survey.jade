@@ -1,0 +1,92 @@
+extends layout
+
+block content
+	.row
+		.page-header
+			h1 Fisherman Survey Form - Monthly Reporting
+	.row
+		form#survey_form.span6
+			p Please fill out the survey form below and submit it by clicking the send button at the bottom
+			p If you have any questions, please contact:
+			address
+				strong John Scotti
+				br
+				span Cornell University Cooperative Extension Marine Program
+				br
+				span 423 Griffing Avenue
+				br
+				span Riverhead, NY 11901
+				br
+				span Phone: (631) 727-7850 Ext. 223
+				br
+				br
+				span Email: <a href="mailto:jns8@cornell.edu">jns8@cornell.edu</a>
+			fieldset
+				legend Your Information
+				.control-group
+					label.control-label Name:
+					.controls
+						input#name.input-xlarge(type='text')
+				.control-group
+					label.control-label Vessel:
+					.controls
+						input#vessel.input-xlarge(type='text')
+			fieldset
+				legend Survey
+				.control-group
+					label.control-label Check the type(s) of bycatch reduction gear you have been using on your fishing vessel:
+					.controls
+						label.checkbox
+							input#drop_chain_small(type='checkbox')
+							span 12" Drop Chain (small vessel category)
+						label.checkbox
+							input#drop_chain_large(type='checkbox')
+							span 12" Drop Chain (large vessel category)
+						label.checkbox
+							input#belly_panel(type='checkbox')
+							span Large Mesh Belly Panel
+				.control-group
+					label.control-label What small mesh fishery were you targeting?
+					.controls
+						label.checkbox
+							input#squid(type='checkbox')
+							span Squid
+						label.checkbox
+							input#whiting(type='checkbox')
+							span Whiting
+						label.checkbox
+							input#scup(type='checkbox')
+							span Scup
+						label.checkbox.other
+							input#other(type='checkbox')
+							span Other (please name species)
+						input#other_detail(type="text")
+				.control-group
+					label.control-label What statistical areas did you primarily fish in while using the bycatch reduction gear?
+					.controls
+						textarea#stat_areas(rows='4')
+				.control-group
+					label.control-label Did you find the gear to be effective in reducing winter flounder bycatch?
+					.controls
+						label.radio
+							input#yes(type='radio', name="effective")
+							span Yes
+						label.radio
+							input#no(type='radio', name="effective")
+							span No
+				.control-group
+					label.control-label Please share any additional observations below.
+					.controls
+						textarea#observations(rows='6')
+				input.btn.btn-primary(type='submit', value='Send Survey')
+	#survey_modal.modal.hide
+		.modal-header
+			h3.error Error Submitting Survey
+			h3.success Survey Submitted
+		.modal-body.error
+			p There was an error submitting your survey. Please wait a few seconds, then try again. If the error continues, please contact:
+		.modal-body.success
+			p Thank you for submitting your monthly survey. This information will help greatly towards the success of this program.
+		.modal-footer
+			a.btn(href='#', data-dismiss="modal") Close
+

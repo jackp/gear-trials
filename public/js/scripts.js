@@ -1,12 +1,34 @@
-$(document).ready(function(){
-	// Socket.io Initialization
-	var socket = io.connect('http://localhost');
+// Socket.io Initialization
+var socket = io.connect('http://localhost');
 
-	// Login Menu
-	$('.login').click(function(){
-		$('.login-area').toggle();
+$(document).ready(function(){
+	// Initialize dropdowns
+	$('.dropdown-toggle').dropdown();
+	// Initialize TinyMCE
+	$('textarea.tinymce').tinymce({
+    // Location of TinyMCE script
+    script_url : '/js/tiny_mce/tiny_mce.js',
+
+    // General options
+    theme : "advanced",
+    plugins: 'advimage, advlink, media, paste',
+    //plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+
+    content_css: '/css/bootstrap.css',
+    // Theme options
+    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,bullist,numlist,|,justifyleft,justifycenter,justifyright,justifyfull,|,outdent,indent,|,formatselect,fontsizeselect,|,link,unlink,image,media,|,pasteword,cleanup,code",
+    theme_advanced_toolbar_location : "top",
+    theme_advanced_toolbar_align : "left",
+    theme_advanced_statusbar_location : "bottom",
+    theme_advanced_resizing : true,
+  });
+	
+	/***********************************************************
+		Image Gallery
+	***********************************************************/
+	$('#gallery').imagegallery({
+		selector: 'a[rel="gallery"]'
 	});
-	$('.dropdown-toggle').dropdown()
 	/***********************************************************
 		Admin: General
 	***********************************************************/
@@ -151,37 +173,274 @@ $(document).ready(function(){
 	/***********************************************************
 		Application Process
 	***********************************************************/
+	// Mailing Address
+	$('#mailing').change(function(){
+		if(!this.checked){
+			$('#mailing_address').show();
+		} else {
+			$('#mailing_address').hide();
+		}
+	});
+
+	// Research questions
+	$('#research').change(function(){
+		if(this.checked){
+			$('#research_info').show();
+		} else {
+			$('#research_info').hide();
+		}
+	});
 	$('#application_form').submit(function(){
-		var empty = false;
-		var form = {};
-		$('#application_form :input:not([type=submit])').each(function(){
-			form[$(this).attr('id')] = $(this).val();
-			if(!$(this).val()) {
+		var validate = true;
+
+		$('#name,#permit,#vessel_name,#vessel_port,#vessel_length, #vessel_hp,#contact_email,#contact_phone_home,#contact_res_address1,#contact_res_city, #contact_res_zip').each(function(){
+			if(!$(this).val()){
+				validate = false;
 				$(this).closest('.control-group').addClass('error');
-				empty = true;
+				$(this).focus(function(){
+					$(this).closest('.control-group').removeClass('error');
+					$('.message').remove();
+				});
 			}
 		});
-		if(!empty) {
-			// Show Confirmation Modal
-			$('#apply_type').text(form.voucher_type);
-			$('#apply_name').text(form.name);
-			$('#apply_email').text(form.email);
-			$('#apply_phone').text(form.phone);
-			$('#apply_vessel').text(form.vessel);
-			$('#apply_permit').text(form.permit);
-			$('#apply_modal').modal('show');
 
-			$('#apply_confirm').click(function(){
-				socket.emit('application', form);
-					socket.on('application_resp', function(){
+		if(!$('#mailing').prop('checked')){
+			$('#contact_mailing_address1, #contact_mailing_city, #contact_mailing_zip').each(function(){
+				if(!$(this).val()){
+					validate = false;
+					$(this).closest('.control-group').addClass('error');
+					$(this).focus(function(){
+						$(this).closest('.control-group').removeClass('error');
+						$('.message').remove();
+					});
+				}
+			});
+		}
+
+		if(!$('#drop_chain').prop('checked') && !$('#belly_panel').prop('checked')){
+			$('#drop_chain').closest('.control-group').addClass('error');
+			validate = false;
+			$('#drop_chain, #belly_panel').change(function(){
+				$(this).closest('.control-group').removeClass('error');
+				$('.message').remove();
+			});
+		}
+
+		if($('#research').prop('checked')){
+			if(!$('#research_crew').val()){
+				validate = false;
+				$('#research_crew').closest('.control-group').addClass('error');
+				$('#research_crew').focus(function(){
+					$(this).closest('.control-group').removeClass('error');
+					$('.message').remove();
+				});
+			}
+		}
+
+		if(!$('#verify').prop('checked')){
+			validate = false;
+			$('#verify').closest('.checkbox').css('color', '#9d261d');
+			$('#verify').change(function(){
+				$(this).closest('.checkbox').css('color', 'inherit');
+				$('.message').remove();
+			});
+		}
+
+		if(validate){
+			var form = {
+				applicant: {
+					name: $('#name').val(),
+					company: $('#company_name').val(),
+					license: $('#permit').val()
+				},
+				vessel: {
+					name: $('#vessel_name').val(),
+					port: $('#vessel_port').val(),
+					length: $('#vessel_length').val(),
+					hp: $('#vessel_hp').val()
+				},
+				contact: {
+					email: $('#contact_email').val(),
+					phone_home: $('#contact_phone_home').val(),
+					phone_cell: $('#contact_phone_cell').val(),
+					res_address: {
+						line1: $('#contact_res_address1').val(),
+						line2: $('#contact_res_address2').val(),
+						city: $('#contact_res_city').val(),
+						state: $('#contact_res_state').val(),
+						zip: $('#contact_res_zip').val()
+					},
+					mailing_address: mailingAddress()
+				},
+				voucher: {
+					drop_chain: applyDropChain(),
+					belly_panel: applyBellyPanel(),
+				},
+				research: research()
+			};
+			socket.emit('applicationSubmit', form);
+			socket.on('application_resp', function(resp){
+				if(resp.error){
+					$('#apply_modal .error').show()
+					$('#apply_modal .success').hide();
+					$('#apply_modal').modal('show');
+				} else {
+					$('#apply_modal .success').show()
+					$('#apply_modal .error').hide();
+					$('#apply_modal').modal('show');
+
+					$('#apply_modal .modal-footer a').click(function(){
 						window.location = '/';
 					});
+				}
 			});
+
+		} else {
+			$('body').append('<div class="alert alert-error message"><a class="close" data-dismiss="alert" href="#">&times;</a><h4>Application Incomplete</h4><p>There are incomplete fields in your application. Please attend to the fields highlighted in red.</p></div>');
+		}
+		
+		return false;
+	});
+	
+	function mailingAddress(){
+		if(!$('#mailing').prop('checked')){
+			return {
+				line1: $('#contact_mailing_address1').val(),
+				line2: $('#contact_mailing_address2').val(),
+				city: $('#contact_mailing_city').val(),
+				state: $('#contact_mailing_state').val(),
+				zip: $('#contact_mailing_zip').val()
+			};
+		} else {
+			return {};
+		}
+	}
+	function applyDropChain(){
+		if($('#drop_chain').prop('checked')){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	function applyBellyPanel(){
+		if($('#belly_panel').prop('checked')){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	function research(){
+		if($('#research').prop('checked')){
+			return {
+				num_crew: $('#research_crew').val(),
+				partners: $('#companions').val()
+			};
+		} else {
+			return {};
+		}
+	}
+
+	/***********************************************************
+		Survey
+	***********************************************************/
+	$('#survey_form').submit(function(){
+		var validate = true;
+
+		$('#name, #vessel, #stat_areas').each(function(){
+			if(!$(this).val()){
+				validate = false;
+				$(this).closest('.control-group').addClass('error');
+				$(this).focus(function(){
+					$(this).closest('.control-group').removeClass('error');
+					$('.message').remove();
+				});
+			}
+		});
+
+		if(!$('#drop_chain_large').prop('checked') && !$('#drop_chain_small').prop('checked') && !$('#belly_panel').prop('checked')){
+			validate = false;
+			$('#drop_chain_large').closest('.control-group').addClass('error');
+			$('#drop_chain_small, #drop_chain_large, #belly_panel').change(function(){
+				$(this).closest('.control-group').removeClass('error');
+				$('.message').remove();
+			});
+		}
+
+		if(!$('#squid').prop('checked') && !$('#whiting').prop('checked') && !$('#scup').prop('checked') && !$('#other').prop('checked')){
+			validate = false;
+			$('#squid').closest('.control-group').addClass('error');
+			$('#squid, #whiting, #scup, #other').change(function(){
+				$(this).closest('.control-group').removeClass('error');
+				$('.message').remove();
+			});
+			$('#other_detail').focus(function(){
+				$(this).closest('.control-group').removeClass('error');
+				$('.message').remove();
+			});
+		}
+
+		if($('#other').prop('checked') && !$('#other_detail').val()){
+			validate = false;
+			$('.other').css('color', '#9d261d');
+			$('#other_detail').focus(function(){
+				$('.other').css('color', 'inherit');
+				$('.message').remove();
+			});
+		}
+
+		if(!$('input:radio[name=effective]:checked').length){
+			validate = false;
+			$('input:radio[name=effective]').closest('.control-group').addClass('error');
+			$('input:radio[name=effective]').change(function(){
+				$(this).closest('.control-group').removeClass('error');
+				$('.message').remove();
+			});
+		}
+
+		if(validate){
+			var form = {
+				name: $('#name').val(),
+				vessel: $('#vessel').val(),
+				gear_type: {
+					drop_chain_small: $('#drop_chain_small').prop('checked'),
+					drop_chain_large: $('#drop_chain_large').prop('checked'),
+					belly_panel: $('#belly_panel').prop('checked')
+				},
+				targeted_fishery: {
+					squid: $('#squid').prop('checked'),
+					whiting: $('#whiting').prop('checked'),
+					scup: $('#scup').prop('checked'),
+					other: $('#other').prop('checked'),
+					other_details: $('#other_detail').val()
+				},
+				statistical_area: $('#stat_areas').val(),
+				effective: $('#yes').prop('checked'),
+				observations: $('#observations').val()
+			};
+
+			socket.emit('surveySubmit', form);
+			socket.on('survey_resp', function(resp){
+				if(resp.error){
+					$('#survey_modal .error').show()
+					$('#survey_modal .success').hide();
+					$('#survey_modal').modal('show');
+				} else {
+					$('#survey_modal .success').show()
+					$('#survey_modal .error').hide();
+					$('#survey_modal').modal('show');
+
+					$('#survey_modal .modal-footer a').click(function(){
+						window.location = '/';
+					});
+				}
+			});
+		} else {
+			$('body').append('<div class="alert alert-error message"><a class="close" data-dismiss="alert" href="#">&times;</a><h4>Survey Incomplete</h4><p>There are incomplete fields in your survey. Please attend to the fields highlighted in red.</p></div>');
 		}
 		return false;
 	});
 
-	
+
 
 	$('button.accept-application').click(function(){
 		$this = $(this);
@@ -334,5 +593,26 @@ $(document).ready(function(){
 	$('.register').click(function(){
 		$('.register-area').toggle();
 	});
+});
 
+/***********************************************************
+	Login
+***********************************************************/
+$('#login_button').click(function(){
+	$('#login_area').toggle();
+});
+
+/***********************************************************
+	Admin  - Pages
+***********************************************************/
+$('.save-content').click(function(){
+	var content = {};
+	$('textarea.tinymce').each(function(){
+		content[$(this).attr('id')] = $(this).html();
+	});
+	
+	socket.emit('saveContent', $('#page').val(), content);
+	socket.on('saveContentResp', function(resp){
+		alert('Saved');
+	});
 });

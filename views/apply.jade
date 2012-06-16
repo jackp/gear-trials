@@ -2,71 +2,169 @@ extends layout
 
 block content
 	.row
-		.hero-unit
-			h1 Apply to the Gear Trials Project
-			p Information goes here
-	.row
 		.page-header
 			h1 Criteria:
 	.row
 		.page-header
 			h1 Apply Online:
 	.row
-		form#application_form.form-horizontal.span6.offset3
+		form#application_form.form-horizontal.span6
 			fieldset
-				legend Applying for:
-					.control-group
-						label.control-label(for="voucher_type") Type:
-						.controls
-							select#voucher_type
-								option(selected) Belly Panel
-								option Drop Chain (Small Vessel)
-								option Drop Chain (Large Vessel)
-			fieldset
-				legend Contact Information
+				legend Applicant Information:
 				.control-group
-					label.control-label(for="name") Name:
+					label.control-label(for="name") Name: <br/>(Fishing Vessel Owner)
 					.controls
 						input#name.input-xlarge(type='text')
 				.control-group
-					label.control-label(for="email") Email:
+					label.control-label(for="company_name") Company Name: <br/>(if applicable)
 					.controls
-						input#email.input-xlarge(type='text')
+						input#company_name.input-xlarge(type='text')
 				.control-group
-					label.control-label(for="phone") Phone #:
-					.controls
-						input#phone.input-xlarge(type='text')
-			fieldset
-				legend Vessel Information
-				.control-group
-					label.control-label(for="vessel") Vessel:
-					.controls
-						input#vessel.input-xlarge(type='text')
-				.control-group
-					label.control-label(for="permit") Permit # or State Landing License #:
+					label.control-label(for="permit") Federal Permit # or State License #:
 					.controls
 						input#permit.input-xlarge(type='text')
-			.control-group
-				.controls
-					input.btn.btn-large.btn-primary(type="submit", value="Apply")
+			fieldset
+				legend Vessel Information:
+				.control-group
+					label.control-label(for="vessel_name") Fishing Vessel Name:
+					.controls
+						input#vessel_name.input-xlarge(type='text')
+				.control-group
+					label.control-label(for="vessel_port") Home Port:
+					.controls
+						input#vessel_port.input-xlarge(type='text')
+				.control-group
+					label.control-label(for="vessel_length") Length:
+					.controls
+						input#vessel_length.input-mini(type='text')
+						span.help-inline ft.
+				.control-group
+					label.control-label(for="vessel_hp") Horsepower:
+					.controls
+						input#vessel_hp.input-mini(type='text')
+						span.help-inline HP
+			fieldset
+				legend Contact Information:
+				.control-group
+					label.control-label(for="contact_email") Email Address:
+					.controls
+						input#contact_email.input-xlarge(type='text')
+				.control-group
+					label.control-label Phone:
+					.controls
+						input#contact_phone_home.input-medium(type='text', placeholder="Home #")
+				.control-group
+					.controls
+						input#contact_phone_cell.input-medium(type='text', placeholder="Cell #")
+				.control-group
+					label.control-label Residential Address:
+					.controls
+						input#contact_res_address1.input-xlarge(type='text', placeholder="Address Line 1")
+				.control-group
+					.controls
+						input#contact_res_address2.input-xlarge(type='text', placeholder="Address Line 2")
+				.control-group.address
+					.controls
+						input#contact_res_city.input-medium.city(type='text', placeholder="City")
+				.control-group.address
+					.controls.state
+						select#contact_res_state.input-mini
+							option(value='RI') RI
+							option(value='MA') MA
+							option(value='CT') CT
+				.control-group.address
+					.controls.zip
+						input#contact_res_zip.input-mini(type='text', placeholder='Zip')
+				.control-group
+					label.control-label Mailing Address:
+					.controls
+						label.checkbox
+							input#mailing(type='checkbox', checked)
+							span Same as residential
+			fieldset#mailing_address.hide
+				.control-group
+					.controls
+						input#contact_mailing_address1.input-xlarge(type='text', placeholder="Address Line 1")
+				.control-group
+					.controls
+						input#contact_mailing_address2.input-xlarge(type='text', placeholder="Address Line 2")
+				.control-group.address
+					.controls
+						input#contact_mailing_city.input-medium.city(type='text', placeholder="City")
+				.control-group.address
+					.controls.state
+						select#contact_mailing_state.input-mini
+							option(value='RI') RI
+							option(value='MA') MA
+							option(value='CT') CT
+				.control-group.address
+					.controls.zip
+						input#contact_mailing_zip.input-mini(type='text', placeholder='Zip')
+			fieldset
+				legend Voucher Gear Type(s)
+				.control-group
+					label.control-label Voucher:
+					.controls
+						label.checkbox
+							input#drop_chain(type='checkbox')
+							span 12" Drop Chain
+						label.checkbox
+							input#belly_panel(type='checkbox')
+							span Large Mesh Belly Panel
+						p.help-block Choose one or both of the options above.
+						p.help-block
+							a(href='#', target="_blank") Click to view voucher information
+			fieldset
+				legend Research
+				p Would you like to be considered for Research Team participation?
+				ul.unstyled
+					li Criteria for consideration:
+						ul
+							li 60-70' fishing vessel
+							li Willing to fish in the Deep Hole east of Block Island or southwest of Block Island in the whiting fishery
+							li 450-600 HP
+				label.checkbox
+					input#research(type='checkbox')
+					span Yes, I would like to be considered for the research team.
+			fieldset#research_info.hide
+				.control-group
+					label.control-label Number of crew members
+					.controls
+						input#research_crew.input-mini(type='text')
+				p Is there another fishing vessel(s) that you know of that is comparable in size, horsepower, with the same fishing nets, doors, legs, and ground cable that would be willing to pair up with your vessel? If so, please detail the fishing vessel and owner names below.
+				.control-group
+					.controls
+						textarea#companions.input-xlarge
+			fieldset
+				legend Submit Application
+				label.checkbox
+					input#verify(type='checkbox')
+					span I verify that the information supplied in the above application form is accurate.
+				.control-group
+					.controls
+						input.btn.btn-primary(type='submit', value="Submit Application")
 	#apply_modal.modal.hide
 		.modal-header
-			h3 Confirm Application 
-		.modal-body
-			p Please confirm the information on your application. Once submitted, the CFRF will review your application and contact you with the results.
-			dl.dl-horizontal
-				dt Applying For:
-				dd#apply_type
-				dt Name:
-				dd#apply_name
-				dt Email:
-				dd#apply_email
-				dt Phone:
-				dd#apply_phone
-				dt Vessel:
-				dd#apply_vessel
-				dt Permit:
-				dd#apply_permit
+			h3.error Error Submitting Application
+			h3.success Application Submitted
+		.modal-body.error
+			p There was an error submitting your application. Please wait a few seconds, then try again. If the error continues, please contact:
+		.modal-body.success
+			p Thank you for appliying to participate in the "Gear Trials Program". Your application has been received and will be reviewed as quickly as possible. If the application package is complete, and you are found to meet the eligibility criteria, you should receive your voucher(s) within two weeks. In the meantime, if you have any questions, please contact:
+			address
+				strong Jane Dickinson, Administrative Assistant
+				br
+				span Commercial Fisheries Research Foundation
+				br
+				span P.O. Box 278
+				br
+				span Saunderstown, RI 02874
+				br
+				span Phone: (401) 515-4892
+				br
+				span Fax: (401) 515-3537
+				br
+				span Email: <a href="mailto:jdickinson@cfrfoundation.org">jdickinson@cfrfoundation.org</a>
 		.modal-footer
-			a.btn(href='#', data-dismiss="modal") Cancel
-			a#apply_confirm.btn.btn-primary(href='#') Confirm
+			a.btn(href='#', data-dismiss="modal") Close
+

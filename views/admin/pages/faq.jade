@@ -1,0 +1,11 @@
+extends ../../layout
+
+block content
+	include ../../sidebars/admin_sidebar
+	input#page(type='hidden', value='#{page}')
+	.row.span10.offset2.page
+		.page-header
+			h1 Edit FAQ
+		textarea#faq.tinymce 
+			!{content.faq}
+		button.save-content.btn.btn-primary Save

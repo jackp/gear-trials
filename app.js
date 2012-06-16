@@ -36,7 +36,6 @@ app.configure(function(){
 // Dynamic Helpers
 app.locals.use(function(req, res){
   res.locals.session = req.session;
-  
 });
 
 // Dev Config Only
@@ -100,9 +99,11 @@ var io = require('socket.io').listen(server);
 /*************************************************************
   Mongoose Models
 *************************************************************/
-var Users = require('./models').Users;
-var Vouchers = require('./models').Vouchers;
-var Applications = require('./models').Applications;
+var Users = require('./models').Users,
+    Vouchers = require('./models').Vouchers,
+    Applications = require('./models').Applications,
+    Surveys = require('./models').Surveys,
+    Contents = require('./models').Contents;
 
 // Create admin user if database empty
 Users.find({}, function(err, docs){
@@ -121,20 +122,90 @@ Users.find({}, function(err, docs){
     });
   }
 });
+
 /*************************************************************
   Routes
 *************************************************************/
-
+// Home Page
 app.get('/', function(req, res){
-  res.render('index', { title: 'Gear Trials Project' });
+  Contents.findOne({page: 'home'}, function(err, doc){
+    res.render('index', { 
+      title: 'Gear Trials Project',
+      content: doc.toObject() 
+    });
+  });
 });
-
+// Error Page
 app.get('/404', function(req, res, next){
   next();
 });
-
+// Error Page
 app.get('/500', function(req, res, next){
   next(new Error('keyboard cat!'));
+});
+// Login
+app.post('/login', function(req, res){
+  var form = req.body;
+
+  // Check for valid email
+  Users.findOne({email: form.email}, function(err, doc){
+    if(doc){
+      // If found, check password
+      if(bcrypt.compareSync(form.password, doc.password)){
+        // Successful login
+        delete doc.password;
+        req.session.user = doc;
+        req.session.admin = true;
+        res.redirect('admin');
+      }
+    } else {
+      // Send to /login with error message
+    }
+  });
+});
+// Logout
+app.get('/logout', function(req, res){
+  req.session.destroy(function(err){
+    if(err) console.log(err);
+    res.redirect('/');
+  });
+});
+
+/***********************************************************
+  Content Pages
+***********************************************************/
+app.get('/faq', function(req, res){
+  Contents.findOne({page: 'faq'}, function(err, doc){
+    res.render('faq', { 
+      title: 'FAQ',
+      content: doc.toObject() 
+    });
+  });
+});
+/***********************************************************
+  Admin Pages
+***********************************************************/
+// Admin Welcome Page
+app.get('/admin', restrict, function(req, res){
+  res.render('admin/admin', {
+    title: 'Admin Page'
+  });
+});
+// Pages
+app.get('/admin/pages/:page', restrict, function(req, res){
+  req.session.page = req.params.page;
+  Contents.findOne({page: req.params.page}, function(err, doc){
+    if(doc){
+      var content = doc.toObject();
+    } else {
+      var content = {};
+    }
+    res.render('admin/pages/' + req.params.page, {
+      title: 'Admin - Pages: ' + req.params.page,
+      page: req.params.page,
+      content: content
+    });
+  });
 });
 
 app.get('/admin/all-vouchers', admin, function(req, res){
@@ -216,39 +287,29 @@ app.get('/reports', restrict, function(req, res){
   });
 });
 
+app.get('/gallery', function(req, res){
+  res.render('gallery', {
+    title: 'Image Gallery'
+  });
+});
+app.get('/about', function(req, res){
+  res.render('about', {
+    title: 'About the Program'
+  });
+});
 app.get('/apply', function(req, res){
   res.render('apply', {
     title: 'Apply Now'
   });
-}); 
-app.post('/login', function(req, res){
-  var form = req.body;
+});
 
-  // Check for valid email
-  Users.findOne({email: form.email}, function(err, doc){
-    if(doc){
-      // If found, check password
-      if(bcrypt.compareSync(form.password, doc.password)){
-        // Successful login
-        delete doc.password;
-        req.session.user = doc;
-        if(doc.admin){
-          res.redirect('admin/users');
-        } else {
-          res.redirect('process-voucher')
-        }
-      }
-    } else {
-      // Send to /login with error message
-    }
+app.get('/survey', function(req, res){
+  res.render('survey', {
+    title: 'Fisherman Survey Form'
   });
 });
-app.get('/logout', function(req, res){
-  req.session.destroy(function(err){
-    if(err) console.log(err);
-    res.redirect('/');
-  });
-});
+
+
 
 /*************************************************************
   Socket.io Events
@@ -256,6 +317,14 @@ app.get('/logout', function(req, res){
 var ObjectId = mongoose.Types.ObjectId;
 
 io.sockets.on('connection', function(socket){
+  // Save Page Content
+  socket.on('saveContent', function(page, content){
+    Contents.update({page: page}, {$set: content}, {upsert: true}, function(err){
+      if(err) console.log(err);
+      socket.emit('saveContentResp');
+    });
+  });
+
   socket.on('add_user', function(form){
     var new_user = new Users();
     new_user.name = form.name;
@@ -293,11 +362,25 @@ io.sockets.on('connection', function(socket){
     });
   });
 
-  socket.on('application', function(app){
+  socket.on('applicationSubmit', function(app){
     var App = new Applications(app);
     App.save(function(err){
-      if(err) console.log(err);
-      socket.emit('application_resp');
+      if(err){
+        socket.emit('application_resp', {error: err});
+      } else {
+        socket.emit('application_resp', {success: true});
+      }
+    });
+  });
+
+  socket.on('surveySubmit', function(survey){
+    var Survey = new Surveys(survey);
+    Survey.save(function(err){
+      if(err){
+        socket.emit('survey_resp', {error: err});
+      } else {
+        socket.emit('survey_resp', {success: true});
+      }
     });
   });
 

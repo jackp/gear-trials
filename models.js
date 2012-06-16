@@ -43,16 +43,22 @@ exports.Vouchers = mongoose.model('Vouchers', Vouchers);
 	Application Schema
 ***********************************************************/
 var Applications = new Schema({
-	name: {type: String},
-	voucher_type: {type: String},
-	vessel: {type: String},
-	permit: {type: String},
-	email: {type: String},
-	phone: {type: String},
 	date_submitted: {type: Date, default: new Date() },
-	date_accepted: {type: Date},
-	date_declined: {type: Date},
 	status: {type: String, default: 'open'}
 });
 
 exports.Applications = mongoose.model('Applications', Applications);
+/***********************************************************
+	Survey Schema
+***********************************************************/
+var Surveys = new Schema({
+	date_submitted: {type: Date, default: new Date() }
+});
+
+exports.Surveys = mongoose.model('Surveys', Surveys);
+
+/***********************************************************
+	Content Schema
+***********************************************************/
+var Contents = new Schema();
+exports.Contents = mongoose.model('Contents', Contents);

@@ -1,26 +1,15 @@
 extends layout
 
 block content
-	.row
-		.main.span9
-			.tabbable.tabs-left
-				ul.nav.nav-tabs
-					li.active
-						a(href='#welcome', data-toggle='tab') Welcome
-					li
-						a(href='#program-info', data-toggle='tab') Program Info
-					li
-						a(href='#how-to-apply', data-toggle='tab') How to Apply
-				.tab-content
-					#welcome.tab-pane.active
-						p Welcome to the website for the Commercial Fisheries Research Foundation’s “Gear Trials Program”. This program is designed to financially assist industry with utilizing and further testing two gear types – the large mesh belly panel and the drop chain – that were designed to reduce winter flounder bycatch in the southern New England stock area within the small mesh trawl fisheries.  Here you will find information on how to get involved, how to use your vouchers, and how to be part of the research component of the program.  Please follow this site for continual updates, and to track the program’s progress.
-					#program-info.tab-pane
-						h1 Program Information
-					#how-to-apply.tab-pane
-						h1 How to Apply
-		.sidebar.span3
-			.actions
-				a.btn.btn-large.btn-primary(href='/apply') Apply
-				a.btn.btn-large.btn-primary(href='#') Submit Survey
-				a.btn.btn-large.btn-primary(href='#') Contact Us
+	include ./sidebars/sidebar
+	.span10.offset2
+		.welcome
+			img(src='/img/homepage-photo.png')
+			.page-header
+				h1 Welcome to the Gear Trials Program
+			!{content.welcome_text}
+		.news
+			.page-header
+				h1 News <small>Industry-related news and events</small>
+			!{content.news}
 
