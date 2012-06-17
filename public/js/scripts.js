@@ -19,16 +19,16 @@ $(document).ready(function(){
 
     // General options
     theme : "advanced",
-    plugins: 'advimage, advlink, media, paste',
+    plugins: 'advimage, advlink, media, paste,fullscreen',
     //plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
 
     content_css: '/css/bootstrap.css',
     // Theme options
-    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,bullist,numlist,|,justifyleft,justifycenter,justifyright,justifyfull,|,outdent,indent,|,formatselect,fontsizeselect,|,link,unlink,image,media,|,pastetext,pasteword,cleanup,code",
+    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,bullist,numlist,|,justifyleft,justifycenter,justifyright,justifyfull,|,outdent,indent,|,formatselect,fontsizeselect,|,link,unlink,image,media,|,pastetext,pasteword,cleanup,code,|,fullscreen",
     theme_advanced_toolbar_location : "top",
     theme_advanced_toolbar_align : "left",
     theme_advanced_statusbar_location : "bottom",
-    theme_advanced_resizing : true,
+    theme_advanced_resizing : false,
   });
 	
 	/***********************************************************
@@ -670,7 +670,7 @@ $('.save-content').click(function(){
 	
 	socket.emit('saveContent', $('#page').val(), content);
 	socket.on('saveContentResp', function(resp){
-		alert('Saved');
+		$('body').append('<div class="alert alert-success message"><a class="close" data-dismiss="alert" href="#">&times;</a><h4>Changes Saved</h4></div>');
 	});
 });
 
