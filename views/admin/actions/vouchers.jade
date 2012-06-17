@@ -1,0 +1,77 @@
+extends ../../layout
+
+block content
+	include ../../sidebars/admin_sidebar
+	.row.span10.offset2.page
+		h1 Vouchers
+		ul.nav.nav-tabs
+				li.active
+					a(href='#open', data-toggle="tab") Open
+				li
+					a(href='#used', data-toggle="tab") Used
+			.tab-content
+				#open.tab-pane.active
+					button.btn Print All
+					button.btn Export to Excel
+					table.table.table-striped.tablesorter
+						thead
+							tr
+								th Number
+								th Issued Date
+								th Type
+								th Owner
+								th Contact Info
+								th
+						each voucher in open_vouchers
+							tr
+								td= voucher.number
+								td= voucher.issued_date.toDateString()
+								td
+									span Type: #{voucher.type}
+									br
+									span Amount: $#{voucher.amount}
+								td
+									span Name: #{voucher.name}
+									br
+									span Vessel: #{voucher.vessel}
+									br
+									span Permit #: #{voucher.permit}
+								td
+									#{voucher.email}
+									br
+									#{voucher.phone}
+								td
+									a.btn Print Voucher
+				#used.tab-pane
+					button.btn Print All
+					button.btn Export to Excel
+					table.table.table-striped.tablesorter
+						thead
+							tr
+								th Number
+								th Issued Date
+								th Used Date
+								th Location
+								th Type
+								th Owner
+								th Contact Info
+						each voucher in used_vouchers
+							tr
+								td= voucher.number
+								td= voucher.issued_date.toDateString()
+								td= voucher.used_date.toDateString()
+								td= voucher.used_location
+								td
+									span Type: #{voucher.type}
+									br
+									span Amount: $#{voucher.amount}
+								td
+									span Name: #{voucher.name}
+									br
+									span Vessel: #{voucher.vessel}
+									br
+									span Permit #: #{voucher.permit}
+								td
+									#{voucher.email}
+									br
+									#{voucher.phone}

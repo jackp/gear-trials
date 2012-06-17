@@ -1,0 +1,51 @@
+extends ../../layout
+
+block content
+	include ../../sidebars/admin_sidebar
+	input#page(type='hidden', value='#{page}')
+	.row.span10.offset2.page
+		.page-header
+			h1 Edit About Program Text
+		textarea#about_gear_trials.tinymce 
+			!{content.about_gear_trials}
+		button.save-content.btn.btn-primary Save
+		.page-header
+			h1 Edit Gear Types Text
+		textarea#gear_types.tinymce 
+			!{content.gear_types}
+		button.save-content.btn.btn-primary Save
+		.page-header
+			h1 Edit How Program Works Text
+		textarea#how_program_works.tinymce 
+			!{content.how_program_works}
+		button.save-content.btn.btn-primary Save
+		.page-header
+			h1 Edit Voucher Information Text
+		textarea#voucher_information.tinymce 
+			!{content.voucher_information}
+		button.save-content.btn.btn-primary Save
+		.page-header
+			h1 Edit How to Apply Text
+		textarea#how_to_apply.tinymce 
+			!{content.how_to_apply}
+		button.save-content.btn.btn-primary Save
+		.page-header
+			h1 Edit Guidelines for Participation Text
+		textarea#guidelines.tinymce 
+			!{content.guidelines}
+		button.save-content.btn.btn-primary Save
+		.page-header
+			h1 Edit Gear Suppliers Text
+		textarea#gear_suppliers.tinymce 
+			!{content.gear_suppliers}
+		button.save-content.btn.btn-primary Save
+		.page-header
+			h1 Edit Critical Dates Text
+		textarea#critical_dates.tinymce 
+			!{content.critical_dates}
+		button.save-content.btn.btn-primary Save
+		.page-header
+			h1 Edit Feedback from Fisherman Text
+		textarea#feedback.tinymce 
+			!{content.feedback}
+		button.save-content.btn.btn-primary Save

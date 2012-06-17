@@ -124,7 +124,7 @@ Users.find({}, function(err, docs){
 });
 
 // Init page databases
-var pages = ['home', 'faq', 'apply'];
+var pages = ['home', 'faq', 'apply', 'about-program'];
 
 Contents.find({}, function(err, docs){
   if(!docs.length){
@@ -143,6 +143,8 @@ app.get('/', function(req, res){
   Contents.findOne({page: 'home'}, function(err, doc){
     res.render('index', { 
       title: 'Gear Trials Project',
+      page: 'home',
+      admin: false,
       content: doc.toObject() 
     });
   });
@@ -184,11 +186,23 @@ app.get('/logout', function(req, res){
 /***********************************************************
   Content Pages
 ***********************************************************/
+app.get('/about-program', function(req, res){
+  Contents.findOne({page: 'about-program'}, function(err, doc){
+    res.render('about-program', { 
+      title: 'About Gear Trials',
+      page: 'about-program',
+      admin: false,
+      content: doc.toObject() 
+    });
+  });
+});
+
 app.get('/apply', function(req, res){
   Contents.findOne({page: 'apply'}, function(err, doc){
     res.render('apply', { 
       title: 'Apply Now',
       page: 'apply',
+      admin: false,
       content: doc.toObject() 
     });
   });
@@ -198,6 +212,7 @@ app.get('/faq', function(req, res){
     res.render('faq', { 
       title: 'FAQ',
       page: 'faq',
+      admin: false,
       content: doc.toObject() 
     });
   });
@@ -208,7 +223,9 @@ app.get('/faq', function(req, res){
 // Admin Welcome Page
 app.get('/admin', restrict, function(req, res){
   res.render('admin/admin', {
-    title: 'Admin Page'
+    title: 'Admin Page',
+    page: 'admin',
+    admin: true
   });
 });
 // Pages
@@ -223,7 +240,8 @@ app.get('/admin/pages/:page', restrict, function(req, res){
     res.render('admin/pages/' + req.params.page, {
       title: 'Admin - Pages: ' + req.params.page,
       page: req.params.page,
-      content: content
+      content: content,
+      admin: true
     });
   });
 });
@@ -249,23 +267,20 @@ app.get('/admin/actions/applications', restrict, function(req, res){
   }); 
 });
 
-app.get('/admin/all-vouchers', admin, function(req, res){
+app.get('/admin/actions/vouchers', restrict, function(req, res){
   Vouchers.find({}, [], {sort: {issued_date: -1}}, function(err, vouchers){
-    var open = [], used = [], expired = [];
+    var open = [], used = [];
     vouchers.forEach(function(voucher){
       if((voucher.status === 'open') && (new Date(voucher.expiration_date) >= new Date())) {
         open.push(voucher);
       } else if(voucher.status === 'used') {
         used.push(voucher);
-      } else {
-        expired.push(voucher);
       }
     });
-    res.render('admin/all-vouchers', {
+    res.render('admin/actions/vouchers', {
       title: 'Admin: Vouchers',
       open_vouchers: open,
       used_vouchers: used,
-      expired_vouchers: expired
     });
   });
 });

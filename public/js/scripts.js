@@ -1,6 +1,14 @@
 // Socket.io Initialization
 var socket = io.connect('http://localhost');
 
+// Nivo Slider
+$(window).load(function(){
+	$('#slider').nivoSlider({
+		controlNav: false,
+		controlNavThumbs: true
+	});
+});
+
 $(document).ready(function(){
 	// Initialize dropdowns
 	$('.dropdown-toggle').dropdown();
@@ -16,7 +24,7 @@ $(document).ready(function(){
 
     content_css: '/css/bootstrap.css',
     // Theme options
-    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,bullist,numlist,|,justifyleft,justifycenter,justifyright,justifyfull,|,outdent,indent,|,formatselect,fontsizeselect,|,link,unlink,image,media,|,pasteword,cleanup,code",
+    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,bullist,numlist,|,justifyleft,justifycenter,justifyright,justifyfull,|,outdent,indent,|,formatselect,fontsizeselect,|,link,unlink,image,media,|,pastetext,pasteword,cleanup,code",
     theme_advanced_toolbar_location : "top",
     theme_advanced_toolbar_align : "left",
     theme_advanced_statusbar_location : "bottom",
@@ -27,7 +35,47 @@ $(document).ready(function(){
 		Image Gallery
 	***********************************************************/
 	$('#gallery').imagegallery({
-		selector: 'a[rel="gallery"]'
+		 // selector given to jQuery's delegate method:
+    selector: 'a[rel="gallery"]',
+    // event handler namespace:
+    namespace: 'imagegallery',
+    // Shows the next image after the given time in ms (0 = disabled):
+    slideshow: 0,
+    // Offset of image width to viewport width:
+    offsetWidth: 100,
+    // Offset of image height to viewport height:
+    offsetHeight: 100,
+    // Display images fullscreen (overrides offsets):
+    fullscreen: false,
+    // Display images as canvas elements:
+    canvas: false,
+    // body class added on dialog display:
+    bodyClass: 'gallery-body',
+    // element id of the loading animation:
+    loaderId: 'gallery-loader',
+    // list of available dialog effects,
+    // used when show/hide is set to "random":
+    effects: [
+        'blind',
+        'clip',
+        'drop',
+        'explode',
+        'fade',
+        'fold',
+        'puff',
+        'slide',
+        'scale'
+    ],
+    // The following are jQuery UI dialog options, see
+    // http://jqueryui.com/demos/dialog/#options
+    // for additional options and documentation:
+    modal: true,
+    resizable: false,
+    width: 'auto',
+    height: 'auto',
+    show: 'fade',
+    hide: 'fade',
+    dialogClass: 'gallery-dialog'
 	});
 	/***********************************************************
 		Admin: General
@@ -600,6 +648,15 @@ $(document).ready(function(){
 ***********************************************************/
 $('#login_button').click(function(){
 	$('#login_area').toggle();
+});
+
+/***********************************************************
+	Sidebar
+***********************************************************/
+$('.sidebar .regular > li').hover(function(){
+	$(this).children('ul').slideDown();
+}, function(){
+	$(this).children('ul').hide();
 });
 
 /***********************************************************

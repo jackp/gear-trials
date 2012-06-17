@@ -1,58 +1,54 @@
-.header
-	// h2 Welcome to the Gear Trials Program
+#header.navbar.navbar-fixed-top
+	.navbar-inner
+		.container
+			img(src='/img/header.png')
+			.pull-right
+				- if(session.user)
+					.btn-group
+						button.btn.dropdown-toggle(data-toggle='dropdown', href='#') #{session.user.name}
+							span.caret
+						ul.dropdown-menu
+							li
+								a(href='/admin') Admin
+							li
+								a(href='/logout') Logout
+				- else
+					a.btn(href='#login_modal', data-toggle="modal") Login
+					
 
 //
-	.navbar.navbar-fixed-top
-		.navbar-inner
-			.container.header
-				a.brand(href='/') Gear Trials Project
-				ul.nav
-					li
-						a(href='#') Reports
-					li
-						a(href='#') Fisherman Feedback
-					li
-						a(href='#') Voucher Information
-					li
-						a(href='#') Gallery
-					li
-						a(href='#') Background Info
-				ul.nav.pull-right
-					li.divider-vertical
-					- if (!session.user)
-						li
-							a(href='#').login Login
-							.login-area
-								form#login_form(method="POST", action="/login")
-									label(for='email') Email
-									input#email(type='text', name="email")
-									label.control-label(for='password') Password:
-									input#password(type='password', name="password")
-									input.btn.btn-primary(type='submit', value='Login')
+	.header
+		#title.pull-left
+			h1
+				small Welcome to the
+				span Gear Trials Program
+		#user-area.pull-right
+			- if(session.user)
+				p
+					span #{session.user.name}
+					br
+					a(href='/admin') Admin
+					a(href='/logout') Logout
+			- else
+				a(href='#login_modal', data-toggle="modal") Login
+			.span2
+				.pull-right
+					- if(session.user)
+						p #{session.user.name}
+						a(href='/admin') Admin
+						a(href='/logout') Logout
 					- else
-						li.dropdown
-							a.dropdown-toggle(href='#', data-toggle="dropdown")
-								#{session.user.name}
-								b.caret
-							ul.dropdown-menu
-								- if(session.user.admin)
-									li
-										a(href='/admin/users') User Management
-									li
-										a(href='/admin/applications') View Applications
-									li
-										a(href='/admin/issue-voucher') Issue Voucher
-									li
-										a(href='/admin/all-vouchers') View All Vouchers
-									li
-										a(href='/admin/master-reports') Master Reports
-								- else
-									li
-										a(href='/process-voucher') Process Voucher
-									li
-										a(href='/vouchers') View Vouchers
-									li
-										a(href='/reports') Reports
-								li.divider
-								li
-									a(href='/logout') Logout
+						a(href='#login_modal', data-toggle="modal") Login
+#login_modal.modal.hide
+	.modal-header
+		h3 Login
+	form(method="POST", action="/login")
+		.modal-body
+			.form
+				label(for='email') Email
+				input#email(type='text', name="email")
+				label.control-label(for='password') Password:
+				input#password(type='password', name="password")
+		.modal-footer
+			a.btn(href='#', data-dismiss="modal") Cancel
+			input.btn.btn-primary(type='submit', value='Login')

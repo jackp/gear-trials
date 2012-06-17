@@ -27,6 +27,7 @@ html
 		//if lt IE 7
 			<p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p>
 		.container
+			include header
 			.row
 				block content
 			.row
@@ -35,6 +36,7 @@ html
 		script(src='/socket.io/socket.io.js')
 		script(src='/js/libs/jquery-1.7.2.min.js')
 		script(src='/js/libs/jquery-ui-1.8.21.custom.min.js')
+		script(src='/js/libs/jquery.nivo.slider.pack.js')
 		script(src='/js/libs/bootstrap.min.js')
 		script(src='/js/tiny_mce/jquery.tinymce.js')
 		script(src='/js/plugins.js')

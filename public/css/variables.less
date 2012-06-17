@@ -34,6 +34,7 @@
 @lightgray: 					#939598;
 @orange: 							#BE3C26;
 @yellow: 							#B59238;
+@brown: 							#D7C9A4;
 
 // Scaffolding
 // -------------------------
@@ -60,7 +61,7 @@
 
 @headingsFontFamily:    inherit; // empty to use BS default, @baseFontFamily
 @headingsFontWeight:    400;    // instead of browser default, bold
-@headingsColor:         inherit; // empty to use BS default, @textColor
+@headingsColor:         @yellow; // empty to use BS default, @textColor
 
 
 // Tables
@@ -125,7 +126,7 @@
 @zindexDropdown:          1000;
 @zindexPopover:           1010;
 @zindexTooltip:           1020;
-@zindexFixedNavbar:       1030;
+@zindexFixedNavbar:       1001;
 @zindexModalBackdrop:     1040;
 @zindexModal:             1050;
 
@@ -148,13 +149,13 @@
 
 // Navbar
 // -------------------------
-@navbarHeight:                    40px;
-@navbarBackground:                @grayDarker;
-@navbarBackgroundHighlight:       @grayDark;
+@navbarHeight:                    100px;
+@navbarBackground:                #FFF;
+@navbarBackgroundHighlight:       #FFF;
 
-@navbarText:                      @grayLight;
-@navbarLinkColor:                 @grayLight;
-@navbarLinkColorHover:            @white;
+@navbarText:                      @gray;
+@navbarLinkColor:                 @orange;
+@navbarLinkColorHover:            @orange;
 @navbarLinkColorActive:           @navbarLinkColorHover;
 @navbarLinkBackgroundHover:       transparent;
 @navbarLinkBackgroundActive:      @navbarBackground;

@@ -1,43 +1,44 @@
 .sidebar.span2
-	- if(!session.user)
-		button#login_button.btn.btn-primary Login
-	- else
-		a(href='/admin') Admin
-	#login_area.hide
-		form(method="POST", action="/login")
-			label(for='email') Email
-			input#email(type='text', name="email")
-			label.control-label(for='password') Password:
-			input#password(type='password', name="password")
-			input.btn.btn-primary(type='submit', value='Login')
-	ul.menu
+	ul.menu.regular
 		li
-			a(href="/about") ABOUT THE PROGRAM
+			a.btn(href='/apply') Apply Now
+		li
+			a.btn(href='/survey') Submit Survey
+		li
+			a(href="/about-program") ABOUT GEAR TRIALS
 			ul
 				li
-					a(href='/about#program') How the program works
-				li 
-					a(href='/about#get-involved') How to get involved
+					a(href='/about-program#gear-types') Gear types
 				li
-					a(href="#") Voucher Information
+					a(href='/about-program#how-program-works') How the program works
 				li 
-					a(href="#") Feedback from fisherman
+					a(href='/about-program#voucher-information') Voucher Information
+				li
+					a(href="/about-program#how-to-apply") How to Apply
 				li 
-					a.btn.btn-primary(href="/apply") Apply Now
+					a(href="/about-program#guidelines") Guidelines for participation
+				li 
+					a(href="/about-program#suppliers") Gear Suppliers
+				li 
+					a(href="/about-program#dates") Critical Dates
+				li 
+					a(href="/about-program#feedback") Feedback from fisherman
 		li 
 			a(href="#") RESEARCH
 			ul
 				li 
-					a(href="#") Scientific Studies
+					a(href="#") How to get involved
 				li 
-					a(href="#") Quarterly Reports
+					a(href="#") Scientific studies
 				li 
-					a.btn.btn-primary(href="#") Submit Survey
+					a(href="#") Interim reports
 		li 
-			a(href="#") NEWS & ANNOUNCEMENTS
+			a(href="/#news") NEWS & ANNOUNCEMENTS
 		li 
 			a(href="/gallery") GALLERY
 		li 
 			a(href="/faq") FAQ
 		li
 			a(href="#") ABOUT US
+		li
+			a(href="#") CONTACT US

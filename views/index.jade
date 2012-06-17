@@ -3,13 +3,17 @@ extends layout
 block content
 	include ./sidebars/sidebar
 	.span10.offset2
-		.welcome
-			img(src='/img/homepage-photo.png')
-			.page-header
-				h1 Welcome to the Gear Trials Program
+		.page
+			#slider.nivoSlider.theme-default
+				img(src='/img/homepage-photo.png')
+				img(src='/img/homepage-photo.png')
+				img(src='/img/homepage-photo.png')
 			!{content.welcome_text}
-		.news
-			.page-header
-				h1 News <small>Industry-related news and events</small>
+		.page
+			a(name='news')
+			h1 News
+				small Industry-related news and events
 			!{content.news}
-
+		.page
+			h1 Announcements
+				small Meeting announcements and program updates

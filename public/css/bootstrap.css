@@ -1,3 +1,4 @@
+@import "jquery-ui-1.8.21.custom.css";
 /*!
  * Bootstrap v2.0.3
  *
@@ -363,7 +364,7 @@ h6 {
   margin: 0;
   font-family: inherit;
   font-weight: 400;
-  color: inherit;
+  color: #b59238;
   text-rendering: optimizelegibility;
 }
 h1 small,
@@ -2959,18 +2960,18 @@ input[type="submit"].btn.btn-mini {
   margin-bottom: 21px;
 }
 .navbar-inner {
-  min-height: 40px;
+  min-height: 100px;
   padding-left: 20px;
   padding-right: 20px;
-  background-color: #2c2c2c;
-  background-image: -moz-linear-gradient(top, #333333, #222222);
-  background-image: -ms-linear-gradient(top, #333333, #222222);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#333333), to(#222222));
-  background-image: -webkit-linear-gradient(top, #333333, #222222);
-  background-image: -o-linear-gradient(top, #333333, #222222);
-  background-image: linear-gradient(top, #333333, #222222);
+  background-color: #ffffff;
+  background-image: -moz-linear-gradient(top, #ffffff, #ffffff);
+  background-image: -ms-linear-gradient(top, #ffffff, #ffffff);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#ffffff));
+  background-image: -webkit-linear-gradient(top, #ffffff, #ffffff);
+  background-image: -o-linear-gradient(top, #ffffff, #ffffff);
+  background-image: linear-gradient(top, #ffffff, #ffffff);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#222222', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0);
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
@@ -2985,7 +2986,7 @@ input[type="submit"].btn.btn-mini {
   height: auto;
 }
 .navbar {
-  color: #999999;
+  color: #555555;
 }
 .navbar .brand:hover {
   text-decoration: none;
@@ -2993,26 +2994,26 @@ input[type="submit"].btn.btn-mini {
 .navbar .brand {
   float: left;
   display: block;
-  padding: 8px 20px 12px;
+  padding: 38px 20px 42px;
   margin-left: -20px;
   font-size: 20px;
   font-weight: 200;
   line-height: 1;
-  color: #999999;
+  color: #be3c26;
 }
 .navbar .navbar-text {
   margin-bottom: 0;
-  line-height: 40px;
+  line-height: 100px;
 }
 .navbar .navbar-link {
-  color: #999999;
+  color: #be3c26;
 }
 .navbar .navbar-link:hover {
-  color: #ffffff;
+  color: #be3c26;
 }
 .navbar .btn,
 .navbar .btn-group {
-  margin-top: 5px;
+  margin-top: 35px;
 }
 .navbar .btn-group .btn {
   margin: 0;
@@ -3033,7 +3034,7 @@ input[type="submit"].btn.btn-mini {
 .navbar-form select,
 .navbar-form .radio,
 .navbar-form .checkbox {
-  margin-top: 5px;
+  margin-top: 35px;
 }
 .navbar-form input,
 .navbar-form select {
@@ -3057,7 +3058,7 @@ input[type="submit"].btn.btn-mini {
 .navbar-search {
   position: relative;
   float: left;
-  margin-top: 6px;
+  margin-top: 36px;
   margin-bottom: 0;
 }
 .navbar-search .search-query {
@@ -3067,8 +3068,8 @@ input[type="submit"].btn.btn-mini {
   font-weight: normal;
   line-height: 1;
   color: #ffffff;
-  background-color: #626262;
-  border: 1px solid #151515;
+  background-color: #ffffff;
+  border: 1px solid #b3b3b3;
   -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.1), 0 1px 0 rgba(255,255,255,.15);
   -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,.1), 0 1px 0 rgba(255,255,255,.15);
   box-shadow: inset 0 1px 2px rgba(0,0,0,.1), 0 1px 0 rgba(255,255,255,.15);
@@ -3101,7 +3102,7 @@ input[type="submit"].btn.btn-mini {
   position: fixed;
   right: 0;
   left: 0;
-  z-index: 1030;
+  z-index: 1001;
   margin-bottom: 0;
 }
 .navbar-fixed-top .navbar-inner,
@@ -3138,40 +3139,40 @@ input[type="submit"].btn.btn-mini {
 }
 .navbar .nav > li > a {
   float: none;
-  padding: 9px 10px 11px;
+  padding: 39px 10px 41px;
   line-height: 19px;
-  color: #999999;
+  color: #be3c26;
   text-decoration: none;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 .navbar .btn {
   display: inline-block;
   padding: 4px 10px 4px;
-  margin: 5px 5px 6px;
+  margin: 35px 5px 36px;
   line-height: 21px;
 }
 .navbar .btn-group {
   margin: 0;
-  padding: 5px 5px 6px;
+  padding: 35px 5px 36px;
 }
 .navbar .nav > li > a:hover {
   background-color: transparent;
-  color: #ffffff;
+  color: #be3c26;
   text-decoration: none;
 }
 .navbar .nav .active > a,
 .navbar .nav .active > a:hover {
-  color: #ffffff;
+  color: #be3c26;
   text-decoration: none;
-  background-color: #222222;
+  background-color: #ffffff;
 }
 .navbar .divider-vertical {
-  height: 40px;
+  height: 100px;
   width: 1px;
   margin: 0 9px;
   overflow: hidden;
-  background-color: #222222;
-  border-right: 1px solid #333333;
+  background-color: #ffffff;
+  border-right: 1px solid #ffffff;
 }
 .navbar .nav.pull-right {
   margin-left: 10px;
@@ -3183,18 +3184,18 @@ input[type="submit"].btn.btn-mini {
   padding: 7px 10px;
   margin-left: 5px;
   margin-right: 5px;
-  background-color: #2c2c2c;
-  background-image: -moz-linear-gradient(top, #333333, #222222);
-  background-image: -ms-linear-gradient(top, #333333, #222222);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#333333), to(#222222));
-  background-image: -webkit-linear-gradient(top, #333333, #222222);
-  background-image: -o-linear-gradient(top, #333333, #222222);
-  background-image: linear-gradient(top, #333333, #222222);
+  background-color: #ffffff;
+  background-image: -moz-linear-gradient(top, #ffffff, #ffffff);
+  background-image: -ms-linear-gradient(top, #ffffff, #ffffff);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#ffffff));
+  background-image: -webkit-linear-gradient(top, #ffffff, #ffffff);
+  background-image: -o-linear-gradient(top, #ffffff, #ffffff);
+  background-image: linear-gradient(top, #ffffff, #ffffff);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#222222', GradientType=0);
-  border-color: #222222 #222222 #000000;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0);
+  border-color: #ffffff #ffffff #d9d9d9;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  *background-color: #222222;
+  *background-color: #ffffff;
   /* Darken IE7 buttons by default so they stand out more given they won't have borders */
 
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
@@ -3207,12 +3208,12 @@ input[type="submit"].btn.btn-mini {
 .navbar .btn-navbar.active,
 .navbar .btn-navbar.disabled,
 .navbar .btn-navbar[disabled] {
-  background-color: #222222;
-  *background-color: #151515;
+  background-color: #ffffff;
+  *background-color: #f2f2f2;
 }
 .navbar .btn-navbar:active,
 .navbar .btn-navbar.active {
-  background-color: #080808 \9;
+  background-color: #e6e6e6 \9;
 }
 .navbar .btn-navbar .icon-bar {
   display: block;
@@ -4159,249 +4160,12 @@ a.badge:hover {
   line-height: 31.5px;
   color: inherit;
 }
-/* Showcase
--------------*/
-#awOnePageButton .view-slide {
-  display: none;
-}
-/* This class is removed after the showcase is loaded */
-/* Assign the correct showcase height to prevent loading jumps in IE */
-.showcase-load {
-  height: 470px;
-  /* Same as showcase javascript option */
-
-  overflow: hidden;
-}
-/* Container when content is shown as one page */
-.showcase-onepage {
-  /**/
-
-}
-/* Container when content is shown in slider */
-.showcase {
-  position: relative;
-  margin: auto;
-}
-.showcase-content-container {
-  background-color: #000;
-}
-/* Navigation arrows */
-.showcase-arrow-previous,
-.showcase-arrow-next {
-  position: absolute;
-  background: url('/img/arrows.png');
-  width: 33px;
-  height: 33px;
-  top: 220px;
-  cursor: pointer;
-}
-.showcase-arrow-previous {
-  left: -35px;
-}
-.showcase-arrow-previous:hover {
-  background-position: 0px -34px;
-}
-.showcase-arrow-next {
-  right: -35px;
-  background-position: -34px 0;
-}
-.showcase-arrow-next:hover {
-  background-position: -34px -34px;
-}
-/* Content */
-.showcase-content {
-  background-color: #000;
-  text-align: center;
-}
-.showcase-content-wrapper {
-  text-align: center;
-  height: 470px;
-  width: 700px;
-  display: table-cell;
-  vertical-align: middle;
-}
-/* Styling the tooltips */
-.showcase-plus-anchor {
-  background-image: url('/img/plus.png');
-  background-repeat: no-repeat;
-}
-.showcase-plus-anchor:hover {
-  background-position: -32px 0;
-}
-div.showcase-tooltip {
-  background-color: #fff;
-  color: #000;
-  text-align: left;
-  padding: 5px 8px;
-  background-image: url('/img/white-opacity-80.png');
-}
-/* Styling the caption */
-.showcase-caption {
-  color: #000;
-  padding: 8px 15px;
-  text-align: left;
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  display: none;
-  background-image: url('/img/white-opacity-80.png');
-}
-.showcase-onepage .showcase-content {
-  margin-bottom: 10px;
-}
-/* Button Wrapper */
-.showcase-button-wrapper {
-  clear: both;
-  margin-top: 10px;
-  text-align: center;
-}
-.showcase-button-wrapper span {
-  margin-right: 3px;
-  padding: 2px 5px 0px 5px;
-  cursor: pointer;
-  font-size: 12px;
-  color: #444444;
-}
-.showcase-button-wrapper span.active {
-  background-color: #CCC;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  padding-bottom: 2px;
-}
-/* Thumbnails */
-.showcase-thumbnail-container {
-  background-color: #000;
-}
-.showcase-thumbnail-wrapper {
-  overflow: hidden;
-}
-.showcase-thumbnail {
-  width: 120px;
-  height: 90px;
-  cursor: pointer;
-  border: solid 1px #333;
-  position: relative;
-}
-.showcase-thumbnail-caption {
-  position: absolute;
-  bottom: 0px;
-  right: 0;
-  left: 0;
-  padding-left: 10px;
-  padding-bottom: 5px;
-  background-image: url('/img/white-opacity-80.png');
-}
-.showcase-thumbnail-content {
-  padding: 10px;
-  text-align: center;
-  padding-top: 25px;
-}
-.showcase-thumbnail-cover {
-  background-image: url('/img/black-opacity-40.png');
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-.showcase-thumbnail:hover {
-  border: solid 1px #999;
-}
-.showcase-thumbnail:hover .showcase-thumbnail-cover {
-  display: none;
-}
-.showcase-thumbnail.active {
-  border: solid 1px #999;
-}
-.showcase-thumbnail.active .showcase-thumbnail-cover {
-  display: none;
-}
-.showcase-thumbnail-wrapper-horizontal {
-  padding: 10px;
-}
-.showcase-thumbnail-wrapper-horizontal .showcase-thumbnail {
-  margin-right: 10px;
-  width: 116px;
-}
-.showcase-thumbnail-wrapper-vertical {
-  padding: 10px;
-}
-.showcase-thumbnail-wrapper-vertical .showcase-thumbnail {
-  margin-bottom: 10px;
-}
-.showcase-thumbnail-button-backward,
-.showcase-thumbnail-button-forward {
-  padding: 7px;
-  cursor: pointer;
-}
-.showcase-thumbnail-button-backward {
-  padding-bottom: 0px;
-  padding-right: 0px;
-}
-.showcase-thumbnail-button-backward .showcase-thumbnail-vertical,
-.showcase-thumbnail-button-forward .showcase-thumbnail-vertical,
-.showcase-thumbnail-button-forward .showcase-thumbnail-horizontal,
-.showcase-thumbnail-button-backward .showcase-thumbnail-horizontal {
-  background-image: url('/img/arrows-small.png');
-  background-repeat: no-repeat;
-  display: block;
-  width: 17px;
-  height: 17px;
-}
-.showcase-thumbnail-button-backward .showcase-thumbnail-vertical {
-  background-position: 0 -51px;
-  margin-left: 55px;
-}
-.showcase-thumbnail-button-backward:hover .showcase-thumbnail-vertical {
-  background-position: -17px -51px;
-}
-.showcase-thumbnail-button-forward .showcase-thumbnail-vertical {
-  background-position: 0 -34px;
-  margin-left: 55px;
-}
-.showcase-thumbnail-button-forward:hover .showcase-thumbnail-vertical {
-  background-position: -17px -34px;
-}
-.showcase-thumbnail-button-backward .showcase-thumbnail-horizontal {
-  background-position: 0 -17px;
-  margin-top: 40px;
-  margin-bottom: 40px;
-}
-.showcase-thumbnail-button-backward:hover .showcase-thumbnail-horizontal {
-  background-position: -17px -17px;
-}
-.showcase-thumbnail-button-forward .showcase-thumbnail-horizontal {
-  background-position: 0 0;
-  margin-top: 40px;
-  margin-bottom: 40px;
-}
-.showcase-thumbnail-button-forward:hover .showcase-thumbnail-horizontal {
-  background-position: -17px 0;
-}
-/* Hide button text */
-.showcase-thumbnail-button-forward span span,
-.showcase-thumbnail-button-backward span span {
-  display: none;
-}
-/* Clear (used for horizontal thumbnails)
--------------------------------------------*/
-.clear {
-  clear: both;
-  display: block;
-  overflow: hidden;
-  visibility: hidden;
-  width: 0;
-  height: 0;
-  float: none;
-}
 /***********************************************************
 	Global Styles & Classes
 ***********************************************************/
 body {
-  margin-top: 20px;
-  margin-bottom: 40px;
+  margin-top: 120px;
+  margin-bottom: 20px;
 }
 body#tinymce {
   margin: 0;
@@ -4416,15 +4180,28 @@ textarea.tinymce {
   left: 25%;
   width: 50%;
 }
+a[name] {
+  position: absolute;
+  left: -1000px;
+  margin-top: -120px;
+}
+small {
+  color: #555555;
+  margin-left: 20px;
+}
 .page {
+  margin-bottom: 20px;
   padding: 20px;
   border: 1px solid #D1D3D4;
 }
-.page .page-header h1 {
-  color: #be3c26;
+/***********************************************************
+	Header
+***********************************************************/
+#header img {
+  margin-left: 230px;
 }
-.page .page-header h1 small {
-  color: #333;
+#header .btn-group {
+  padding-bottom: 10px;
 }
 /***********************************************************
 	Sidebar
@@ -4432,59 +4209,34 @@ textarea.tinymce {
 .sidebar {
   position: fixed;
 }
-.sidebar #login_area {
-  background-color: #FFF;
-  z-index: 3000;
+.sidebar .btn {
+  width: 75%;
 }
 .sidebar .menu {
   list-style-type: none;
   margin: 0;
 }
 .sidebar .menu > li {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 .sidebar .menu > li a {
   color: #336666;
+  font-size: 16px;
 }
 .sidebar .menu > li ul {
   list-style-type: none;
   margin: 10px 0 0;
 }
 .sidebar .menu > li ul li {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 .sidebar .menu > li ul li a {
-  color: #6d6e71;
+  color: #6D6E71;
+  font-size: 14px;
+  font-weight: 300;
 }
-.sidebar .menu > li ul li a.btn {
-  color: #FFF;
-  background-color: #3a7474;
-  background-image: -moz-linear-gradient(top, #336666, #448888);
-  background-image: -ms-linear-gradient(top, #336666, #448888);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#336666), to(#448888));
-  background-image: -webkit-linear-gradient(top, #336666, #448888);
-  background-image: -o-linear-gradient(top, #336666, #448888);
-  background-image: linear-gradient(top, #336666, #448888);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#336666', endColorstr='#448888', GradientType=0);
-  border-color: #448888 #448888 #2b5555;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  *background-color: #448888;
-  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
-
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
-}
-.sidebar .menu > li ul li a.btn:hover,
-.sidebar .menu > li ul li a.btn:active,
-.sidebar .menu > li ul li a.btn.active,
-.sidebar .menu > li ul li a.btn.disabled,
-.sidebar .menu > li ul li a.btn[disabled] {
-  background-color: #448888;
-  *background-color: #3c7777;
-}
-.sidebar .menu > li ul li a.btn:active,
-.sidebar .menu > li ul li a.btn.active {
-  background-color: #336666 \9;
+.sidebar .menu.regular > li ul {
+  display: none;
 }
 /***********************************************************
 	Home Page
@@ -4537,44 +4289,17 @@ form#application_form .address .zip {
   line-height: 175%;
 }
 /***********************************************************
+	Gallery
+***********************************************************/
+#gallery img {
+  margin: 0 10px 10px 0;
+}
+/***********************************************************
 	Survey Page
 ***********************************************************/
 form#survey_form textarea {
   width: 100%;
 }
-/*
-.header {
-	.login-area, .register-area {
-		display: none;
-		position: absolute;
-		right: 0;
-		top: @navbarHeight;
-		z-index: @zindexModal;
-		background-color: #FFF;
-		border: 1px solid @grayLight;
-		padding: 10px;
-		button {
-			margin: 0;
-		}
-		.border-radius(0 0 5px 5px);
-	}
-}
-
-.sidebar {
-	.voucher-lookup {
-		input {
-			width: 100%;
-		}
-	}
-	.actions {
-		text-align: center;
-		.btn {
-			width: 100%;
-			margin-bottom: 10px;
-		}
-	}
-}
-*/
 #voucher_lookup {
   text-align: center;
 }
@@ -4652,20 +4377,16 @@ table.tablesorter th.tablesorter-headerSortDown {
 	Footer
 ***********************************************************/
 .footer {
-  position: fixed;
-  width: 1200px;
-  bottom: 0;
-}
-.footer #copyright {
-  margin-top: 20px;
-  background-color: #3c4242;
-  color: #999999;
-  font-size: 10px;
   text-align: right;
+  color: #999999;
 }
 /*************************************************************
   Modals
 *************************************************************/
+#login_modal .form {
+  width: 250px;
+  margin: 0 auto;
+}
 #view_application_modal {
   width: 750px;
   margin-left: -375px;
@@ -4775,6 +4496,205 @@ table.tablesorter th.tablesorter-headerSortDown {
 *html .gallery-body select,
 *html .gallery-body-fullscreen select {
   display: none;
+}
+/***********************************************************
+	Nivo Slider
+***********************************************************/
+/*
+ * jQuery Nivo Slider v3.0.1
+ * http://nivo.dev7studios.com
+ *
+ * Copyright 2012, Dev7studios
+ * Free to use and abuse under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+ */
+/* The Nivo Slider styles */
+.nivoSlider {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.nivoSlider img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+.nivo-main-image {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+}
+/* If an image is wrapped in a link */
+.nivoSlider a.nivo-imageLink {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  z-index: 6;
+  display: none;
+}
+/* The slices and boxes in the Slider */
+.nivo-slice {
+  display: block;
+  position: absolute;
+  z-index: 5;
+  height: 100%;
+  top: 0;
+}
+.nivo-box {
+  display: block;
+  position: absolute;
+  z-index: 5;
+  overflow: hidden;
+}
+.nivo-box img {
+  display: block;
+}
+/* Caption styles */
+.nivo-caption {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  background: #000;
+  color: #fff;
+  width: 100%;
+  z-index: 8;
+  padding: 5px 10px;
+  opacity: 0.8;
+  overflow: hidden;
+  display: none;
+  -moz-opacity: 0.8;
+  filter: alpha(opacity=8);
+  -webkit-box-sizing: border-box;
+  /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box;
+  /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+  /* Opera/IE 8+ */
+
+}
+.nivo-caption p {
+  padding: 5px;
+  margin: 0;
+}
+.nivo-caption a {
+  display: inline !important;
+}
+.nivo-html-caption {
+  display: none;
+}
+/* Direction nav styles (e.g. Next & Prev) */
+.nivo-directionNav a {
+  position: absolute;
+  top: 45%;
+  z-index: 9;
+  cursor: pointer;
+}
+.nivo-prevNav {
+  left: 0px;
+}
+.nivo-nextNav {
+  right: 0px;
+}
+/* Control nav styles (e.g. 1,2,3...) */
+.nivo-controlNav {
+  text-align: center;
+  padding: 15px 0;
+}
+.nivo-controlNav a {
+  cursor: pointer;
+}
+.nivo-controlNav a.active {
+  font-weight: bold;
+}
+/*
+Skin Name: Nivo Slider Default Theme
+Skin URI: http://nivo.dev7studios.com
+Skin Type: flexible
+Description: The default skin for the Nivo Slider.
+Version: 1.2
+Author: Gilbert Pellegrom
+Author URI: http://dev7studios.com
+*/
+.theme-default .nivoSlider {
+  position: relative;
+  background: #ffffff url(/img/loading.gif) no-repeat 50% 50%;
+  margin-bottom: 50px;
+  -webkit-box-shadow: 0px 1px 5px 0px #4a4a4a;
+  -moz-box-shadow: 0px 1px 5px 0px #4a4a4a;
+  box-shadow: 0px 1px 5px 0px #4a4a4a;
+}
+.theme-default .nivoSlider img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: none;
+}
+.theme-default .nivoSlider a {
+  border: 0;
+  display: block;
+}
+.theme-default .nivo-controlNav {
+  text-align: center;
+  padding: 20px 0;
+}
+.theme-default .nivo-controlNav a {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  background: url(/img/bullets.png) no-repeat;
+  text-indent: -9999px;
+  border: 0;
+  margin: 0 2px;
+}
+.theme-default .nivo-controlNav a.active {
+  background-position: 0 -22px;
+}
+.theme-default .nivo-directionNav a {
+  display: block;
+  width: 30px;
+  height: 30px;
+  background: url(/img/arrows.png) no-repeat;
+  text-indent: -9999px;
+  border: 0;
+}
+.theme-default a.nivo-nextNav {
+  background-position: -30px 0;
+  right: 15px;
+}
+.theme-default a.nivo-prevNav {
+  left: 15px;
+}
+.theme-default .nivo-caption {
+  font-family: Helvetica, Arial, sans-serif;
+}
+.theme-default .nivo-caption a {
+  color: #fff;
+  border-bottom: 1px dotted #fff;
+}
+.theme-default .nivo-caption a:hover {
+  color: #fff;
+}
+.theme-default .nivo-controlNav.nivo-thumbs-enabled {
+  width: 100%;
+}
+.theme-default .nivo-controlNav.nivo-thumbs-enabled a {
+  width: auto;
+  height: auto;
+  background: none;
+  margin-bottom: 5px;
+}
+.theme-default .nivo-controlNav.nivo-thumbs-enabled img {
+  display: block;
+  width: 120px;
+  height: auto;
 }
 .pull-right {
   float: right;
