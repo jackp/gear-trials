@@ -1,0 +1,174 @@
+extends ../../layout
+
+block content
+	include ../../sidebars/admin_sidebar
+	.row.span10.offset2.page
+		h1 Applications
+		ul.nav.nav-tabs
+				li.active
+					a(href='#open', data-toggle="tab") Open
+				li
+					a(href='#accepted', data-toggle="tab") Accepted
+				li
+					a(href='#declined', data-toggle="tab") Denied
+			.tab-content
+				#open.tab-pane.active
+					table.table.table-striped.tablesorter
+						thead
+							tr
+								th Date Submitted
+								th Name
+								th Vessel
+								th Vouchers
+								th Research?
+								th
+						each app in open_applications
+							tr
+								td= app.date_submitted.toDateString()
+								td= app.applicant.name
+								td= app.vessel.name
+								td
+									span Drop Chain
+									input(type='checkbox', disabled, checked='#{app.voucher.drop_chain}')
+									br
+									span Belly Panel
+									input(type='checkbox', disabled, checked='#{app.voucher.belly_panel}')
+								td
+									- if(app.research)
+										span Yes
+									- else
+										span No
+								td
+									button.btn.view-application(data-id="#{app._id}") View Application
+				#accepted.tab-pane
+					table.table.table-striped.tablesorter
+						thead
+							tr
+								th Date Submitted
+								th Date Accepted
+								th Name
+								th Vessel
+								th Vouchers
+								th Research?
+								th
+						each app in accepted_applications
+							tr
+								td= app.date_submitted.toDateString()
+								td= app.date_accepted.toDateString()
+								td= app.applicant.name
+								td= app.vessel.name
+								td
+									span Drop Chain
+									input(type='checkbox', disabled, checked='#{app.voucher.drop_chain}')
+									br
+									span Belly Panel
+									input(type='checkbox', disabled, checked='#{app.voucher.belly_panel}')
+								td
+									- if(app.research)
+										span Yes
+									- else
+										span No
+								td
+									button.btn.view-application(data-id="#{app._id}") View Application
+				#declined.tab-pane
+					table.table.table-striped.tablesorter
+						thead
+							tr
+								th Date Submitted
+								th Date Declined
+								th Name
+								th Vessel
+								th Vouchers
+								th Research?
+								th
+						each app in declined_applications
+							tr
+								td= app.date_submitted.toDateString()
+								td= app.date_declined.toDateString()
+								td= app.applicant.name
+								td= app.vessel.name
+								td
+									span Drop Chain
+									input(type='checkbox', disabled, checked='#{app.voucher.drop_chain}')
+									br
+									span Belly Panel
+									input(type='checkbox', disabled, checked='#{app.voucher.belly_panel}')
+								td
+									- if(app.research)
+										span Yes
+									- else
+										span No
+								td
+									button.btn.view-application(data-id="#{app._id}") View Application
+	#view_application_modal.modal.hide
+		.modal-header
+			h3 View Application
+		.modal-body
+			.section
+				h3 Applicant
+				dl.dl-horizontal
+					dt Name:
+					dd#applicant_name
+					dt Company:
+					dd#applicant_company
+					dt Permit #:
+					dd#applicant_permit
+			.section
+				h3 Vessel
+				dl.dl-horizontal
+					dt Name:
+					dd#vessel_name
+					dt Port:
+					dd#vessel_port
+					dt Length:
+					dd#vessel_length
+					dt HP:
+					dd#vessel_hp
+			.section
+				h3 Contact Info
+				dl.dl-horizontal
+					dt Email:
+					dd#contact_email
+					dt Home Phone:
+					dd#contact_home_phone
+					dt Cell Phone:
+					dd#contact_cell_phone
+					dt Res Address:
+					dd
+						span#res_address1
+						br
+						span#res_address2
+						br
+						span#res_city
+						span#res_state
+						span#res_zip
+					dt.mailing Mail Address:
+					dd.mailing
+						span#mail_address1
+						br
+						span#mail_address2
+						br
+						span#mail_city
+						span#mail_state
+						span#mail_zip
+			.section
+				h3 Application
+				dl.dl-horizontal
+					dt Applying For:
+					dd
+						span Drop Chain
+						input#drop_chain(type='checkbox', disabled)
+						br
+						span Belly Panel
+						input#belly_panel(type='checkbox', disabled)
+					dt Research?
+					dd#research
+					dt.research Number of Crew:
+					dd#num_crew.research
+					dt.research Partners?
+					dd#partners.research
+		.modal-footer
+			a.btn(href='#', data-dismiss="modal") Close
+			button#decline.btn.btn-danger.hide Decline
+			button#accept.btn.btn-success.hide Accept
+

@@ -616,3 +616,73 @@ $('.save-content').click(function(){
 		alert('Saved');
 	});
 });
+
+/*************************************************************
+  Admin: View Applications
+*************************************************************/
+$('.view-application').click(function(){
+	socket.emit('getApplication', $(this).attr('data-id'));
+	socket.on('getApplicationResp', function(app){
+		console.log(app);
+		// Applicant
+		$('#view_application_modal #applicant_name').text(app.applicant.name);
+		$('#view_application_modal #applicant_company').text(app.applicant.company);
+		$('#view_application_modal #applicant_permit').text(app.applicant.license);
+		// Vessel
+		$('#view_application_modal #vessel_name').text(app.vessel.name);
+		$('#view_application_modal #vessel_port').text(app.vessel.port);
+		$('#view_application_modal #vessel_length').text(app.vessel.length + 'ft');
+		$('#view_application_modal #vessel_hp').text(app.vessel.hp + 'HP');
+		// Contact
+		$('#view_application_modal #contact_email').text(app.contact.email);
+		$('#view_application_modal #contact_home_phone').text(app.contact.phone_home);
+		$('#view_application_modal #contact_cell_phone').text(app.contact.phone_cell);
+		$('#view_application_modal #res_address1').text(app.contact.res_address.line1);
+		$('#view_application_modal #res_address2').text(app.contact.res_address.line2);
+		$('#view_application_modal #res_city').text(app.contact.res_address.city + ', ');
+		$('#view_application_modal #res_state').text(app.contact.res_address.state + ' ');
+		$('#view_application_modal #res_zip').text(app.contact.res_address.zip);
+		if(app.contact.mail_address){
+			$('#view_application_modal #mail_address1').text(app.contact.mail_address.line1);
+			$('#view_application_modal #mail_address2').text(app.contact.mail_address.line2);
+			$('#view_application_modal #mail_city').text(app.contact.mail_address.city + ', ');
+			$('#view_application_modal #mail_state').text(app.contact.mail_address.state + ' ');
+			$('#view_application_modal #mail_zip').text(app.contact.mail_address.zip);
+			$('.mailing').show();
+		} else {
+			$('.mailing').hide();
+		}
+		// Vouchers
+		$('#view_application_modal #drop_chain').attr('checked', app.voucher.drop_chain);
+		$('#view_application_modal #belly_panel').attr('checked', app.voucher.belly_panel);
+		// Research
+		if(app.research){
+			$('#view_application_modal #research').text('Yes');
+			$('#view_application_modal #num_crew').text(app.research.num_crew);
+			$('#view_application_modal #partners').text(app.research.partners);
+			$('#view_application_modal .research').show();
+		} else {
+			$('#view_application_modal #research').text('No');
+			$('#view_application_modal .research').hide();
+		}
+		
+		if(app.status == 'open'){
+			$('#view_application_modal .modal-footer button').attr('data-id', app._id).show();
+		}
+		$('#view_application_modal').modal('show');
+	});
+});
+
+$('#view_application_modal #accept').click(function(){
+	socket.emit('acceptApplication', $(this).attr('data-id'));
+	socket.on('acceptApplicationResp', function(resp){
+		window.location = '/admin/actions/applications';
+	});
+});
+
+$('#view_application_modal #decline').click(function(){
+	socket.emit('declineApplication', $(this).attr('data-id'));
+	socket.on('declineApplicationResp', function(resp){
+		window.location = '/admin/actions/applications';
+	});
+});

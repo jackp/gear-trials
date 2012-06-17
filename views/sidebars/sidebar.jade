@@ -1,5 +1,8 @@
 .sidebar.span2
-	button#login_button.btn.btn-primary Login
+	- if(!session.user)
+		button#login_button.btn.btn-primary Login
+	- else
+		a(href='/admin') Admin
 	#login_area.hide
 		form(method="POST", action="/login")
 			label(for='email') Email
@@ -20,7 +23,7 @@
 				li 
 					a(href="#") Feedback from fisherman
 				li 
-					a.btn.btn-primary(href="#") Apply Now
+					a.btn.btn-primary(href="/apply") Apply Now
 		li 
 			a(href="#") RESEARCH
 			ul

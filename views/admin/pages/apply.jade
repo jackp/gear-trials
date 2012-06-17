@@ -1,0 +1,16 @@
+extends ../../layout
+
+block content
+	include ../../sidebars/admin_sidebar
+	input#page(type='hidden', value='#{page}')
+	.row.span10.offset2.page
+		.page-header
+			h1 Edit Application Criteria
+		textarea#criteria.tinymce 
+			!{content.criteria}
+		button.save-content.btn.btn-primary Save
+		.page-header
+			h1 Edit Application Instructions
+		textarea#instructions.tinymce 
+			!{content.instructions}
+		button.save-content.btn.btn-primary Save

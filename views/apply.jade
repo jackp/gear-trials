@@ -1,13 +1,14 @@
 extends layout
 
 block content
-	.row
+	include ./sidebars/sidebar
+	.row.span10.offset2
 		.page-header
-			h1 Criteria:
-	.row
-		.page-header
-			h1 Apply Online:
-	.row
+			h1 Apply for the Gear Trials Program:
+		h2 Criteria
+		!{content.criteria}
+		h2 Instructions
+		!{content.instructions}
 		form#application_form.form-horizontal.span6
 			fieldset
 				legend Applicant Information:

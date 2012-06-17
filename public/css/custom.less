@@ -10,7 +10,10 @@ body {
 	margin-top: 20px;
 	margin-bottom: 40px;
 }
-
+body#tinymce{
+	margin: 0;
+	padding: 10px;
+}
 textarea.tinymce{
 	width: 100%;
 }
@@ -245,6 +248,22 @@ table.tablesorter th.tablesorter-headerSortDown {
 		color: @grayLight;
 		font-size: 10px;
 		text-align: right
+	}
+}
+
+/*************************************************************
+  Modals
+*************************************************************/
+#view_application_modal{
+	width: 750px;
+	margin-left: -375px;
+	.section{
+		width: 50%;
+		float: left;
+
+		h3{
+			text-align: center;
+		}
 	}
 }
 

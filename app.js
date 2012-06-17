@@ -123,6 +123,18 @@ Users.find({}, function(err, docs){
   }
 });
 
+// Init page databases
+var pages = ['home', 'faq', 'apply'];
+
+Contents.find({}, function(err, docs){
+  if(!docs.length){
+    pages.forEach(function(page){
+      var Content = new Contents({page: page});
+      Content.save();
+    });
+  }
+});
+
 /*************************************************************
   Routes
 *************************************************************/
@@ -146,7 +158,6 @@ app.get('/500', function(req, res, next){
 // Login
 app.post('/login', function(req, res){
   var form = req.body;
-
   // Check for valid email
   Users.findOne({email: form.email}, function(err, doc){
     if(doc){
@@ -154,8 +165,7 @@ app.post('/login', function(req, res){
       if(bcrypt.compareSync(form.password, doc.password)){
         // Successful login
         delete doc.password;
-        req.session.user = doc;
-        req.session.admin = true;
+        req.session.user = doc.toObject();
         res.redirect('admin');
       }
     } else {
@@ -174,10 +184,20 @@ app.get('/logout', function(req, res){
 /***********************************************************
   Content Pages
 ***********************************************************/
+app.get('/apply', function(req, res){
+  Contents.findOne({page: 'apply'}, function(err, doc){
+    res.render('apply', { 
+      title: 'Apply Now',
+      page: 'apply',
+      content: doc.toObject() 
+    });
+  });
+});
 app.get('/faq', function(req, res){
   Contents.findOne({page: 'faq'}, function(err, doc){
     res.render('faq', { 
       title: 'FAQ',
+      page: 'faq',
       content: doc.toObject() 
     });
   });
@@ -206,6 +226,27 @@ app.get('/admin/pages/:page', restrict, function(req, res){
       content: content
     });
   });
+});
+// Applications
+app.get('/admin/actions/applications', restrict, function(req, res){
+  Applications.find({}, [], {sort: {date_submitted: -1}}, function(err, apps){
+    var open = [], accepted = [], declined = [];
+    apps.forEach(function(app){
+      if(app.status === 'open') {
+        open.push(app.toObject());
+      } else if(app.status === 'accepted'){
+        accepted.push(app.toObject());
+      } else if(app.status === 'declined'){
+        declined.push(app.toObject());
+      } 
+    });
+    res.render('admin/actions/applications', {
+      title: 'View Applications',
+      open_applications: open,
+      accepted_applications: accepted,
+      declined_applications: declined
+    });
+  }); 
 });
 
 app.get('/admin/all-vouchers', admin, function(req, res){
@@ -297,11 +338,6 @@ app.get('/about', function(req, res){
     title: 'About the Program'
   });
 });
-app.get('/apply', function(req, res){
-  res.render('apply', {
-    title: 'Apply Now'
-  });
-});
 
 app.get('/survey', function(req, res){
   res.render('survey', {
@@ -324,7 +360,27 @@ io.sockets.on('connection', function(socket){
       socket.emit('saveContentResp');
     });
   });
-
+  // Get Application Information
+  socket.on('getApplication', function(id){
+    Applications.findOne({_id: id}, function(err, doc){
+      if(err) console.log(err);
+      socket.emit('getApplicationResp', doc.toObject());
+    });
+  });
+  // Accept Application
+  socket.on('acceptApplication', function(id){
+    Applications.update({_id: id}, {$set: {status: 'accepted', date_accepted: new Date()}}, {upsert: true}, function(err){
+      if(err) console.log(err);
+      socket.emit('acceptApplicationResp');
+    });
+  });
+  // Decline Application
+  socket.on('declineApplication', function(id){
+    Applications.update({_id: id}, {$set: {status: 'declined', date_declined: new Date()}}, {upsert: true}, function(err){
+      if(err) console.log(err);
+      socket.emit('declineApplicationResp');
+    });
+  });
   socket.on('add_user', function(form){
     var new_user = new Users();
     new_user.name = form.name;
