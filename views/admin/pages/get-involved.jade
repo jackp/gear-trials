@@ -1,0 +1,25 @@
+extends ../../layout
+
+block content
+	include ../../sidebars/admin_sidebar
+	input#page(type='hidden', value='#{page}')
+	.span10.offset2
+		.page-header
+			h1 Edit How to get involved Page
+		h2 Eligibility Criteria
+		textarea#eligibility.tinymce 
+			!{content.eligibility}
+		button.save-content.btn.btn-primary Save
+		h2 Guidelines for participation
+		textarea#guidelines.tinymce 
+			!{content.guidelines}
+		button.save-content.btn.btn-primary Save
+		h2 Research Participation
+		textarea#research.tinymce 
+			!{content.research}
+		button.save-content.btn.btn-primary Save
+		h2 How to Apply
+		textarea#apply.tinymce 
+			!{content.apply}
+		button.save-content.btn.btn-primary Save
+

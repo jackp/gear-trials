@@ -1,8 +1,8 @@
 // Socket.io Initialization
 try{
-	var socket = io.connect('http://geartrials.org');
-} catch(err){
 	var socket = io.connect('http://localhost');
+} catch(err){
+	socket = io.connect('http://geartrials.org');
 }
 
 
@@ -17,6 +17,8 @@ $(window).load(function(){
 $(document).ready(function(){
 	// Initialize dropdowns
 	$('.dropdown-toggle').dropdown();
+	// Initialize Tablesorter
+	$('#admin-area table').tablesorter();
 	// Initialize TinyMCE
 	$('textarea.tinymce').tinymce({
     // Location of TinyMCE script
@@ -82,10 +84,6 @@ $(document).ready(function(){
     hide: 'fade',
     dialogClass: 'gallery-dialog'
 	});
-	/***********************************************************
-		Admin: General
-	***********************************************************/
-	$('#admin-area table').tablesorter();
 
 	/***********************************************************
 		Admin: User Management
@@ -494,7 +492,7 @@ $(document).ready(function(){
 	});
 
 
-
+	/*
 	$('button.accept-application').click(function(){
 		$this = $(this);
 		$('#accept_application_name').text($this.parent().siblings('.application-name').text());
@@ -532,7 +530,7 @@ $(document).ready(function(){
 			window.location.reload();
 		});
 	});
-
+	*/
 	/***********************************************************
 		Dealer: Process Voucher
 	***********************************************************/
@@ -658,11 +656,7 @@ $('#login_button').click(function(){
 /***********************************************************
 	Sidebar
 ***********************************************************/
-$('.sidebar .regular > li').hover(function(){
-	$(this).children('ul').slideDown();
-}, function(){
-	$(this).children('ul').hide();
-});
+
 
 /***********************************************************
 	Admin  - Pages
@@ -685,7 +679,6 @@ $('.save-content').click(function(){
 $('.view-application').click(function(){
 	socket.emit('getApplication', $(this).attr('data-id'));
 	socket.on('getApplicationResp', function(app){
-		console.log(app);
 		// Applicant
 		$('#view_application_modal #applicant_name').text(app.applicant.name);
 		$('#view_application_modal #applicant_company').text(app.applicant.company);

@@ -2,31 +2,23 @@ extends layout
 
 block content
 	include ./sidebars/sidebar
-	.span10.offset2.page
+	.span9.offset3
 		.page-header
 			h1 About Gear Trials
 				small Program description, goals, and objectives
 		!{content.about_gear_trials}
 		.page-header
-			a(name="gear-types")
-			h1 Gear Types
-		!{content.gear_types}
-		.page-header
 			a(name="how-program-works")
 			h1 How the Program Works
 		!{content.how_program_works}
 		.page-header
+			a(name="gear-types")
+			h1 Gear Types
+		!{content.gear_types}
+		.page-header
 			a(name="voucher-information")
 			h1 Voucher Information
 		!{content.voucher_information}
-		.page-header
-			a(name="how-to-apply")
-			h1 How to Apply
-		!{content.how_to_apply}
-		.page-header
-			a(name="guidelines")
-			h1 Guidelines for Participation
-		!{content.guidelines}
 		.page-header
 			a(name="suppliers")
 			h1 Gear Suppliers
@@ -35,10 +27,6 @@ block content
 			a(name="dates")
 			h1 Critical Dates
 		!{content.critical_dates}
-		.page-header
-			a(name="feedback")
-			h1 Feedback from Fisherman
-		!{content.feedback}
 
 
 

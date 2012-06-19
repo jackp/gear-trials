@@ -124,7 +124,18 @@ Users.find({}, function(err, docs){
 });
 
 // Init page databases
-var pages = ['home', 'faq', 'apply', 'about-program'];
+var pages = [
+  'home', 
+  'faq', 
+  'apply', 
+  'about-program', 
+  'get-involved',
+  'research',
+  'feedback',
+  'gallery',
+  'about',
+  'contact',
+  'survey'];
 
 Contents.find({}, function(err, docs){
   if(!docs.length){
@@ -138,17 +149,6 @@ Contents.find({}, function(err, docs){
 /*************************************************************
   Routes
 *************************************************************/
-// Home Page
-app.get('/', function(req, res){
-  Contents.findOne({page: 'home'}, function(err, doc){
-    res.render('index', { 
-      title: 'Gear Trials Project',
-      page: 'home',
-      admin: false,
-      content: doc.toObject() 
-    });
-  });
-});
 // Error Page
 app.get('/404', function(req, res, next){
   next();
@@ -157,24 +157,30 @@ app.get('/404', function(req, res, next){
 app.get('/500', function(req, res, next){
   next(new Error('keyboard cat!'));
 });
-// Login
+
 app.post('/login', function(req, res){
-  var form = req.body;
-  // Check for valid email
-  Users.findOne({email: form.email}, function(err, doc){
+  Users.findOne({email: req.body.email}, function(err, doc){
     if(doc){
-      // If found, check password
-      if(bcrypt.compareSync(form.password, doc.password)){
-        // Successful login
-        delete doc.password;
-        req.session.user = doc.toObject();
-        res.redirect('admin');
+      if(bcrypt.compareSync(req.body.password, doc.password)){
+        var user = doc.toObject();
+        delete user.password;
+        req.session.user = user;
+        res.redirect('/admin');
+      } else {
+        res.render('login', {
+          title: 'Login Error',
+          error: 'Incorrect password.'
+        });
       }
     } else {
-      // Send to /login with error message
+      res.render('login', {
+        title: 'Login Error',
+        error: 'Email not registered.'
+      });
     }
   });
 });
+
 // Logout
 app.get('/logout', function(req, res){
   req.session.destroy(function(err){
@@ -186,11 +192,95 @@ app.get('/logout', function(req, res){
 /***********************************************************
   Content Pages
 ***********************************************************/
+// Home Page
+app.get('/', function(req, res){
+  Contents.findOne({page: 'home'}, function(err, doc){
+    res.render('index', { 
+      title: 'Gear Trials Project',
+      page: 'home',
+      admin: false,
+      content: doc.toObject() 
+    });
+  });
+});
+
 app.get('/about-program', function(req, res){
   Contents.findOne({page: 'about-program'}, function(err, doc){
     res.render('about-program', { 
       title: 'About Gear Trials',
       page: 'about-program',
+      admin: false,
+      content: doc.toObject() 
+    });
+  });
+});
+
+app.get('/get-involved', function(req, res){
+  Contents.findOne({page: 'get-involved'}, function(err, doc){
+    res.render('get-involved', { 
+      title: 'Get Involved!',
+      page: 'get-involved',
+      admin: false,
+      content: doc.toObject() 
+    });
+  });
+});
+
+app.get('/research', function(req, res){
+  Contents.findOne({page: 'research'}, function(err, doc){
+    res.render('research', { 
+      title: 'Research',
+      page: 'research',
+      admin: false,
+      content: doc.toObject() 
+    });
+  });
+});
+
+app.get('/feedback', function(req, res){
+  Contents.findOne({page: 'feedback'}, function(err, doc){
+    res.render('feedback', { 
+      title: 'Fisherman Feedback',
+      page: 'feedback',
+      admin: false,
+      content: doc.toObject() 
+    });
+  });
+});
+
+app.get('/gallery', function(req, res){
+  res.render('gallery', {
+    title: 'Image Gallery'
+  });
+});
+
+app.get('/faq', function(req, res){
+  Contents.findOne({page: 'faq'}, function(err, doc){
+    res.render('faq', { 
+      title: 'FAQ',
+      page: 'faq',
+      admin: false,
+      content: doc.toObject() 
+    });
+  });
+});
+
+app.get('/about', function(req, res){
+  Contents.findOne({page: 'about'}, function(err, doc){
+    res.render('about', { 
+      title: 'About the CFRF',
+      page: 'about',
+      admin: false,
+      content: doc.toObject() 
+    });
+  });
+});
+
+app.get('/contact', function(req, res){
+  Contents.findOne({page: 'contact'}, function(err, doc){
+    res.render('contact', { 
+      title: 'Contact Us',
+      page: 'contact',
       admin: false,
       content: doc.toObject() 
     });
@@ -207,11 +297,12 @@ app.get('/apply', function(req, res){
     });
   });
 });
-app.get('/faq', function(req, res){
-  Contents.findOne({page: 'faq'}, function(err, doc){
-    res.render('faq', { 
-      title: 'FAQ',
-      page: 'faq',
+
+app.get('/survey', function(req, res){
+  Contents.findOne({page: 'survey'}, function(err, doc){
+    res.render('survey', { 
+      title: 'Fisherman Survey Form',
+      page: 'survey',
       admin: false,
       content: doc.toObject() 
     });
@@ -321,44 +412,7 @@ app.get('/admin/applications', admin, function(req, res){
     });
   }); 
 });
-app.get('/admin/master-reports', admin, function(req, res){
-  res.render('admin/master-reports', {
-    title: 'Admin: Master Reports'
-  });
-});
 
-app.get('/process-voucher', restrict, function(req, res){
-  res.render('dealer/process-voucher', {
-    title: 'Process Voucher'
-  });
-});
-app.get('/vouchers', restrict, function(req, res){
-  res.render('dealer/vouchers', {
-    title: 'Vouchers'
-  });
-});
-app.get('/reports', restrict, function(req, res){
-  res.render('dealer/reports', {
-    title: 'Reports'
-  });
-});
-
-app.get('/gallery', function(req, res){
-  res.render('gallery', {
-    title: 'Image Gallery'
-  });
-});
-app.get('/about', function(req, res){
-  res.render('about', {
-    title: 'About the Program'
-  });
-});
-
-app.get('/survey', function(req, res){
-  res.render('survey', {
-    title: 'Fisherman Survey Form'
-  });
-});
 
 
 
@@ -386,6 +440,65 @@ io.sockets.on('connection', function(socket){
   socket.on('acceptApplication', function(id){
     Applications.update({_id: id}, {$set: {status: 'accepted', date_accepted: new Date()}}, {upsert: true}, function(err){
       if(err) console.log(err);
+      // Create Vouchers
+      Applications.findOne({_id: id}, function(err, doc){
+        if(err) console.log(err);
+        var app = doc.toObject();
+
+        // Drop Chain
+        if(app.voucher.drop_chain){
+          var voucher1 = new Vouchers();
+          voucher1.number = Date.now().toString().substr(7);
+
+          if(app.vessel.length >= 50){
+            voucher1.type = 'Drop Chain - Large';
+            voucher1.amount = 800;
+          } else {
+            voucher1.type = 'Drop Chain - Small';
+            voucher1.amount = 450;
+          }
+
+          voucher1.owner = {
+            name: app.applicant.name,
+            vessel: app.vessel.name,
+            permit: app.applicant.license
+          };
+          voucher1.contact = {
+            email: app.contact.email,
+            home_phone: app.contact.phone_home,
+            cell_phone: app.contact.phone_cell,
+            mailing_address: app.contact.mail_address || app.contact.res_address
+          };
+          voucher1.issued_date = new Date();
+          voucher1.save(function(err){
+            if(err) console.log(err);
+          });
+        }
+        // Belly Panel
+        if(app.voucher.belly_panel){
+          var voucher2 = new Vouchers();
+          voucher2.number = Date.now().toString().substr(7);
+          voucher2.type = 'Belly Panel';
+          voucher2.amount = 500;
+
+          voucher2.owner = {
+            name: app.applicant.name,
+            vessel: app.vessel.name,
+            permit: app.applicant.license
+          };
+          voucher2.contact = {
+            email: app.contact.email,
+            home_phone: app.contact.phone_home,
+            cell_phone: app.contact.phone_cell,
+            mailing_address: app.contact.mail_address || app.contact.res_address
+          };
+          voucher2.issued_date = new Date();
+          voucher2.save(function(err){
+            if(err) console.log(err);
+          });
+        }
+      });
+      
       socket.emit('acceptApplicationResp');
     });
   });

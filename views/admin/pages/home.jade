@@ -3,14 +3,14 @@ extends ../../layout
 block content
 	include ../../sidebars/admin_sidebar
 	input#page(type='hidden', value='#{page}')
-	.row.span10.offset2.page
+	.span10.offset2
 		.page-header
 			h1 Edit Home Page
 		h2 Welcome Text
 		textarea#welcome_text.tinymce 
 			!{content.welcome_text}
 		button.save-content.btn.btn-primary Save
-		h2 News Text
-		textarea#news.tinymce 
-			!{content.news}
+		h2 Announcements
+		textarea#announcements.tinymce 
+			!{content.announcements}
 		button.save-content.btn.btn-primary Save

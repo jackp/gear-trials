@@ -3,7 +3,7 @@
 ***********************************************************/
 body {
 	margin-top: 120px;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 }
 body#tinymce{
 	margin: 0;
@@ -27,17 +27,13 @@ textarea.tinymce{
 a[name]{
 	position: absolute;
 	left: -1000px;
-	margin-top: -120px;
+	margin-top: -100px
 }
 small{
 	color: @gray;
 	margin-left: 20px;
 }
-.page{
-	margin-bottom: 20px;
-	padding: 20px;
-	border: 1px solid #D1D3D4;
-}
+
 span.caret{
 	margin-top: 8px;
 	margin-left: 3px;
@@ -46,11 +42,64 @@ span.caret{
 	Header
 ***********************************************************/
 #header{
-	img{
-		margin-left: 230px;
+	border-top: 5px solid @grayDark;
+	
+	.container{
+		position: relative;
+
+		p{
+			display: inline-block;
+			margin-left: 30px;
+		}
+		#buttons{
+			position: absolute;
+			top: 0;
+			right: 0;
+
+			a{
+				background-color: @grayDark;
+				color: @white;
+				padding: 5px 10px;
+				margin-left: 10px;
+				.border-radius(0 0 3px 3px);
+			}
+		}
+
+		#login_area{
+			display: none;
+			form{
+				padding: 10px;
+				float: right;
+				margin-top: 10px;
+				//background-color: @white;
+				//border: 1px solid @grayDark;
+				.border-radius(3px);
+				input{
+					display: block;
+					margin-right: 0;
+				}
+				input.btn{
+					float: right;
+					margin: 10px 0;
+				}
+				p.error{
+					color: @red;
+				}
+			}
+		}
 	}
-	.btn-group{
-		padding-bottom: 10px;
+}
+
+/***********************************************************
+	Footer
+***********************************************************/
+#footer{
+	color: @grayLight;
+	height: 20px;
+	text-align: right;
+	.navbar-inner{
+		background-image: none;
+		background-color: @grayDark;
 	}
 }
 /***********************************************************
@@ -58,11 +107,6 @@ span.caret{
 ***********************************************************/
 .sidebar{
 	position: fixed;
-	width: 190px;
-	margin-left: 10px;
-	.btn{
-		width: 75%;
-	}
 	.menu{
 		list-style-type: none;
 		margin: 0;
@@ -86,9 +130,6 @@ span.caret{
 				}
 			}
 		}
-	}
-	.menu.regular > li ul{
-		display: none;
 	}
 }
 /***********************************************************
@@ -184,6 +225,13 @@ form#survey_form{
 		width: 33%;
 		margin-left: 33%;
 	}
+}
+
+/***********************************************************
+	Admin Pages
+***********************************************************/
+.save-content{
+	margin-top: 10px;
 }
 
 // Tablesorter Styles

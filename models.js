@@ -22,16 +22,21 @@ exports.Users = mongoose.model('Users', Users);
 	Voucher Schema
 ***********************************************************/
 var Vouchers = new Schema({
-	number: { type: String },
-	type: { type: String},
+	number: { type: String, unique: true },
+	type: { type: String}, //['Drop Chain - Large', 'Drop Chain - Small', 'Belly Panel']
 	amount: { type: Number},
-	name: {type: String},
-	vessel: {type: String},
-	permit: {type: String},
-	email : { type: String},
-	phone : {type: String},
+	owner: {
+		name: {type: String},
+		vessel: {type: String},
+		permit: {type: String}
+	},
+	contact: {
+		email: {type: String},
+		home_phone: {type: String},
+		cell_phone: {type: String},
+		mailing_address: {type: String}
+	},
 	issued_date: {type: Date},
-	expiration_date: {type: Date},
 	status: {type: String, default: 'open'}, // Open, Used
 	used_date: {type: Date},
 	used_location: {type: String}

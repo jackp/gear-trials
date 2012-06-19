@@ -2,7 +2,7 @@ extends layout
 
 block content
 	include ./sidebars/sidebar
-	.span10.offset2
+	.span9.offset3
 		.page
 			#slider.nivoSlider.theme-default
 				img(src='/img/homepage-photo.png')
@@ -12,3 +12,4 @@ block content
 		.page
 			h1 Announcements
 				small Meeting announcements and program updates
+			!{content.announcements}

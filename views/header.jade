@@ -2,54 +2,32 @@
 	.navbar-inner
 		.container
 			a(href='/')
-				img(src='/img/header.png')
-			.pull-right
+				img(src='/img/logo.png', height='80')
+			p A project of the Commercial Fisheries Research Foundation
+			#buttons
+				a(href='/apply') Apply Now
+				a(href='/survey') Submit Survey
 				- if(session.user)
-					.btn-group
-						button.btn.dropdown-toggle(data-toggle='dropdown', href='#') #{session.user.name}
-							span.caret
-						ul.dropdown-menu
-							li
-								a(href='/admin') Admin
-							li
-								a(href='/logout') Logout
-				- else
-					a.btn(href='#login_modal', data-toggle="modal") Login
-					
-
-//
-	.header
-		#title.pull-left
-			h1
-				small Welcome to the
-				span Gear Trials Program
-		#user-area.pull-right
-			- if(session.user)
-				p
-					span #{session.user.name}
-					br
 					a(href='/admin') Admin
 					a(href='/logout') Logout
-			- else
-				a(href='#login_modal', data-toggle="modal") Login
-			.span2
+				- else
+					a#login_button(href='#') Login
+				#login_area
+					form#login_form.well(method='POST', action='/login')
+						input#email(type='text', name='email', placeholder='Email')
+						input#password(type='password', name='password', placeholder='Password')
+						input.btn(type='submit', value="Login")
+
+			//
 				.pull-right
 					- if(session.user)
-						p #{session.user.name}
-						a(href='/admin') Admin
-						a(href='/logout') Logout
+						.btn-group
+							button.btn.dropdown-toggle(data-toggle='dropdown', href='#') #{session.user.name}
+								span.caret
+							ul.dropdown-menu
+								li
+									a(href='/admin') Admin
+								li
+									a(href='/logout') Logout
 					- else
-						a(href='#login_modal', data-toggle="modal") Login
-#login_modal.modal.hide
-	.modal-header
-		h3 Login
-	form(method="POST", action="/login")
-		.modal-body
-			.form
-				label(for='email') Email
-				input#email(type='text', name="email")
-				label.control-label(for='password') Password:
-				input#password(type='password', name="password")
-		.modal-footer
-			a.btn(href='#', data-dismiss="modal") Cancel
-			input.btn.btn-primary(type='submit', value='Login')
+						a.btn(href='#login_modal', data-toggle="modal") Login
