@@ -1,5 +1,10 @@
 // Socket.io Initialization
-var socket = io.connect('http://localhost');
+try{
+	var socket = io.connect('http://geartrials.org');
+} catch(err){
+	var socket = io.connect('http://localhost');
+}
+
 
 // Nivo Slider
 $(window).load(function(){
