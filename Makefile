@@ -1,2 +1,5 @@
 connect:
-	ssh -i ~/.ssh/jack.pem ubuntu@184.72.251.248
+	ssh jack@198.101.196.100
+
+deploy:
+	git push production master
