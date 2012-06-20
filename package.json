@@ -12,6 +12,7 @@
     "mongoose": "latest",
     "connect-mongodb": "latest",
     "socket.io": "latest",
-    "bcrypt": "latest"
+    "bcrypt": "latest",
+    "moment": "latest"
   }
 }

@@ -1,0 +1,41 @@
+extends ../../layout
+
+block content
+	include ../../sidebars/dealer_sidebar
+	#reports.row.span10.offset2
+		.page-header
+			h1 Monthly Report: #{date}
+				small #{session.user.location}
+		button.btn.btn-primary Print Report
+		select#month
+			each option in select_array
+				option(data-month='#{option.month}', data-year='#{option.year}') #{option.human}
+		table.table.table-striped.tablesorter
+			thead
+				tr
+					th Number
+					th Used Date
+					th Owner
+					th Type
+					th Amount
+			each voucher in vouchers
+				tr
+					td= voucher.number
+					td= voucher.used_date.toDateString()
+					td
+						span Name: #{voucher.owner.name}
+						br
+						span Vessel: #{voucher.owner.vessel}
+					td= voucher.type
+					td= '$' + voucher.amount
+		#totals
+			p Total Drop Chain - Large: #{dcl} &times; $800
+				span.total= '$' + dcl*800
+			p Total Drop Chain - Small: #{dcs} &times; $450
+				span.total= '$' + dcs*450
+			p Total Belly Panel: #{bp} &times; $500
+				span.total= '$' + bp*800
+			p Total
+				span(style='border-top: 1px solid #333;').total= '$' + total
+
+					

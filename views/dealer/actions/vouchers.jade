@@ -1,0 +1,29 @@
+extends ../../layout
+
+block content
+	include ../../sidebars/dealer_sidebar
+	.row.span10.offset2.page
+		.page-header
+			h1 View Vouchers
+				small All vouchers used at #{session.user.location}
+		table.table.table-striped.tablesorter
+			thead
+				tr
+					th Number
+					th Used Date
+					th Type
+					th Owner
+			each voucher in vouchers
+				tr
+					td= voucher.number
+					td= voucher.used_date.toDateString()
+					td
+						span Type: #{voucher.type}
+						br
+						span Amount: $#{voucher.amount}
+					td
+						span Name: #{voucher.owner.name}
+						br
+						span Vessel: #{voucher.owner.vessel}
+						br
+						span Permit #: #{voucher.owner.permit}

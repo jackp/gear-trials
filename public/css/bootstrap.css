@@ -4431,6 +4431,20 @@ table.tablesorter th.tablesorter-headerSortDown {
 
 }
 /***********************************************************
+	Dealer Pages
+***********************************************************/
+#reports select#month {
+  margin-left: 20px;
+  margin-bottom: 0;
+}
+#reports #totals {
+  text-align: right;
+}
+#reports #totals .total {
+  margin-left: 40px;
+  font-weight: bold;
+}
+/***********************************************************
 	Footer
 ***********************************************************/
 .footer {

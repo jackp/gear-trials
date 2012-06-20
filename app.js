@@ -4,6 +4,7 @@
 var express = require('express')
   , mongoose = require('mongoose')
   , bcrypt = require('bcrypt')
+  , moment = require('moment')
   , MongoStore = require('connect-mongodb')
   , sessionStore = new MongoStore({
     url: 'mongodb://localhost/gear-trials',
@@ -423,6 +424,61 @@ app.get('/dealer', restrict, function(req, res){
 app.get('/dealer/actions/process', restrict, function(req, res){
   res.render('dealer/actions/process', {
     title: 'Process Voucher'
+  });
+});
+
+// View Vouchers
+app.get('/dealer/actions/vouchers', restrict, function(req, res){
+  Vouchers.find({used_location: req.session.user.location}, function(err, docs){
+    res.render('dealer/actions/vouchers', {
+      title: 'Dealer: View Vouchers',
+      vouchers: docs
+    });
+  });
+});
+
+// View Vouchers
+app.get('/dealer/actions/reports', restrict, function(req, res){
+  var now = moment();
+  var month_start = now.date(1).sod();
+  var month_end = now.date(now.daysInMonth()).eod();
+  Vouchers.find({used_location: req.session.user.location, used_date: { $gte: month_start, $lte: month_end}}, [], {sort: {used_date: -1}},function(err, docs){
+    var dcl = 0, dcs = 0, bp = 0, total = 0;
+    docs.forEach(function(v){
+      if(v.type == 'Drop Chain - Large'){
+        dcl++;
+        total += v.amount;
+      } else if(v.type == 'Drop Chain - Small'){
+        dcs++;
+        total += v.amount;
+      } else if(v.type == 'Belly Panel'){
+        bp++;
+        total += v.amount;
+      }
+    });
+
+    var month = moment();
+    var select_array = [];
+    while(month >= moment([2012, 5, 1])){
+      select_array.push({
+        month: month.month(),
+        year: month.year(),
+        human: month.format('MMMM')
+      });
+      month.subtract('months', 1);
+    }
+    console.log(select_array);
+    res.render('dealer/actions/reports', {
+      title: 'Dealer: Report',
+      month: now.month(),
+      date: now.format('MMMM') + ' ' + now.format('YYYY'),
+      vouchers: docs,
+      dcl: dcl,
+      dcs: dcs,
+      bp: bp,
+      total: total,
+      select_array: select_array
+    });
   });
 });
 
