@@ -1,0 +1,30 @@
+extends ../../layout
+
+block content
+	include ../../sidebars/dealer_sidebar
+	.span9.offset3
+		.page-header
+			h1 Process Voucher
+		form#voucher_lookup.form-inline.well
+			input#user_location(type='hidden', value="#{session.user.location}")
+			label Enter Voucher Number:
+			input(type='text', maxlength="6")
+			input.btn.btn-primary.btn-large(type='submit', value='Submit')
+		#lookup_results
+	#process_voucher_modal.modal.hide
+		.modal-header
+			h3 Confirm Voucher User
+		.modal-body
+			p Please confirm that you would like submit the following voucher. Once confirmed, this voucher cannot be used again
+			dl.dl-horizontal
+				dt Number:
+				dd#voucher_number
+				dt Owner Name:
+				dd#voucher_name
+				dt Type:
+				dd#voucher_type
+				dt Amount:
+				dd#voucher_amount
+		.modal-footer
+			a.btn(href='#', data-dismiss="modal") Cancel
+			a#process_voucher_confirm.btn.btn-primary(href='#') Confirm

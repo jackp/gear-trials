@@ -1,0 +1,34 @@
+extends ../../layout
+
+block content
+	include ../../sidebars/admin_sidebar
+	.row.span10.offset2.page
+		.page-header
+			h1 Add Users
+		form#add_user.form-horizontal(method='POST', action='/adduser')
+			.control-group
+				label.control-label(for="name") Name:
+				.controls
+					input#name.input-xlarge(type='text', name='name')
+					p.help-block Full name of user
+			.control-group
+				label.control-label(for="email") Email Address:
+				.controls
+					input#email.input-xlarge(type='text', name='email')
+					p.help-block This email address will be used by the user to login, as well as for any communications.
+			.control-group
+				label.control-label(for="password") Password:
+				.controls
+					input#password.input-xlarge(type='password', name='password')
+					p.help-block Please choose a password for the user. Please make sure to write this down to provide to the user!
+			.control-group
+				label.control-label(for="location") Location:
+				.controls
+					select#location(name='location')
+						option(value='')
+						option(value='CFRF') CFRF
+						option(value='Superior Trawl') Superior Trawl
+						option(value="Reidar's Manufacturing") Reidar's Manufacturing
+			.control-group
+				.controls
+					input.input-xlarge(type='submit', value='Add User')

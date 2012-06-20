@@ -13,7 +13,8 @@ var Users = new Schema({
 	email	: { type: String },
 	password : { type: String},
 	location: { type: String},
-	admin : { type: Boolean	}
+	admin : { type: Boolean	},
+	dealer: {type: Boolean}
 });
 
 exports.Users = mongoose.model('Users', Users);
@@ -34,7 +35,13 @@ var Vouchers = new Schema({
 		email: {type: String},
 		home_phone: {type: String},
 		cell_phone: {type: String},
-		mailing_address: {type: String}
+		mailing_address: {
+			line1: {type: String},
+			line2: {type: String},
+			city: {type: String},
+			state: {type: String},
+			zip: {type: String}
+		}
 	},
 	issued_date: {type: Date},
 	status: {type: String, default: 'open'}, // Open, Used

@@ -165,7 +165,12 @@ app.post('/login', function(req, res){
         var user = doc.toObject();
         delete user.password;
         req.session.user = user;
-        res.redirect('/admin');
+        if(user.admin){
+          res.redirect('/admin');
+        } else {
+          res.redirect('/dealer');
+        }
+        
       } else {
         res.render('login', {
           title: 'Login Error',
@@ -178,6 +183,28 @@ app.post('/login', function(req, res){
         error: 'Email not registered.'
       });
     }
+  });
+});
+
+app.post('/adduser', function(req, res){
+  var form = req.body,
+      salt = bcrypt.genSaltSync(10);
+  console.log(form);
+  var user = new Users();
+  user.name = form.name;
+  user.email = form.email;
+  user.password = bcrypt.hashSync(form.password, salt);
+  user.location = form.location;
+  if(form.location == 'CFRF'){
+    user.admin = true;
+  } else {
+    user.dealer = true;
+  }
+  console.log(user);
+  user.save(function(err){
+    if(err) console.log(err);
+
+    res.redirect('/admin/actions/users');
   });
 });
 
@@ -312,7 +339,7 @@ app.get('/survey', function(req, res){
   Admin Pages
 ***********************************************************/
 // Admin Welcome Page
-app.get('/admin', restrict, function(req, res){
+app.get('/admin', admin, function(req, res){
   res.render('admin/admin', {
     title: 'Admin Page',
     page: 'admin',
@@ -320,7 +347,7 @@ app.get('/admin', restrict, function(req, res){
   });
 });
 // Pages
-app.get('/admin/pages/:page', restrict, function(req, res){
+app.get('/admin/pages/:page', admin, function(req, res){
   req.session.page = req.params.page;
   Contents.findOne({page: req.params.page}, function(err, doc){
     if(doc){
@@ -337,7 +364,7 @@ app.get('/admin/pages/:page', restrict, function(req, res){
   });
 });
 // Applications
-app.get('/admin/actions/applications', restrict, function(req, res){
+app.get('/admin/actions/applications', admin, function(req, res){
   Applications.find({}, [], {sort: {date_submitted: -1}}, function(err, apps){
     var open = [], accepted = [], declined = [];
     apps.forEach(function(app){
@@ -358,11 +385,11 @@ app.get('/admin/actions/applications', restrict, function(req, res){
   }); 
 });
 
-app.get('/admin/actions/vouchers', restrict, function(req, res){
+app.get('/admin/actions/vouchers', admin, function(req, res){
   Vouchers.find({}, [], {sort: {issued_date: -1}}, function(err, vouchers){
     var open = [], used = [];
     vouchers.forEach(function(voucher){
-      if((voucher.status === 'open') && (new Date(voucher.expiration_date) >= new Date())) {
+      if(voucher.status === 'open') {
         open.push(voucher);
       } else if(voucher.status === 'used') {
         used.push(voucher);
@@ -375,46 +402,29 @@ app.get('/admin/actions/vouchers', restrict, function(req, res){
     });
   });
 });
-app.get('/admin/issue-voucher', admin, function(req, res){
-  res.render('admin/issue-voucher', {
-    title: 'Admin: Issue New Voucher'
+
+app.get('/admin/actions/users', admin, function(req, res){
+  res.render('admin/actions/users', {
+    title: 'Admin: Users'
   });
 });
-app.get('/admin/users', admin, function(req, res){
-  // Get Users
-  var query = Users.find({});
-  query.where('_id').ne(req.session.user._id);
-  query.exclude('password');
-  query.run(function(err, users){
-    res.render('admin/users', {
-      title: 'Admin: User Management',
-      users: users
-    });
+
+/***********************************************************
+  Dealer Pages
+***********************************************************/
+// Dealer Welcome Page
+app.get('/dealer', restrict, function(req, res){
+  res.render('dealer/admin', {
+    title: 'Dealer Page',
+    page: 'dealer'
   });
 });
-app.get('/admin/applications', admin, function(req, res){
-  Applications.find({}, [], {sort: {date_submitted: -1}}, function(err, apps){
-    var open = [], accepted = [], declined = [];
-    apps.forEach(function(app){
-      if(app.status === 'open') {
-        open.push(app);
-      } else if(app.status === 'accepted'){
-        accepted.push(app);
-      } else if(app.status === 'declined'){
-        declined.push(app);
-      } 
-    });
-    res.render('admin/applications', {
-      title: 'Admin: Applications',
-      open_applications: open,
-      accepted_applications: accepted,
-      declined_applications: declined
-    });
-  }); 
+// Process Voucher
+app.get('/dealer/actions/process', restrict, function(req, res){
+  res.render('dealer/actions/process', {
+    title: 'Process Voucher'
+  });
 });
-
-
-
 
 /*************************************************************
   Socket.io Events

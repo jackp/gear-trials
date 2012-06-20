@@ -3,7 +3,8 @@ extends ../../layout
 block content
 	include ../../sidebars/admin_sidebar
 	.row.span10.offset2.page
-		h1 Vouchers
+		.page-header
+			h1 Vouchers
 		ul.nav.nav-tabs
 				li.active
 					a(href='#open', data-toggle="tab") Open
@@ -31,15 +32,23 @@ block content
 									br
 									span Amount: $#{voucher.amount}
 								td
-									span Name: #{voucher.name}
+									span Name: #{voucher.owner.name}
 									br
-									span Vessel: #{voucher.vessel}
+									span Vessel: #{voucher.owner.vessel}
 									br
-									span Permit #: #{voucher.permit}
+									span Permit #: #{voucher.owner.permit}
 								td
-									#{voucher.email}
+									span Email: #{voucher.contact.email}
 									br
-									#{voucher.phone}
+									span Home: #{voucher.contact.home_phone}
+									br
+									span Cell: #{voucher.contact.cell_phone}
+									br
+									span Mailing Address:
+									br
+									#{voucher.contact.mailing_address.line1}, #{voucher.contact.mailing_address.line2}
+									br
+									#{voucher.contact.mailing_address.city}, #{voucher.contact.mailing_address.state} #{voucher.contact.mailing_address.zip}
 								td
 									a.btn Print Voucher
 				#used.tab-pane

@@ -1,40 +1,12 @@
 .sidebar.span2
-	button#login_button.btn.btn-primary Login
-	#login_area.hide
-		form(method="POST", action="/login")
-			label(for='email') Email
-			input#email(type='text', name="email")
-			label.control-label(for='password') Password:
-			input#password(type='password', name="password")
-			input.btn.btn-primary(type='submit', value='Login')
 	ul.menu
 		li
-			a(href="/about") ABOUT THE PROGRAM
+			a.btn(href='/') Return to Home
+		li ACTIONS
 			ul
 				li
-					a(href='/about#program') How the program works
-				li 
-					a(href='/about#get-involved') How to get involved
+					a(href='/dealer/actions/process') Process Voucher
 				li
-					a(href="#") Voucher Information
-				li 
-					a(href="#") Feedback from fisherman
-				li 
-					a.btn.btn-primary(href="#") Apply Now
-		li 
-			a(href="#") RESEARCH
-			ul
-				li 
-					a(href="#") Scientific Studies
-				li 
-					a(href="#") Quarterly Reports
-				li 
-					a.btn.btn-primary(href="#") Submit Survey
-		li 
-			a(href="#") NEWS & ANNOUNCEMENTS
-		li 
-			a(href="/gallery") GALLERY
-		li 
-			a(href="/faq") FAQ
-		li
-			a(href="#") ABOUT US
+					a(href='/dealer/actions/vouchers') View Vouchers
+				li
+					a(href='/dealer/actions/reports') Monthly Reports

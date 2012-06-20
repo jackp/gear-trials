@@ -18,7 +18,7 @@ $(document).ready(function(){
 	// Initialize dropdowns
 	$('.dropdown-toggle').dropdown();
 	// Initialize Tablesorter
-	$('#admin-area table').tablesorter();
+	$('.tablesorter').tablesorter();
 	// Initialize TinyMCE
 	$('textarea.tinymce').tinymce({
     // Location of TinyMCE script
@@ -88,7 +88,7 @@ $(document).ready(function(){
 	/***********************************************************
 		Admin: User Management
 	***********************************************************/
-	
+	/*
 	// Add User Flow
 	$('#add_user_button').click(function(e){
 		$name = $('#add_user #name');
@@ -140,7 +140,7 @@ $(document).ready(function(){
 			window.location.reload();
 		});
 	});
-
+*/
 	// Remove User Flow
 	$('button.remove-user-button').click(function(e){
 		var name = $(this).parent().siblings('.user-name').text();
@@ -534,109 +534,7 @@ $(document).ready(function(){
 	/***********************************************************
 		Dealer: Process Voucher
 	***********************************************************/
-	$('#voucher_lookup').submit(function(){
-		$input = $(this).children('input[type=text]');
-		if($input.val().length === 16){
-			socket.emit("voucher_lookup", $input.val());
-			socket.on('voucher_lookup_resp', function(resp){
-				if(resp){
-					if((resp.status === 'open') && (new Date(resp.expiration_date) >= new Date())) {
-						$('#lookup_results').html(
-							'<div class="alert alert-success">\
-								<a class="close" data-dismiss="alert" href="#">×</a>\
-								<h4 class="alert-heading">Voucher Found!</h4>\
-								<dl class="dl-horizontal">\
-									<dt>Voucher Holder:</dt>\
-									<dd><i>Name: </i>' + resp.name + '<br><i>Vessel: </i>' + resp.vessel + '</dd>\
-									<dt>Contact Info:</dt>\
-									<dd>' +  resp.email + '<br>' + resp.phone + '</dd>\
-									<dt>Voucher Type:</dt>\
-									<dd>' + resp.type + '</dd>\
-									<dt>Amount:</dt>\
-									<dd>$' + resp.amount + '</dd>\
-									<dt>Issued Date:</dt>\
-									<dd>' + new Date(resp.issued_date).toDateString() + '</dd>\
-									<dt>Expiration Date:</dt>\
-									<dd>' + new Date(resp.expiration_date).toDateString() + '</dd>\
-								</dl>\
-								<button class="btn btn-primary btn-large process-voucher" data-id="' + resp.number + '" data-name="' + resp.name + '" data-type="' + resp.type + '" data-amount="' + resp.amount + '">Use Voucher</button>\
-							</div>');
-						$('button.process-voucher').click(function(){
-							$this = $(this);
-							$('#process_voucher_modal #voucher_number').text($this.attr('data-id'));
-							$('#process_voucher_modal #voucher_name').text($this.attr('data-name'));
-							$('#process_voucher_modal #voucher_type').text($this.attr('data-type'));
-							$('#process_voucher_modal #voucher_amount').text('$' + $this.attr('data-amount'));
-							$('#process_voucher_modal #process_voucher_confirm').attr('data-id', $this.attr('data-id'));
-							$('#process_voucher_modal').modal('show');
-						});
-
-						$('#process_voucher_confirm').click(function(){
-							socket.emit('process_voucher', $(this).attr('data-id'), $('#user_location').val());
-							socket.on('process_voucher_resp', function(){
-								window.location = '/vouchers';
-							});
-						});
-					} else if(resp.status === 'used') {
-						$('#lookup_results').html(
-							'<div class="alert alert-error">\
-								<a class="close" data-dismiss="alert" href="#">×</a>\
-								<h4 class="alert-heading">Voucher Already Used.</h4>\
-								<dl class="dl-horizontal">\
-									<dt>Voucher Holder:</dt>\
-									<dd><i>Name: </i>' + resp.name + '<br><i>Vessel: </i>' + resp.vessel + '</dd>\
-									<dt>Contact Info:</dt>\
-									<dd>' +  resp.email + '<br>' + resp.phone + '</dd>\
-									<dt>Voucher Type:</dt>\
-									<dd>' + resp.type + '</dd>\
-									<dt>Amount:</dt>\
-									<dd>$' + resp.amount + '</dd>\
-									<dt>Issued Date:</dt>\
-									<dd>' + new Date(resp.issued_date).toDateString() + '</dd>\
-									<dt>Date Used:</dt>\
-									<dd><b>' + new Date(resp.used_date).toDateString() + '</b></dd>\
-									<dt>Location Used:</dt>\
-									<dd><b>' + resp.used_location + '</b></dd>\
-								</dl>\
-							</div>');
-					} else {
-						$('#lookup_results').html(
-							'<div class="alert alert-error">\
-								<a class="close" data-dismiss="alert" href="#">×</a>\
-								<h4 class="alert-heading">Voucher Expired.</h4>\
-								<dl class="dl-horizontal">\
-									<dt>Voucher Holder:</dt>\
-									<dd><i>Name: </i>' + resp.name + '<br><i>Vessel: </i>' + resp.vessel + '</dd>\
-									<dt>Contact Info:</dt>\
-									<dd>' +  resp.email + '<br>' + resp.phone + '</dd>\
-									<dt>Voucher Type:</dt>\
-									<dd>' + resp.type + '</dd>\
-									<dt>Amount:</dt>\
-									<dd>$' + resp.amount + '</dd>\
-									<dt>Issued Date:</dt>\
-									<dd>' + new Date(resp.issued_date).toDateString() + '</dd>\
-									<dt>Expiration Date:</dt>\
-									<dd><b>' + new Date(resp.expiration_date).toDateString() + '</b></dd>\
-								</dl>\
-							</div>');
-					}
-				} else {
-					$('#lookup_results').html(
-						'<div class="alert alert-error">\
-							<a class="close" data-dismiss="alert" href="#">×</a>\
-							<h4 class="alert-heading">Voucher not found.</h4>\
-						</div>');
-				}
-			});
-		} else {
-			$('#lookup_results').html(
-				'<div class="alert alert-block">\
-					<a class="close" data-dismiss="alert" href="#">×</a>\
-					<h4 class="alert-heading">Voucher must be 16 digits long.</h4>\
-				</div>');
-		}
-		return false;
-	});
+	
 
 	/***********************************************************
 		TESTING ONLY
@@ -652,11 +550,6 @@ $(document).ready(function(){
 $('#login_button').click(function(){
 	$('#login_area').toggle();
 });
-
-/***********************************************************
-	Sidebar
-***********************************************************/
-
 
 /***********************************************************
 	Admin  - Pages
@@ -740,4 +633,119 @@ $('#view_application_modal #decline').click(function(){
 	socket.on('declineApplicationResp', function(resp){
 		window.location = '/admin/actions/applications';
 	});
+});
+
+/***********************************************************
+	Admin: Add User
+***********************************************************/
+$('form#add_user').submit(function(){
+	var $name = $('#add_user #name'),
+			$email = $('#add_user #email'),
+			$password = $('#add_user #password'),
+			$location = $('#add_user #location');
+
+	var errors = false;
+	// Validate Form
+	$('#add_user input, #add_user select').each(function(){
+		if(!$(this).val()){
+			$(this).closest('.control-group').addClass('error');
+			errors = true;
+		}
+	});
+
+	var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	if(!regex.test($email.val())) {
+		$email.closest('.control-group').addClass('error');
+		$email.siblings('.help-block').text('Please enter a valid email address.');
+		errors = true;
+	}
+
+	$('#add_user input, #add_user select').focus(function(){
+		$(this).closest('.control-group').removeClass('error');
+	});
+
+	if(errors){
+		return false;
+	}
+});
+
+/***********************************************************
+	Dealer: Process Voucher
+***********************************************************/
+$('#voucher_lookup').submit(function(){
+	$input = $(this).children('input[type=text]');
+	if($input.val().length === 6){
+		socket.emit("voucher_lookup", $input.val());
+		socket.on('voucher_lookup_resp', function(resp){
+			if(resp){
+				if(resp.status === 'open') {
+					$('#lookup_results').html(
+						'<div class="alert alert-success">\
+							<a class="close" data-dismiss="alert" href="#">×</a>\
+							<h4 class="alert-heading">Voucher Found!</h4>\
+							<dl class="dl-horizontal">\
+								<dt>Voucher Holder:</dt>\
+								<dd><i>Name: </i>' + resp.owner.name + '<br><i>Vessel: </i>' + resp.owner.vessel + '</dd>\
+								<dt>Voucher Type:</dt>\
+								<dd>' + resp.type + '</dd>\
+								<dt>Amount:</dt>\
+								<dd>$' + resp.amount + '</dd>\
+								<dt>Issued Date:</dt>\
+								<dd>' + new Date(resp.issued_date).toDateString() + '</dd>\
+							</dl>\
+							<button class="btn btn-primary btn-large process-voucher" data-id="' + resp.number + '" data-name="' + resp.owner.name + '" data-type="' + resp.type + '" data-amount="' + resp.amount + '">Use Voucher</button>\
+						</div>');
+					$('button.process-voucher').click(function(){
+						$this = $(this);
+						$('#process_voucher_modal #voucher_number').text($this.attr('data-id'));
+						$('#process_voucher_modal #voucher_name').text($this.attr('data-name'));
+						$('#process_voucher_modal #voucher_type').text($this.attr('data-type'));
+						$('#process_voucher_modal #voucher_amount').text('$' + $this.attr('data-amount'));
+						$('#process_voucher_modal #process_voucher_confirm').attr('data-id', $this.attr('data-id'));
+						$('#process_voucher_modal').modal('show');
+					});
+
+					$('#process_voucher_confirm').click(function(){
+						socket.emit('process_voucher', $(this).attr('data-id'), $('#user_location').val());
+						socket.on('process_voucher_resp', function(){
+							window.location = '/dealer/actions/vouchers';
+						});
+					});
+				} else if(resp.status === 'used') {
+					$('#lookup_results').html(
+						'<div class="alert alert-error">\
+							<a class="close" data-dismiss="alert" href="#">×</a>\
+							<h4 class="alert-heading">Voucher Already Used.</h4>\
+							<dl class="dl-horizontal">\
+								<dt>Voucher Holder:</dt>\
+								<dd><i>Name: </i>' + resp.owner.name + '<br><i>Vessel: </i>' + resp.owner.vessel + '</dd>\
+								<dt>Voucher Type:</dt>\
+								<dd>' + resp.type + '</dd>\
+								<dt>Amount:</dt>\
+								<dd>$' + resp.amount + '</dd>\
+								<dt>Issued Date:</dt>\
+								<dd>' + new Date(resp.issued_date).toDateString() + '</dd>\
+								<dt>Date Used:</dt>\
+								<dd><b>' + new Date(resp.used_date).toDateString() + '</b></dd>\
+								<dt>Location Used:</dt>\
+								<dd><b>' + resp.used_location + '</b></dd>\
+							</dl>\
+						</div>');
+				}
+			} else {
+				$('#lookup_results').html(
+					'<div class="alert alert-error">\
+						<a class="close" data-dismiss="alert" href="#">×</a>\
+						<h4 class="alert-heading">Voucher not found.</h4>\
+					</div>');
+			}
+		});
+	} else {
+		$('#lookup_results').html(
+			'<div class="alert alert-block">\
+				<a class="close" data-dismiss="alert" href="#">×</a>\
+				<h4 class="alert-heading">Voucher must be 6 digits long.</h4>\
+			</div>');
+	}
+	return false;
 });
