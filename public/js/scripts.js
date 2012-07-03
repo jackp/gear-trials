@@ -1,17 +1,31 @@
 // Socket.io Initialization
-var socket = io.connect('http://geartrials.org');
-
-
+var socket = io.connect('http://localhost');
 
 // Nivo Slider
 $(window).load(function(){
 	$('#slider').nivoSlider({
-		controlNav: false,
-		controlNavThumbs: true
+		effect: 'fade',
+		pauseTime: 6000,
+		controlNav: false
 	});
 });
 
 $(document).ready(function(){
+	// Placeholder Fix
+	$('[placeholder]').focus(function() {
+	  var input = $(this);
+	  if (input.val() == input.attr('placeholder')) {
+	    input.val('');
+	    input.removeClass('placeholder');
+	  }
+	}).blur(function() {
+	  var input = $(this);
+	  if (input.val() == '' || input.val() == input.attr('placeholder')) {
+	    input.addClass('placeholder');
+	    input.val(input.attr('placeholder'));
+	  }
+	}).blur();
+
 	// Initialize dropdowns
 	$('.dropdown-toggle').dropdown();
 	// Initialize Tablesorter
@@ -38,7 +52,7 @@ $(document).ready(function(){
 	/***********************************************************
 		Image Gallery
 	***********************************************************/
-	$('#gallery').imagegallery({
+	$('.gallery').imagegallery({
 		 // selector given to jQuery's delegate method:
     selector: 'a[rel="gallery"]',
     // event handler namespace:
@@ -275,14 +289,16 @@ $(document).ready(function(){
 		}
 
 		if($('#research').prop('checked')){
-			if(!$('#research_crew').val()){
-				validate = false;
-				$('#research_crew').closest('.control-group').addClass('error');
-				$('#research_crew').focus(function(){
-					$(this).closest('.control-group').removeClass('error');
-					$('.message').remove();
-				});
-			}
+			$('#research_crew,#net_size,#door_size').each(function(){
+				if(!$(this).val()){
+					validate = false;
+					$(this).closest('.control-group').addClass('error');
+					$(this).focus(function(){
+						$(this).closest('.control-group').removeClass('error');
+						$('.message').remove();
+					});
+				}
+			});
 		}
 
 		if(!$('#verify').prop('checked')){
@@ -380,6 +396,8 @@ $(document).ready(function(){
 	function research(){
 		if($('#research').prop('checked')){
 			return {
+				net_size: $('#net_size').val(),
+				door_size: $('#door_size').val(),
 				num_crew: $('#research_crew').val(),
 				partners: $('#companions').val()
 			};

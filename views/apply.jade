@@ -116,7 +116,7 @@ block content
 							span Large Mesh Belly Panel
 						p.help-block Choose one or both of the options above.
 						p.help-block
-							a(href='#', target="_blank") Click to view voucher information
+							a(href='/about-program#voucher-information', target="_blank") Click to view voucher information
 			fieldset
 				legend Research
 				p Would you like to be considered for Research Team participation?
@@ -131,13 +131,19 @@ block content
 					span Yes, I would like to be considered for the research team.
 			fieldset#research_info.hide
 				.control-group
-					label.control-label Number of crew members
+					label.control-label What size nets do you tow?
+					.controls
+						input#net_size.input-mini(type='text')
+				.control-group
+					label.control-label What size doors do you tow?
+					.controls
+						input#door_size.input-mini(type='text')
+				.control-group
+					label.control-label How many crew members do you have?
 					.controls
 						input#research_crew.input-mini(type='text')
 				p Is there another fishing vessel(s) that you know of that is comparable in size, horsepower, with the same fishing nets, doors, legs, and ground cable that would be willing to pair up with your vessel? If so, please detail the fishing vessel and owner names below.
-				.control-group
-					.controls
-						textarea#companions.input-xlarge
+				textarea#companions
 			fieldset
 				legend Submit Application
 				label.checkbox
