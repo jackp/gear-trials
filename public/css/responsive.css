@@ -619,10 +619,6 @@
   body {
     padding-top: 0;
   }
-  .navbar-fixed-top {
-    position: static;
-    margin-bottom: 21px;
-  }
   .navbar-fixed-top .navbar-inner {
     padding: 5px;
   }
