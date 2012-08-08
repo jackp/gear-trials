@@ -31,3 +31,43 @@
 									a(href='/logout') Logout
 					- else
 						a.btn(href='#login_modal', data-toggle="modal") Login
+.visible-phone(style="margin: 10px 0;")
+	ul.nav.nav-pills
+		li.dropdown
+			a.dropdown-toggle(data-toggle='dropdown', href="#") About Gear Trials
+				b.caret
+			ul.dropdown-menu
+				li
+					a(href='/about-program#how-program-works') How the program works
+				li
+					a(href='/about-program#gear-types') Gear types
+				li 
+					a(href='/about-program#voucher-information') Voucher information
+				li 
+					a(href="/about-program#suppliers") Gear Suppliers
+				li 
+					a(href="/about-program#dates") Critical Dates
+		li.dropdown
+			a.dropdown-toggle(data-toggle='dropdown', href="#") How to get involved
+				b.caret
+			ul.dropdown-menu
+				li
+					a(href='/get-involved#eligibility') Eligibility Criteria
+				li 
+					a(href="/get-involved#guidelines") Guidelines for Participation
+				li
+					a(href='/get-involved#apply') How to Apply
+				li
+					a(href='/get-involved#research') Research Participation
+		li
+			a(href="/research") Research
+		li
+			a(href="/feedback") Fisherman Feedback
+		li 
+			a(href="/gallery") Gallery
+		li 
+			a(href="/faq") Frequently Asked Questions
+		li
+			a(href="/about") About Us
+		li
+			a(href="/contact") Contact Us

@@ -127,11 +127,6 @@
     padding-left: 20px;
     padding-right: 20px;
   }
-  .navbar-fixed-top,
-  .navbar-fixed-bottom {
-    margin-left: -20px;
-    margin-right: -20px;
-  }
   .container-fluid {
     padding: 0;
   }
@@ -619,12 +614,9 @@
   body {
     padding-top: 0;
   }
-  .navbar-fixed-top {
-    position: static;
-    margin-bottom: 21px;
-  }
   .navbar-fixed-top .navbar-inner {
     padding: 5px;
+    padding-top: 0;
   }
   .navbar .container {
     width: auto;
