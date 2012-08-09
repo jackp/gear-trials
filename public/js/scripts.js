@@ -412,7 +412,7 @@ $(document).ready(function(){
 	$('#survey_form').submit(function(){
 		var validate = true;
 
-		$('#name, #vessel, #stat_areas').each(function(){
+		$('#name, #vessel, #reporting_month, #reporting_year, #stat_areas, #adjustments, #conditions, #reduction_target, #reduction_bycatch').each(function(){
 			if(!$(this).val()){
 				validate = false;
 				$(this).closest('.control-group').addClass('error');
@@ -458,6 +458,15 @@ $(document).ready(function(){
 			validate = false;
 			$('input:radio[name=effective]').closest('.control-group').addClass('error');
 			$('input:radio[name=effective]').change(function(){
+				$(this).closest('.control-group').removeClass('error');
+				$('.message').remove();
+			});
+		}
+
+		if(!$('input:radio[name=continue]:checked').length){
+			validate = false;
+			$('input:radio[name=continue]').closest('.control-group').addClass('error');
+			$('input:radio[name=continue]').change(function(){
 				$(this).closest('.control-group').removeClass('error');
 				$('.message').remove();
 			});
