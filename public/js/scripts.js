@@ -1,5 +1,5 @@
 // Socket.io Initialization
-var socket = io.connect('http://geartrials.org');
+var socket = io.connect('http://localhost');
 
 // Nivo Slider
 $(window).load(function(){
@@ -476,6 +476,8 @@ $(document).ready(function(){
 			var form = {
 				name: $('#name').val(),
 				vessel: $('#vessel').val(),
+				reporting_month: $('#reporting_month').val(),
+				reporting_year: $('#reporting_year').val(),
 				gear_type: {
 					drop_chain_small: $('#drop_chain_small').prop('checked'),
 					drop_chain_large: $('#drop_chain_large').prop('checked'),
@@ -489,10 +491,15 @@ $(document).ready(function(){
 					other_details: $('#other_detail').val()
 				},
 				statistical_area: $('#stat_areas').val(),
-				effective: $('#yes').prop('checked'),
+				adjustments: $('#adjustments').val(),
+				conditions: $('#conditions').val(),
+				effective: $('input:radio[name="effective"]:checked').val(),
+				reduction_target: $('#reduction_target').val(),
+				reduction_bycatch: $('#reduction_bycatch').val(),
+				will_continue: $('input:radio[name="continue"]:checked').val(),
 				observations: $('#observations').val()
 			};
-
+			console.log(form);
 			socket.emit('surveySubmit', form);
 			socket.on('survey_resp', function(resp){
 				if(resp.error){
@@ -514,51 +521,6 @@ $(document).ready(function(){
 		}
 		return false;
 	});
-
-
-	/*
-	$('button.accept-application').click(function(){
-		$this = $(this);
-		$('#accept_application_name').text($this.parent().siblings('.application-name').text());
-		$('#accept_application_voucher_type').text($this.parent().siblings('.application-voucher-type').text());
-		$('#accept_application_vessel').text($this.parent().siblings('.application-vessel').text());
-		$('#accept_application_permit').text($this.parent().siblings('.application-permit').text());
-		$('#accept_application_contact').html($this.parent().siblings('.application-contact').html());
-		$('#accept_application_date_submitted').text($this.parent().siblings('.application-date-submitted').text());
-		$('#accept_application_confirm').attr('data-id', $this.attr('data-id'));
-		$('#accept_application_modal').modal('show');
-	});
-
-	$('#accept_application_confirm').click(function(){
-		socket.emit('accept_application', $(this).attr('data-id'));
-		socket.on('accept_application_resp', function(){
-			window.location.reload();
-		});
-	});
-
-	$('button.decline-application').click(function(){
-		$this = $(this);
-		$('#decline_application_name').text($this.parent().siblings('.application-name').text());
-		$('#decline_application_voucher_type').text($this.parent().siblings('.application-voucher-type').text());
-		$('#decline_application_vessel').text($this.parent().siblings('.application-vessel').text());
-		$('#decline_application_permit').text($this.parent().siblings('.application-permit').text());
-		$('#decline_application_contact').html($this.parent().siblings('.application-contact').html());
-		$('#decline_application_date_submitted').text($this.parent().siblings('.application-date-submitted').text());
-		$('#decline_application_confirm').attr('data-id', $this.attr('data-id'));
-		$('#decline_application_modal').modal('show');
-	});
-
-	$('#decline_application_confirm').click(function(){
-		socket.emit('decline_application', $(this).attr('data-id'));
-		socket.on('decline_application_resp', function(){
-			window.location.reload();
-		});
-	});
-	*/
-	/***********************************************************
-		Dealer: Process Voucher
-	***********************************************************/
-	
 
 	/***********************************************************
 		TESTING ONLY

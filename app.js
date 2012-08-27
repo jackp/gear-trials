@@ -10,7 +10,15 @@ var express = require('express')
     url: 'mongodb://localhost/gear-trials',
     collection: 'sessions'
   })
-  , http = require('http');
+  , http = require('http')
+  , email = require('emailjs')
+  , email_server = email.server.connect({
+    user: 'survey+cfrfoundation.org',
+    password: 'GTsurvey12',
+    host: 'box447.bluehost.com',
+    port: 465,
+    ssl: true
+  });
 
 var app = express();
 var server = http.createServer(app);
@@ -158,6 +166,7 @@ app.get('/404', function(req, res, next){
 app.get('/500', function(req, res, next){
   next(new Error('keyboard cat!'));
 });
+
 
 app.post('/login', function(req, res){
   Users.findOne({email: req.body.email}, function(err, doc){
@@ -629,6 +638,78 @@ io.sockets.on('connection', function(socket){
       if(err){
         socket.emit('survey_resp', {error: err});
       } else {
+        // Send email
+
+        // Get variables for gear types
+        var dc_s = 'No',
+            dc_l = 'No',
+            bp = 'No';
+        if(survey.gear_type.drop_chain_small){
+          dc_s = 'Yes'
+        }
+        if(survey.gear_type.drop_chain_large){
+          dc_l = 'Yes'
+        }
+        if(survey.gear_type.belly_panel){
+          bp = 'Yes'
+        }
+        // Get variables for species
+        var squid = 'No',
+            whiting = 'No',
+            scup = 'No',
+            other = '';
+        if(survey.targeted_fishery.squid){
+          squid = 'Yes';
+        }
+        if(survey.targeted_fishery.whiting){
+          whiting = 'Yes';
+        }
+        if(survey.targeted_fishery.scup){
+          scup = 'Yes';
+        }
+        if(survey.targeted_fishery.other_details){
+          other = survey.targeted_fishery.other_details;
+        }
+
+        var html_email = 
+        '<html> \
+          <h1>Gear Trials Survey</h1> \
+          <p><b>Name: </b> ' + survey.name + '</p> \
+          <p><b>Vessel: </b> ' + survey.vessel + '</p> \
+          <p><b>Reporting Month: </b> ' + survey.reporting_month + '</p> \
+          <p><b>Reporting Year: </b> ' + survey.reporting_year + '</p> \
+          <p><b>Gear Types Used: </b><ul> \
+            <li>Small Drop Chain: ' + dc_s + '</li> \
+            <li>Large Drop Chain: ' + dc_l + '</li> \
+            <li>Belly Panel: ' + bp + '</li> \
+          </ul></p> \
+          <p><b>What small mesh fishery were you targeting? </b><ul> \
+            <li>Squid: ' + squid + '</li> \
+            <li>Whiting: ' + whiting + '</li> \
+            <li>Scup: ' + scup + '</li> \
+            <li>Other: ' + other + '</li> \
+          </ul></p> \
+          <p><b>What statistical areas did you primarily fish in while using the bycatch reduction gear? </b> ' + survey.statistical_area + '</p> \
+          <p><b>Did you make any adjustments or modifications to the gear? If so, how? </b> ' + survey.adjustments + '</p> \
+          <p><b>Under what fishing conditions did you use the bycatch reduction gear? </b> ' + survey.conditions + '</p> \
+          <p><b>Did you find the gear to be effective in reducing winter flounder bycatch? </b> ' + survey.effective + '</p> \
+          <p><b>Over the past month, did you observe a reduction in target species when using the bycatch reduction gear? If so, estimate the percent reduction of each target species. </b> ' + survey.reduction_target + '</p> \
+          <p><b>Over the past month, did you observe a reduction in bycatch species when using the bycatch reduction gear? If so, estimate the percent reduction of each bycatch species. </b> ' + survey.reduction_bycatch + '</p> \
+          <p><b>Will you continue to use the gear? </b> ' + survey.will_continue + '</p> \
+          <p><b>Please share any additional observations below. </b> ' + survey.observations + '</p> \
+        </html>';
+
+        email_server.send({
+          text: 'Survey Results',
+          from: 'Gear Trials Survey <survey@cfrfoundation.org>',
+          to: 'parkej3@gmail.com',
+          subject: 'Gear Trials survey has been submitted',
+          attachment: 
+             [
+                {data:html_email, alternative:true},
+             ]
+        }, function(err, message){ console.log(err || message)});
+
         socket.emit('survey_resp', {success: true});
       }
     });
