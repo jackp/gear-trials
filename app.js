@@ -631,6 +631,22 @@ io.sockets.on('connection', function(socket){
       if(err){
         socket.emit('application_resp', {error: err});
       } else {
+        // Send email
+        var html_email = 
+        '<html><p>An application has been submitted by <b>' + app.applicant.name + '</b>. Please log into the Gear Trials website to view the application.</p></html>';
+
+        email_server.send({
+          text: 'Gear Trials Application Submitted',
+          from: 'Gear Trials Application <survey@cfrfoundation.org>',
+          to: 'pparker@cfrfoundation.org, jdickinson@cfrfoundation.org',
+          subject: 'Gear Trials application has been submitted',
+          attachment: 
+             [
+                {data:html_email, alternative:true},
+             ]
+        }, function(err, message){ console.log(err || message)});
+
+
         socket.emit('application_resp', {success: true});
       }
     });
