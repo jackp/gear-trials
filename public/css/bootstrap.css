@@ -4462,6 +4462,20 @@ table.tablesorter th.tablesorter-headerSortDown {
   margin-left: 40px;
   font-weight: bold;
 }
+@media print {
+  body {
+    margin: 0 !important;
+  }
+  .sidebar,
+  #sidebar_phone,
+  #footer {
+    display: none !important;
+  }
+  #reports #print,
+  #reports #month {
+    display: none !important;
+  }
+}
 /***********************************************************
 	Footer
 ***********************************************************/

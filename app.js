@@ -447,8 +447,12 @@ app.get('/dealer/actions/vouchers', restrict, function(req, res){
 });
 
 // View Vouchers
-app.get('/dealer/actions/reports', restrict, function(req, res){
-  var now = moment();
+app.get('/dealer/actions/reports/:month', restrict, function(req, res){
+  if(req.params.month){
+    var now = moment(req.params.month, 'M-YYYY');
+  } else {
+    var now = moment();
+  }
   var month_start = now.date(1).sod();
   var month_end = now.date(now.daysInMonth()).eod();
   Vouchers.find({used_location: req.session.user.location, used_date: { $gte: month_start, $lte: month_end}}, [], {sort: {used_date: -1}},function(err, docs){
@@ -470,7 +474,7 @@ app.get('/dealer/actions/reports', restrict, function(req, res){
     var select_array = [];
     while(month >= moment([2012, 5, 1])){
       select_array.push({
-        month: month.month(),
+        month: month.month() + 1,
         year: month.year(),
         human: month.format('MMMM')
       });
@@ -525,7 +529,7 @@ io.sockets.on('connection', function(socket){
           var voucher1 = new Vouchers();
           voucher1.number = Date.now().toString().substr(7);
 
-          if(app.vessel.length >= 50){
+          if(app.vessel.hp >= 500){
             voucher1.type = 'Drop Chain - Large';
             voucher1.amount = 800;
           } else {
@@ -554,7 +558,7 @@ io.sockets.on('connection', function(socket){
           var voucher2 = new Vouchers();
           voucher2.number = Date.now().toString().substr(7);
           voucher2.type = 'Belly Panel';
-          voucher2.amount = 500;
+          voucher2.amount = 400;
 
           voucher2.owner = {
             name: app.applicant.name,

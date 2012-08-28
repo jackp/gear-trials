@@ -317,6 +317,21 @@ table.tablesorter th.tablesorter-headerSortDown {
 		}
 	}
 }
+@media print
+{	
+	body{
+		margin: 0 !important;
+	}
+
+	.sidebar, #sidebar_phone, #footer{
+		display: none !important;
+	}
+	#reports{
+		#print, #month{
+			display: none !important;
+		}
+	}
+}
 
 
 /***********************************************************

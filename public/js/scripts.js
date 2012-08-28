@@ -594,6 +594,8 @@ $('.view-application').click(function(){
 			$('#view_application_modal #research').text('Yes');
 			$('#view_application_modal #num_crew').text(app.research.num_crew);
 			$('#view_application_modal #partners').text(app.research.partners);
+			$('#view_application_modal #net_size').text(app.research.net_size);
+			$('#view_application_modal #door_size').text(app.research.door_size);
 			$('#view_application_modal .research').show();
 		} else {
 			$('#view_application_modal #research').text('No');
@@ -734,4 +736,14 @@ $('#voucher_lookup').submit(function(){
 			</div>');
 	}
 	return false;
+});
+//=========================================================
+// Dealer: Print Monthly Report
+//=========================================================
+$('#print').click(function(){
+	window.print();
+});
+
+$('select#month').change(function(){
+	window.location = '/dealer/actions/reports/' + $(this).val();
 });
