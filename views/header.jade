@@ -8,7 +8,10 @@
 				a(href='/apply') Apply Now
 				a(href='/survey') Submit Survey
 				- if(session.user)
-					a(href='/admin') Admin
+					- if(session.user.admin)
+						a(href='/admin') Admin
+					- else
+						a(href='/dealer') Admin
 					a(href='/logout') Logout
 				- else
 					a#login_button(href='#') Login
@@ -17,20 +20,6 @@
 						input#email(type='text', name='email', placeholder="Email")
 						input#password(type='password', name='password', placeholder="Password")
 						input.btn(type='submit', value="Login")
-
-			//
-				.pull-right
-					- if(session.user)
-						.btn-group
-							button.btn.dropdown-toggle(data-toggle='dropdown', href='#') #{session.user.name}
-								span.caret
-							ul.dropdown-menu
-								li
-									a(href='/admin') Admin
-								li
-									a(href='/logout') Logout
-					- else
-						a.btn(href='#login_modal', data-toggle="modal") Login
 #sidebar_phone.visible-phone(style="margin: 10px 0;")
 	ul.nav.nav-pills
 		li.dropdown
