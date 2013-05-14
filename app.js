@@ -16,6 +16,7 @@ var express = require('express')
     user: 'jack@cfrfoundation.org',
     password: 'j6286ipp',
     host: 'smtp.gmail.com',
+    ssl: true
   });
 
 var app = express();
