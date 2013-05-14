@@ -54,8 +54,7 @@ app.configure('development', function(){
 
 // Prod Config Only
 app.configure('production', function(){
-  app.use(express.errorHandler());
-  mongoose.connect('mongodb://YOUR-DB-HERE');
+  mongoose.connect('mongodb://localhost/gear-trials');
 });
 
 app.use(function(req, res, next){
@@ -722,7 +721,7 @@ io.sockets.on('connection', function(socket){
         email_server.send({
           text: 'Survey Results',
           from: 'Gear Trials Survey <survey@cfrfoundation.org>',
-          to: 'parkej3@gmail.com, mihaehinayon@gmail.com',
+          to: 'jns8@cornell.edu, kk334@cornell.edu, jh2333@cornell.edu, jdickinson@cfrfoundation.org',
           subject: 'Gear Trials survey has been submitted',
           attachment: 
              [
