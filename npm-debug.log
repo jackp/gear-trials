@@ -1,0 +1,180 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install', 'bcrypt' ]
+2 info using npm@1.2.18
+3 info using node@v0.10.5
+4 verbose node symlink /usr/bin/node
+5 verbose read json /home/jack/Projects/gear-trials/package.json
+6 verbose read json /home/jack/Projects/gear-trials/node_modules/connect-mongodb/package.json
+7 verbose read json /home/jack/Projects/gear-trials/node_modules/emailjs/package.json
+8 verbose read json /home/jack/Projects/gear-trials/node_modules/express/package.json
+9 verbose read json /home/jack/Projects/gear-trials/node_modules/jade/package.json
+10 verbose read json /home/jack/Projects/gear-trials/node_modules/less-middleware/package.json
+11 verbose read json /home/jack/Projects/gear-trials/node_modules/moment/package.json
+12 verbose read json /home/jack/Projects/gear-trials/node_modules/mongoose/package.json
+13 verbose read json /home/jack/Projects/gear-trials/node_modules/socket.io/package.json
+14 verbose from cache /home/jack/Projects/gear-trials/package.json
+15 verbose readDependencies using package.json deps
+16 verbose cache add [ 'bcrypt@0.5.0', null ]
+17 verbose cache add name=undefined spec="bcrypt@0.5.0" args=["bcrypt@0.5.0",null]
+18 verbose parsed url { protocol: null,
+18 verbose parsed url   slashes: null,
+18 verbose parsed url   auth: null,
+18 verbose parsed url   host: null,
+18 verbose parsed url   port: null,
+18 verbose parsed url   hostname: null,
+18 verbose parsed url   hash: null,
+18 verbose parsed url   search: null,
+18 verbose parsed url   query: null,
+18 verbose parsed url   pathname: 'bcrypt@0.5.0',
+18 verbose parsed url   path: 'bcrypt@0.5.0',
+18 verbose parsed url   href: 'bcrypt@0.5.0' }
+19 verbose cache add name="bcrypt" spec="0.5.0" args=["bcrypt","0.5.0"]
+20 verbose parsed url { protocol: null,
+20 verbose parsed url   slashes: null,
+20 verbose parsed url   auth: null,
+20 verbose parsed url   host: null,
+20 verbose parsed url   port: null,
+20 verbose parsed url   hostname: null,
+20 verbose parsed url   hash: null,
+20 verbose parsed url   search: null,
+20 verbose parsed url   query: null,
+20 verbose parsed url   pathname: '0.5.0',
+20 verbose parsed url   path: '0.5.0',
+20 verbose parsed url   href: '0.5.0' }
+21 verbose addNamed [ 'bcrypt', '0.5.0' ]
+22 verbose addNamed [ '0.5.0', '0.5.0' ]
+23 silly lockFile 1c43c76d-bcrypt-0-5-0 bcrypt@0.5.0
+24 verbose lock bcrypt@0.5.0 /home/jack/.npm/1c43c76d-bcrypt-0-5-0.lock
+25 verbose url raw bcrypt/0.5.0
+26 verbose url resolving [ 'https://registry.npmjs.org/', './bcrypt/0.5.0' ]
+27 verbose url resolved https://registry.npmjs.org/bcrypt/0.5.0
+28 info trying registry request attempt 1 at 11:03:47
+29 verbose etag "EY984U1A8C4JUEV13ELMLM8KS"
+30 http GET https://registry.npmjs.org/bcrypt/0.5.0
+31 http 304 https://registry.npmjs.org/bcrypt/0.5.0
+32 silly registry.get cb [ 304,
+32 silly registry.get   { server: 'CouchDB/1.3.0 (Erlang OTP/R15B03)',
+32 silly registry.get     etag: '"EY984U1A8C4JUEV13ELMLM8KS"',
+32 silly registry.get     date: 'Tue, 14 May 2013 15:03:47 GMT',
+32 silly registry.get     'content-length': '0' } ]
+33 verbose etag bcrypt/0.5.0 from cache
+34 verbose read json /home/jack/.npm/bcrypt/0.5.0/package/package.json
+35 silly lockFile 1c43c76d-bcrypt-0-5-0 bcrypt@0.5.0
+36 silly lockFile 1c43c76d-bcrypt-0-5-0 bcrypt@0.5.0
+37 silly resolved [ { name: 'bcrypt',
+37 silly resolved     description: 'A bcrypt library for NodeJS.',
+37 silly resolved     keywords:
+37 silly resolved      [ 'bcrypt',
+37 silly resolved        'password',
+37 silly resolved        'auth',
+37 silly resolved        'authentication',
+37 silly resolved        'encryption',
+37 silly resolved        'crypt',
+37 silly resolved        'crypto' ],
+37 silly resolved     main: './bcrypt',
+37 silly resolved     version: '0.5.0',
+37 silly resolved     author: { name: 'Nick Campbell', url: 'http://github.com/ncb000gt' },
+37 silly resolved     engines: { node: '>= 0.6.0' },
+37 silly resolved     repository:
+37 silly resolved      { type: 'git',
+37 silly resolved        url: 'http://github.com/ncb000gt/node.bcrypt.js.git' },
+37 silly resolved     licenses: [ [Object] ],
+37 silly resolved     bugs: { url: 'http://github.com/ncb000gt/node.bcrypt.js/issues' },
+37 silly resolved     scripts: { install: 'make build', test: 'make test' },
+37 silly resolved     devDependencies: { nodeunit: '>=0.6.4' },
+37 silly resolved     contributors:
+37 silly resolved      [ [Object],
+37 silly resolved        [Object],
+37 silly resolved        [Object],
+37 silly resolved        [Object],
+37 silly resolved        [Object],
+37 silly resolved        [Object],
+37 silly resolved        [Object],
+37 silly resolved        [Object],
+37 silly resolved        [Object],
+37 silly resolved        [Object],
+37 silly resolved        [Object] ],
+37 silly resolved     readme: 'node.bcrypt.js\n=============\n\n[![Build Status](https://secure.travis-ci.org/ncb000gt/node.bcrypt.js.png)](http://travis-ci.org/#!/ncb000gt/node.bcrypt.js) \n\nLib to help you hash passwords.\n[bcrypt on wikipedia][bcryptwiki]\n\nCatalyst for this module: [How To Safely Store A Password][codahale]\n\n\nSecurity Issues/Concerns\n=============\n\nAs should be the case with any security tool, this library should be scrutinized by anyone using it. If you find or suspect an issue with the code- please bring it to my attention and I\'ll spend some time trying to make sure that this tool is as secure as possible.\n\nTo make it easier for people using this tool to analyze what has been surveyed, here is a list of BCrypt related security issues/concerns as they\'ve come up.\n\n* An [issue with passwords][jtr] was found with a version of the Blowfish algorithm developed for John the Ripper. This is not present in the OpenBSD version and is thus not a problem for this module. HT [zooko][zooko].\n\nDependencies\n=============\n\n* NodeJS\n* OpenSSL\n\nFrom NPM\n============\n\nnpm install bcrypt\n\n\nFrom Source\n============\n\nAssuming you\'ve already built node, you can run the waf script:  \n\n    node-waf configure\n    node-waf build\n    npm link\n\nUsage - Sync\n============\n\nTo hash a password:  \n\n    var bcrypt = require(\'bcrypt\');  \n    var salt = bcrypt.genSaltSync(10);  \n    var hash = bcrypt.encryptSync("B4c0/\\/", salt);\n    // Store hash in your password DB.\n\nTo check a password:  \n\n    // Load hash from your password DB.\n    bcrypt.compareSync("B4c0/\\/", hash); // true    \n    bcrypt.compareSync("not_bacon", hash); // false\n\nUsage - Async\n============\n\nTo hash a password:  \n\n    var bcrypt = require(\'bcrypt\');  \n    bcrypt.genSalt(10, function(err, salt) {\n        bcrypt.hash("B4c0/\\/", salt, function(err, hash) {\n            // Store hash in your password DB.\n        });\n    });\n\nTo check a password:  \n\n    // Load hash from your password DB.\n    bcrypt.compare("B4c0/\\/", hash, function(err, res) {\n        // res == true    \n    });\n    bcrypt.compare("not_bacon", hash, function(err, res) {\n        // res = false\n    });\n\nAPI\n============\n\n`BCrypt.`\n\n  * `genSaltSync(rounds, seed_length)`\n    * `rounds` - [OPTIONAL] - the number of rounds to process the data for. (default - 10)\n    * `seed_length` - [OPTIONAL] - RAND_bytes wants a length. to make that a bit flexible, you can specify a seed_length. (default - 20)\n  * `genSalt(rounds, seed_length, cb)`\n    * `rounds` - [OPTIONAL] - the number of rounds to process the data for. (default - 10)\n    * `seed_length` - [OPTIONAL] - RAND_bytes wants a length. to make that a bit flexible, you can specify a seed_length. (default - 20)\n    * `cb` - [REQUIRED] - a callback to be fired once the salt has been generated. uses eio making it asynchronous.\n      * `err` - First parameter to the callback detailing any errors.\n      * `salt` - Second parameter to the callback providing the generated salt.\n  * `hashSync(data, salt)`\n    * `data` - [REQUIRED] - the data to be encrypted.\n    * `salt` - [REQUIRED] - the salt to be used in encryption.\n  * `hash(data, salt, cb)`\n    * `data` - [REQUIRED] - the data to be encrypted.\n    * `salt` - [REQUIRED] - the salt to be used in encryption.\n    * `cb` - [REQUIRED] - a callback to be fired once the data has been encrypted. uses eio making it asynchronous.\n      * `err` - First parameter to the callback detailing any errors.\n      * `encrypted` - Second parameter to the callback providing the encrypted form.\n  * `compareSync(data, encrypted)`\n    * `data` - [REQUIRED] - data to compare.\n    * `encrypted` - [REQUIRED] - data to be compared to.\n  * `compare(data, encrypted, cb)`\n    * `data` - [REQUIRED] - data to compare.\n    * `encrypted` - [REQUIRED] - data to be compared to.\n    * `cb` - [REQUIRED] - a callback to be fired once the data has been compared. uses eio making it asynchronous.\n      * `err` - First parameter to the callback detailing any errors.\n      * `same` - Second parameter to the callback providing whether the data and encrypted forms match [true | false].\n  * `getRounds(encrypted)` - return the number of rounds used to encrypt a given hash\n    * `encrypted` - [REQUIRED] - hash from which the number of rounds used should be extracted.\n\n\nHash Info\n============\n\nThe characters that comprise the resultant hash are `./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$`.\n\nTesting\n============\n\nI am using nodeunit. I like the way you write tests with it and I like the default output. As such you\'ll need it to run the tests. I suspect my tests would run on an older version, but these were written and worked against 0.5.1\n\n    npm install nodeunit@0.5.1\n    nodeunit test/\n\nCredits\n============\n\nThe code for this comes from a few sources:\n\n* blowfish.cc - OpenBSD\n* bcrypt.cc - OpenBSD\n* bcrypt::gen_salt - [gen_salt inclusion to bcrypt][bcryptgs]\n* bcrypt_node.cc - me\n\nContributors\n============\n\n* [Antonio Salazar Cardozo][shadowfiend] - Early MacOS X support (when we used libbsd)\n* [Ben Glow][pixelglow] - Fixes for thread safety with async calls\n* [Van Nguyen][thegoleffect] - Found a timing attack in the comparator\n* [NewITFarmer][newitfarmer] - Initial Cygwin support\n* [David Trejo][dtrejo] - packaging fixes\n* [Alfred Westerveld][alfredwesterveld] - packaging fixes\n* [Vincent Côté-Roy][vincentr] - Testing around concurrency issues\n* [Lloyd Hilaiel][lloyd] - Documentation fixes\n* [Roman Shtylman][shtylman] - Code refactoring, general rot reduction, compile options, better memory management with delete and new, and an upgrade to libuv over eio/ev.\n* [Vadim Graboys][vadimg] - Code changes to support 0.5.5+\n* [Ben Noordhuis][bnoordhuis] - Fixed a thread safety issue in nodejs that was perfectly mappable to this module.\n\nLicense\n============\n\nUnless stated elsewhere, file headers or otherwise, the license as stated in the LICENSE file.\n\n\n\n[bcryptwiki]: http://en.wikipedia.org/wiki/Crypt_(Unix)#Blowfish-based_scheme  \n[bcryptgs]: http://mail-index.netbsd.org/tech-crypto/2002/05/24/msg000204.html\n[codahale]: http://codahale.com/how-to-safely-store-a-password/\n[gh13]: https://github.com/ncb000gt/node.bcrypt.js/issues/13\n[jtr]: http://www.openwall.com/lists/oss-security/2011/06/20/2\n\n[shadowfiend]:https://github.com/Shadowfiend\n[thegoleffect]:https://github.com/thegoleffect\n[pixelglow]:https://github.com/pixelglow\n[dtrejo]:https://github.com/dtrejo\n[alfredwesterveld]:https://github.com/alfredwesterveld\n[newitfarmer]:https://github.com/newitfarmer\n[zooko]:https://twitter.com/zooko\n[vincentr]:https://twitter.com/vincentcr\n[lloyd]:https://github.com/lloyd\n[shtylman]:https://github.com/shtylman\n[vadimg]:https://github.com/vadimg\n',
+37 silly resolved     readmeFilename: 'README.md',
+37 silly resolved     _id: 'bcrypt@0.5.0',
+37 silly resolved     _from: 'bcrypt@0.5.0' } ]
+38 info install bcrypt@0.5.0 into /home/jack/Projects/gear-trials
+39 info installOne bcrypt@0.5.0
+40 verbose from cache /home/jack/.npm/bcrypt/0.5.0/package/package.json
+41 info /home/jack/Projects/gear-trials/node_modules/bcrypt unbuild
+42 verbose read json /home/jack/Projects/gear-trials/node_modules/bcrypt/package.json
+43 verbose tar unpack /home/jack/.npm/bcrypt/0.5.0/package.tgz
+44 silly lockFile db341c04--gear-trials-node-modules-bcrypt /home/jack/Projects/gear-trials/node_modules/bcrypt
+45 verbose lock /home/jack/Projects/gear-trials/node_modules/bcrypt /home/jack/.npm/db341c04--gear-trials-node-modules-bcrypt.lock
+46 silly lockFile 83f571ef-ack-npm-bcrypt-0-5-0-package-tgz /home/jack/.npm/bcrypt/0.5.0/package.tgz
+47 verbose lock /home/jack/.npm/bcrypt/0.5.0/package.tgz /home/jack/.npm/83f571ef-ack-npm-bcrypt-0-5-0-package-tgz.lock
+48 silly gunzTarPerm modes [ '755', '644' ]
+49 silly gunzTarPerm extractEntry package.json
+50 silly gunzTarPerm extractEntry .npmignore
+51 silly gunzTarPerm extractEntry README.md
+52 silly gunzTarPerm extractEntry LICENSE
+53 silly gunzTarPerm extractEntry bcrypt.js
+54 silly gunzTarPerm extractEntry Makefile
+55 silly gunzTarPerm extractEntry .travis.yml
+56 silly gunzTarPerm extractEntry examples/async_compare.js
+57 silly gunzTarPerm extractEntry examples/forever_gen_salt.js
+58 silly gunzTarPerm extractEntry CHANGELOG
+59 silly gunzTarPerm extractEntry src/bcrypt.cc
+60 silly gunzTarPerm extractEntry src/bcrypt_node.cc
+61 silly gunzTarPerm extractEntry src/blowfish.cc
+62 silly gunzTarPerm extractEntry src/node_blf.h
+63 silly gunzTarPerm extractEntry test/async.js
+64 silly gunzTarPerm extractEntry test/deprecated.js
+65 silly gunzTarPerm extractEntry test/repetitions.js
+66 silly gunzTarPerm extractEntry test/sync.js
+67 silly gunzTarPerm extractEntry wscript
+68 verbose read json /home/jack/Projects/gear-trials/node_modules/bcrypt/package.json
+69 silly lockFile db341c04--gear-trials-node-modules-bcrypt /home/jack/Projects/gear-trials/node_modules/bcrypt
+70 silly lockFile db341c04--gear-trials-node-modules-bcrypt /home/jack/Projects/gear-trials/node_modules/bcrypt
+71 silly lockFile 83f571ef-ack-npm-bcrypt-0-5-0-package-tgz /home/jack/.npm/bcrypt/0.5.0/package.tgz
+72 silly lockFile 83f571ef-ack-npm-bcrypt-0-5-0-package-tgz /home/jack/.npm/bcrypt/0.5.0/package.tgz
+73 info preinstall bcrypt@0.5.0
+74 verbose from cache /home/jack/Projects/gear-trials/node_modules/bcrypt/package.json
+75 verbose readDependencies using package.json deps
+76 verbose from cache /home/jack/Projects/gear-trials/node_modules/bcrypt/package.json
+77 verbose readDependencies using package.json deps
+78 silly resolved []
+79 verbose about to build /home/jack/Projects/gear-trials/node_modules/bcrypt
+80 info build /home/jack/Projects/gear-trials/node_modules/bcrypt
+81 verbose from cache /home/jack/Projects/gear-trials/node_modules/bcrypt/package.json
+82 verbose linkStuff [ false,
+82 verbose linkStuff   false,
+82 verbose linkStuff   false,
+82 verbose linkStuff   '/home/jack/Projects/gear-trials/node_modules' ]
+83 info linkStuff bcrypt@0.5.0
+84 verbose linkBins bcrypt@0.5.0
+85 verbose linkMans bcrypt@0.5.0
+86 verbose rebuildBundles bcrypt@0.5.0
+87 info install bcrypt@0.5.0
+88 verbose unsafe-perm in lifecycle true
+89 silly exec sh "-c" "make build"
+90 silly sh,-c,make build,/home/jack/Projects/gear-trials/node_modules/bcrypt spawning
+91 info bcrypt@0.5.0 Failed to exec install script
+92 info /home/jack/Projects/gear-trials/node_modules/bcrypt unbuild
+93 verbose from cache /home/jack/Projects/gear-trials/node_modules/bcrypt/package.json
+94 info preuninstall bcrypt@0.5.0
+95 info uninstall bcrypt@0.5.0
+96 verbose true,/home/jack/Projects/gear-trials/node_modules,/home/jack/Projects/gear-trials/node_modules unbuild bcrypt@0.5.0
+97 info postuninstall bcrypt@0.5.0
+98 error bcrypt@0.5.0 install: `make build`
+98 error `sh "-c" "make build"` failed with 2
+99 error Failed at the bcrypt@0.5.0 install script.
+99 error This is most likely a problem with the bcrypt package,
+99 error not with npm itself.
+99 error Tell the author that this fails on your system:
+99 error     make build
+99 error You can get their info via:
+99 error     npm owner ls bcrypt
+99 error There is likely additional logging output above.
+100 error System Linux 3.8.0-19-generic
+101 error command "/usr/bin/node" "/usr/bin/npm" "install" "bcrypt"
+102 error cwd /home/jack/Projects/gear-trials
+103 error node -v v0.10.5
+104 error npm -v 1.2.18
+105 error code ELIFECYCLE
+106 verbose exit [ 1, true ]
