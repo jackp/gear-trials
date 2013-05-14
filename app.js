@@ -728,7 +728,10 @@ io.sockets.on('connection', function(socket){
              [
                 {data:html_email, alternative:true},
              ]
-        }, function(err, message){ console.log(err || message)});
+        }, function(err, message){ 
+          if(err) console.log(err);
+          else console.log(message);
+        });
 
         socket.emit('survey_resp', {success: true});
       }
