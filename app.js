@@ -13,10 +13,9 @@ var express = require('express')
   , http = require('http')
   , email = require('emailjs')
   , email_server = email.server.connect({
-    user: 'survey+cfrfoundation.org',
-    password: 'GTsurvey12',
-    host: 'box447.bluehost.com',
-    port: 465,
+    user: 'jack+cfrfoundation.org',
+    password: 'j6286ipp',
+    host: 'smtp.gmail.com',
     ssl: true
   });
 
@@ -722,7 +721,7 @@ io.sockets.on('connection', function(socket){
         email_server.send({
           text: 'Survey Results',
           from: 'Gear Trials Survey <survey@cfrfoundation.org>',
-          to: 'jns8@cornell.edu, jdickinson@cfrfoundation.org',
+          to: 'parkej3@gmail.com, jack@taleit.com',
           subject: 'Gear Trials survey has been submitted',
           attachment: 
              [
