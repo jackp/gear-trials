@@ -722,7 +722,7 @@ io.sockets.on('connection', function(socket){
         email_server.send({
           text: 'Survey Results',
           from: 'Gear Trials Survey <survey@cfrfoundation.org>',
-          to: 'parkej3@gmail.com, jack@taleit.com',
+          to: 'Jack Parker <parkej3@gmail.com>',
           subject: 'Gear Trials survey has been submitted',
           attachment: 
              [
