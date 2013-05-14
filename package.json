@@ -13,6 +13,7 @@
     "connect-mongodb": "latest",
     "socket.io": "latest",
     "bcrypt": "latest",
-    "moment": "latest"
+    "moment": "latest",
+    "emailjs": "~0.3.4"
   }
 }

@@ -13,7 +13,7 @@ var express = require('express')
   , http = require('http')
   , email = require('emailjs')
   , email_server = email.server.connect({
-    user: 'jack+cfrfoundation.org',
+    user: 'jack@cfrfoundation.org',
     password: 'j6286ipp',
     host: 'smtp.gmail.com',
     ssl: true
