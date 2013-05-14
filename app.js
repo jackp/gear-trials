@@ -55,6 +55,7 @@ app.configure('development', function(){
 
 // Prod Config Only
 app.configure('production', function(){
+  app.use(express.errorHandler());
   mongoose.connect('mongodb://YOUR-DB-HERE');
 });
 
