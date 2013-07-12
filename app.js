@@ -721,7 +721,7 @@ io.sockets.on('connection', function(socket){
         email_server.send({
           text: 'Survey Results',
           from: 'Gear Trials Survey <survey@cfrfoundation.org>',
-          to: 'jns8@cornell.edu, kk334@cornell.edu, jh2333@cornell.edu, jdickinson@cfrfoundation.org',
+          to: 'jns8@cornell.edu, kk334@cornell.edu, jh2333@cornell.edu, jdickinson@cfrfoundation.org, taf4@cornell.edu, jc2282@cornell.edu',
           subject: 'Gear Trials survey has been submitted',
           attachment: 
              [
