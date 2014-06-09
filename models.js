@@ -55,7 +55,7 @@ exports.Vouchers = mongoose.model('Vouchers', Vouchers);
 	Application Schema
 ***********************************************************/
 var Applications = new Schema({
-	date_submitted: {type: Date, default: new Date() },
+	date_submitted: {type: Date, default: Date.now() },
 	status: {type: String, default: 'open'}
 });
 
@@ -64,7 +64,7 @@ exports.Applications = mongoose.model('Applications', Applications);
 	Survey Schema
 ***********************************************************/
 var Surveys = new Schema({
-	date_submitted: {type: Date, default: new Date() }
+	date_submitted: {type: Date, default: Date.now() }
 });
 
 exports.Surveys = mongoose.model('Surveys', Surveys);
